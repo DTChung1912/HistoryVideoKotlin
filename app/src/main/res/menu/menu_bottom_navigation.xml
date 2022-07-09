@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_post"
+        android:icon="@drawable/ic_bottom_menu_home"
+        android:title="Trang chu"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_video"
+        android:icon="@drawable/ic_bottom_menu_video"
+        android:title="Video"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_quiz"
+        android:icon="@drawable/ic_bottom_menu_feed"
+        android:title="Kiem tra"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_my_page"
+        android:icon="@drawable/ic_bottom_menu_my_page"
+        android:title="Ca nhan"
+        app:showAsAction="ifRoom" />
+</menu>

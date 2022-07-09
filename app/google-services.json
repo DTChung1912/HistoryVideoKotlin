@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "890848716998",
+    "project_id": "historykotlin-80a25",
+    "storage_bucket": "historykotlin-80a25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890848716998:android:3c7b74b4a955bbd2de4fc7",
+        "android_client_info": {
+          "package_name": "com.example.historyvideokotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890848716998-ghem83n0iofkar96s99smdrvddh5iifq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0FmMnfYSPBg5xw2ZwfkcGYV4nBv561O8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890848716998-ghem83n0iofkar96s99smdrvddh5iifq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

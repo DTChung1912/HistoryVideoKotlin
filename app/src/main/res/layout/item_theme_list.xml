@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/ndp_15"
+    android:background="@drawable/background_button_theme"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/ndp_10">
+
+    <ImageView
+        android:id="@+id/ivThemeIcon"
+        android:layout_width="@dimen/ndp_25"
+        android:layout_height="@dimen/ndp_25"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/ndp_15"
+        android:src="@drawable/heart" />
+
+    <TextView
+        android:id="@+id/tvTheme"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ndp_10"
+        android:text="VietNam"
+        android:textSize="@dimen/nsp_15"
+        android:textStyle="bold" />
+
+</LinearLayout>
