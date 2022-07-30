@@ -1,26 +1,43 @@
 package com.example.historyvideokotlin.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.historyvideokotlin.databinding.ItemQuizBinding
+import com.example.historyvideokotlin.model.PostTheme
 
-class QuizAdapter : RecyclerView.Adapter<QuizAdapter.ViewHolder>() {
+class QuizAdapter(
+    val themeList: List<PostTheme>,
+    val context: Context,
+    val onItemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<QuizAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemQuizBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            theme: PostTheme,
+            context: Context,
+            onItemClickListener: OnItemClickListener
+        ) = with(binding) {
 
+            binding.tvTheme.text = theme.theme_name
+            binding.itemQuiz.setOnClickListener {
+                onItemClickListener.onItemClick(theme)
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder (
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemQuizBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(themeList[position], context, onItemClickListener)
     }
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = themeList.size
 
-
+    interface OnItemClickListener {
+        fun onItemClick(postTheme: PostTheme)
+    }
 }

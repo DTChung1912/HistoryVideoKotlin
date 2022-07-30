@@ -1,13 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.LoginFragment">
+        android:background="@color/login"
+        tools:context=".fragments.HistoryLoginFragment">
+
+        <TextView
+            android:id="@+id/tvLoginTile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ndp_36"
+            android:text="Đăng Nhập"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/nsp_40"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginHorizontal="@dimen/ndp_20"
+            android:layout_marginTop="@dimen/ndp_30"
+            android:background="@drawable/background_login"
+            android:drawableLeft="@drawable/mail"
+            android:drawablePadding="@dimen/ndp_10"
+            android:hint="Nhap Email"
+            android:paddingStart="@dimen/ndp_20"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLoginTile"
+            tools:ignore="HardcodedText,RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginHorizontal="@dimen/ndp_20"
+            android:layout_marginTop="@dimen/ndp_30"
+            android:background="@drawable/background_login"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="@dimen/ndp_10"
+            android:hint="Nhap Mat Khau"
+            android:paddingStart="@dimen/ndp_20"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtEmail"
+            tools:ignore="HardcodedText,RtlSymmetry" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ndp_20"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:text="Nhớ tài khoản"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtPassword" />
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:layout_marginEnd="@dimen/ndp_20"
+            android:text="Quen mat khau"
+            android:textColor="@color/black"
+            android:textSize="@dimen/nsp_18"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtPassword" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_15"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:background="@drawable/background_login_button"
+            android:text="Dang nhap"
+            android:textColor="@color/white"
+            android:textSize="@dimen/nsp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvForgotPassword" />
+
+        <FrameLayout
+            android:id="@+id/flLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_30"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_2"
+                android:layout_gravity="center_vertical"
+                android:background="@color/criminal"
+                android:elevation="@dimen/ndp_5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="10dp"
+                android:text="Hoac"
+                android:textColor="@color/black"
+                android:textSize="@dimen/nsp_20"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/ibFacebook"
+            android:layout_width="@dimen/ndp_70"
+            android:layout_height="@dimen/ndp_70"
+            android:layout_marginStart="@dimen/ndp_20"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:background="@color/login"
+            android:scaleType="centerCrop"
+            android:src="@drawable/facebook_other"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flLogin" />
+
+        <ImageButton
+            android:id="@+id/ibGoogle"
+            android:layout_width="@dimen/ndp_70"
+            android:layout_height="@dimen/ndp_70"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:background="@color/login"
+            android:scaleType="centerCrop"
+            android:src="@drawable/google_other"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flLogin" />
+
+        <ImageButton
+            android:id="@+id/ibZalo"
+            android:layout_width="@dimen/ndp_70"
+            android:layout_height="@dimen/ndp_70"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:layout_marginEnd="@dimen/ndp_20"
+            android:background="@color/login"
+            android:scaleType="centerCrop"
+            android:src="@drawable/zalo_other"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flLogin" />
+
+        <LinearLayout
+            android:id="@+id/llRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ibGoogle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ndp_30"
+                android:layout_marginTop="20dp"
+                android:text="Ban chua co tai khoan?"
+                android:textColor="@color/black"
+                android:textSize="@dimen/nsp_20" />
+
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Dang ki ngay"
+                android:textColor="@color/scient"
+                android:textSize="@dimen/nsp_20"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

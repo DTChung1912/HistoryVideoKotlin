@@ -17,7 +17,7 @@
                 app:tabMode="auto"
                 app:tabRippleColor="@color/red"
                 app:tabSelectedTextColor="@color/red"
-                app:tabTextAppearance="@style/MyPageTabTextAppearance"
+                app:tabTextAppearance="@style/PostTabTextAppearance"
                 app:tabTextColor="@color/gray"/>
             
             <androidx.viewpager2.widget.ViewPager2

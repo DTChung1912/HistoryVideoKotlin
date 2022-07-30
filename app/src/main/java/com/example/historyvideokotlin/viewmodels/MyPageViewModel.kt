@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.historyvideokotlin.Repository.UserRepository
 import com.example.historyvideokotlin.base.BaseViewModel
-import com.example.historyvideokotlin.base.RESTClient
 import com.example.historyvideokotlin.model.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +20,6 @@ class MyPageViewModel(application: Application) :
     var disposable2 = CompositeDisposable()
     var user = MutableLiveData<List<User>>()
     var userRepository =  UserRepository()
-    private  val restClient = RESTClient()
 
     fun refreshUser() {
         getUser()

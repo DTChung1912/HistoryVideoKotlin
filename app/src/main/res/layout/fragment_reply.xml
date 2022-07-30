@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragments.ReplyFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/ndp_10">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civUserAvatar"
+                android:layout_width="@dimen/ndp_40"
+                android:layout_height="@dimen/ndp_40"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_toRightOf="@id/civUserAvatar"
+                android:text="Chung"
+                android:textSize="@dimen/nsp_15"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvUserName"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_5"
+                android:layout_toRightOf="@id/civUserAvatar"
+                android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:textSize="@dimen/nsp_10" />
+
+            <TextView
+                android:id="@+id/tvDateSubmitted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ndp_20"
+                android:layout_marginTop="@dimen/ndp_5"
+                android:layout_toRightOf="@id/tvUserName"
+                android:text="1 ngay truoc"
+                android:textSize="@dimen/nsp_10" />
+
+            <ImageView
+                android:id="@+id/ivLike"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_below="@id/tvContent"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_toRightOf="@id/civUserAvatar"
+                android:scaleType="fitXY"
+                android:src="@drawable/like_video" />
+
+            <TextView
+                android:id="@+id/tvLikeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvContent"
+                android:layout_marginStart="@dimen/ndp_5"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_toRightOf="@id/ivLike"
+                android:gravity="center"
+                android:text="10" />
+
+            <ImageView
+                android:id="@+id/ivDislike"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_below="@id/tvContent"
+                android:layout_marginStart="@dimen/ndp_30"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_toRightOf="@id/tvLikeCount"
+                android:scaleType="fitXY"
+                android:src="@drawable/dislike_video" />
+
+            <TextView
+                android:id="@+id/tvDislikeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvContent"
+                android:layout_marginStart="@dimen/ndp_5"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_toRightOf="@id/ivDislike"
+                android:gravity="center"
+                android:text="10" />
+
+            <ImageView
+                android:id="@+id/ivReply"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_below="@id/tvContent"
+                android:layout_marginStart="@dimen/ndp_30"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_toRightOf="@id/tvDislikeCount"
+                android:scaleType="fitXY"
+                android:src="@drawable/comment_video" />
+
+            <TextView
+                android:id="@+id/tvReplyCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvContent"
+                android:layout_marginStart="@dimen/ndp_5"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_toRightOf="@id/ivReply"
+                android:gravity="center"
+                android:text="10" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ndp_30"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/ndp_10"
+            android:weightSum="10">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civAvatar"
+                android:layout_width="@dimen/ndp_30"
+                android:layout_height="@dimen/ndp_30"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_launcher" />
+
+            <EditText
+                android:id="@+id/edtReply"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_30"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_weight="8"
+                android:background="@drawable/background_edit_text_reply"
+                android:hint="Phản hồi bình luận"
+                android:paddingStart="@dimen/ndp_10" />
+
+            <ImageView
+                android:id="@+id/ivSendReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:src="@drawable/send" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/ndp_30"
+            android:layout_marginTop="@dimen/ndp_10">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recylerViewReply"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

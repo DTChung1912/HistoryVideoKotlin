@@ -8,20 +8,21 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.View.VISIBLE
-import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_OPEN
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseActivity
-import com.example.historyvideokotlin.databinding.ActivityKotlinMainBinding
-import com.example.historyvideokotlin.fragments.PostFragment
+import com.example.historyvideokotlin.databinding.ActivityMainBinding
 import com.example.historyvideokotlin.fragments.MyPageFragment
+import com.example.historyvideokotlin.fragments.PostFragment
 import com.example.historyvideokotlin.fragments.QuizFragment
 import com.example.historyvideokotlin.fragments.VideoFragment
 import com.example.historyvideokotlin.ui.FragmentNavigation
+import com.example.historyvideokotlin.ui.ProgressBarDialog
+import com.example.historyvideokotlin.viewmodels.LoginViewModel
 import com.example.historyvideokotlin.viewmodels.MainViewModel
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
@@ -33,10 +34,11 @@ import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.FragNavTransactionOptions.Builder
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
+import com.zing.zalo.zalosdk.oauth.ZaloSDK
 import org.json.JSONObject
 import java.util.*
 
-class MainActivity : BaseActivity<MainViewModel, ActivityKotlinMainBinding>(),
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     FragNavController.TransactionListener, FragmentNavigation, View.OnClickListener {
 
     val TAB_POST = FragNavController.TAB1
@@ -48,7 +50,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityKotlinMainBinding>(),
     private lateinit var controller: FragNavController
 
     private lateinit var currentDialogFragment: DialogFragment
-
+    private lateinit var progressBarDialog : ProgressBarDialog
+    private lateinit var loginViewModel : LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,15 +60,28 @@ class MainActivity : BaseActivity<MainViewModel, ActivityKotlinMainBinding>(),
         setupBottomNavigationView()
         setUpToolbar()
         openDrawer()
+        init()
 
         var accessToken = AccessToken.getCurrentAccessToken()
-        var request : GraphRequest = GraphRequest.newMeRequest(accessToken, object :
+        var request: GraphRequest = GraphRequest.newMeRequest(accessToken, object :
             GraphRequest.GraphJSONObjectCallback {
             override fun onCompleted(obj: JSONObject?, response: GraphResponse?) {
-                
-            }
 
+            }
         })
+    }
+
+    private fun init() {
+        progressBarDialog = ProgressBarDialog(this)
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+
+        loginViewModel.getLoadingLiveData().observe(this) { show ->
+            if (show) {
+                progressBarDialog.show()
+            } else {
+                progressBarDialog.dismiss()
+            }
+        }
     }
 
     private fun setupBottomNavigationView() {
@@ -110,15 +126,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityKotlinMainBinding>(),
     }
 
     private fun openDrawer() {
-        getBinding()!!.drawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED)
-        getBinding()!!.toolbar.ivMenu.setOnClickListener{
-            getBinding()!!.drawer.setDrawerLockMode(LOCK_MODE_LOCKED_OPEN)
+//        getBinding()!!.drawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED)
+        getBinding()!!.toolbar.ivMenu.setOnClickListener {
+//            getBinding()!!.drawer.setDrawerLockMode(LOCK_MODE_LOCKED_OPEN)
             getBinding()!!.drawer.openDrawer(Gravity.RIGHT)
             getBinding()!!.navigationview.setNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.logout -> {
                         FirebaseAuth.getInstance().signOut()
                         LoginManager.getInstance().logOut()
+                        ZaloSDK.Instance.unauthenticate()
                         startActivity(Intent(this, LoginAndRegisterActivity::class.java))
                     }
                 }
@@ -192,7 +209,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityKotlinMainBinding>(),
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_kotlin_main
+        return R.layout.activity_main
     }
 
     override fun getViewModelClass(): Class<MainViewModel> {

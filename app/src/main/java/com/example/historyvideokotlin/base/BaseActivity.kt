@@ -17,7 +17,7 @@ import java.util.*
 abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatActivity() {
     private var binding: B? = null
     private var viewModel: V? = null
-    private lateinit var handler: Handler
+    private var handler = Handler()
 
     protected abstract fun getLayoutId(): Int
 
@@ -30,6 +30,12 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
 
         initData()
 
+    }
+
+    protected fun initData() {
+        binding = DataBindingUtil.setContentView(this, getLayoutId())
+        viewModel = ViewModelProvider(this).get(getViewModelClass())
+
         window.navigationBarColor = resources.getColor(R.color.black)
         viewModel!!.getViewEventLiveData().observe(this) { event ->
             if (event == null) {
@@ -40,11 +46,6 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         viewModel!!.getLoadingLiveData().observe(this) { loading ->
             showLoading(loading != null && loading)
         }
-    }
-
-    fun initData() {
-        binding = DataBindingUtil.setContentView(this, getLayoutId())
-        viewModel = ViewModelProvider(this).get(getViewModelClass())
     }
 
     protected fun showLoading(isLoading: Boolean) {}

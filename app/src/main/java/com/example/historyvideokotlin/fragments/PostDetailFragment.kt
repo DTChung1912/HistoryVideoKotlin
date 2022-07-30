@@ -1,37 +1,30 @@
 package com.example.historyvideokotlin.fragments
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentPostDetailBinding
-import com.example.historyvideokotlin.viewmodels.MyPageViewModel
+import com.example.historyvideokotlin.model.PostListData
 import com.example.historyvideokotlin.viewmodels.PostDetailViewModel
 import java.util.*
 
 class PostDetailFragment : BaseFragment<PostDetailViewModel,FragmentPostDetailBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
+    private lateinit var postListData : PostListData
 
     companion object {
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PostDetailFragment().apply {
-                arguments = Bundle().apply {
+        const val POST_DATA_KEY = "POST_DATA_KEY"
 
-                }
+        @JvmStatic
+        fun newInstance(postListData: PostListData) =
+            PostDetailFragment().apply {
+                arguments = bundleOf(POST_DATA_KEY to postListData)
             }
+
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_post_detail
@@ -42,6 +35,15 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel,FragmentPostDetailBi
     override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
+        postListData = arguments?.getSerializable(POST_DATA_KEY) as PostListData
+        binding.run {
+            tvTitle.text = postListData.title
+            tvYear.text = postListData.year
+            tvPostContent.text = postListData.content
+            if (postListData.image != null && !postListData.image.isEmpty()) {
+                Glide.with(requireContext()).load(postListData.image).into(ivPost)
+            }
+        }
     }
 
     override fun onAppEvent(event: AppEvent<String, Objects>) {

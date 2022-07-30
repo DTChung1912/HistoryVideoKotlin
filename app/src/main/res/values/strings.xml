@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">HistoryVideoKotlin</string>
     <string name="facebook_app_id">564232778533348</string>
+    <string name="Zalo_app_id">4190825215736463498</string>
     <string name="facebook_client_token">3c23ba296c1aa29ad6b8c89e3b7baf02</string>
     <string name="fb_login_protocol_scheme">fb564232778533348</string>
     <string name="title_post_tab_person">Nhân vật lịch sử</string>

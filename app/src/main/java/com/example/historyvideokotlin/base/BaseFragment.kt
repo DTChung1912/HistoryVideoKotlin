@@ -16,10 +16,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.historyvideokotlin.viewmodels.MainViewModel
 import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
+import com.example.historyvideokotlin.viewmodels.MainViewModel
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -60,10 +60,9 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context !is FragmentNavigation) {
-            fragmentNavigation = context as FragmentNavigation
+        if (context is FragmentNavigation) {
+            fragmentNavigation = context
         }
-
     }
 
     override fun onCreateView(

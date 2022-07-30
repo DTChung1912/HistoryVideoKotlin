@@ -3,38 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".fragments.QuizFragment">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/item_quiz_random"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/ndp_15"
-            android:background="@drawable/background_button_theme"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_marginVertical="@dimen/ndp_5"
+            android:background="@drawable/background_quiz_theme"
             android:orientation="horizontal"
             android:paddingVertical="@dimen/ndp_10">
 
-            <ImageView
-                android:id="@+id/ivThemeIcon"
-                android:layout_width="@dimen/ndp_25"
-                android:layout_height="@dimen/ndp_25"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/ndp_15"
-                android:src="@drawable/heart" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivRandom"
+                android:layout_width="@dimen/ndp_50"
+                android:layout_height="@dimen/ndp_50"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:src="@drawable/random" />
 
             <TextView
-                android:id="@+id/tvTheme"
-                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@id/ivRandom"
+                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ndp_10"
-                android:text="VietNam"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/ndp_5"
+                android:text="Ngẫu nhiên"
                 android:textSize="@dimen/nsp_15"
                 android:textStyle="bold" />
 
-        </LinearLayout>
-    </ScrollView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/ndp_10"
+                android:src="@drawable/next" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </layout>

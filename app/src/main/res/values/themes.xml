@@ -34,9 +34,15 @@
 
     <style name="BottomMenuTextItemInActive"></style>
 
-    <style name="MyPageTabTextAppearance">
+    <style name="PostTabTextAppearance">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/nsp_20</item>
+        <item name="android:textSize">@dimen/nsp_15</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="VideoTabSelectedTextAppearance">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">@dimen/nsp_15</item>
         <item name="android:textStyle">bold</item>
     </style>
 </resources>

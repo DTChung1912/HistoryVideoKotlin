@@ -23,7 +23,7 @@ class MyPageFragment : BaseFragment<MyPageViewModel, FragmentMyPageBinding>() {
 
         viewModel.user.observe(this, { data ->
             data?.let {
-                binding.tvName.text = data.get(0).name
+                binding.tvName.text = data.get(0).user_name
             }
         })
     }

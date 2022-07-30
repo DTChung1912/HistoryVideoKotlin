@@ -15,15 +15,14 @@ import java.util.*
 
 class NextVideoFragment : BaseFragment<NextVideoViewModel, FragmentNextVideoBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     companion object {
+        const val THEME_ID_KEY = "THEME_ID_KEY"
 
         @JvmStatic
-        fun newInstance() =
-            NextVideoFragment()
+        fun newInstance(theme_id : String) =
+            NextVideoFragment().apply {
+                THEME_ID_KEY to theme_id
+            }
     }
 
     override fun getLayoutId(): Int {

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,30 +16,32 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvPostTitle"
+                android:id="@+id/tvTitle"
                 android:layout_marginTop="@dimen/ndp_10"
                 android:text="HO CHI MINH"
                 android:textSize="@dimen/nsp_25"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <ImageView
                 android:layout_marginTop="@dimen/ndp_10"
-                android:layout_marginHorizontal="@dimen/ndp_10"
                 android:id="@+id/ivPost"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:src="@mipmap/ic_launcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"/>
 
             <TextView
+                android:layout_marginTop="@dimen/ndp_10"
                 android:id="@+id/tvYear"
                 android:text="(1000-2000)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:layout_marginTop="@dimen/ndp_10"
                 android:id="@+id/tvPostContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemPostList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/ndp_5"
+    android:layout_marginVertical="@dimen/ndp_10"
+    android:background="@drawable/background_item_post_person"
+    android:paddingVertical="@dimen/ndp_10"
+    android:paddingStart="@dimen/ndp_15">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivPostList"
+        android:layout_width="@dimen/ndp_70"
+        android:layout_height="@dimen/ndp_70"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvPostListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ndp_15"
+        android:layout_toRightOf="@id/ivPostList"
+        android:text="Ho Chi Minh"
+        android:textSize="@dimen/nsp_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPostListYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPostListTitle"
+        android:layout_marginStart="@dimen/ndp_15"
+        android:layout_toRightOf="@id/ivPostList"
+        android:text="1890 - 1989"
+        android:textSize="@dimen/nsp_15" />
+
+    <TextView
+        android:id="@+id/tvPostListDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPostListYear"
+        android:layout_marginStart="@dimen/ndp_15"
+        android:layout_toRightOf="@id/ivPostList"
+        android:text="Nghe An"
+        android:textSize="@dimen/nsp_15" />
+</RelativeLayout>
