@@ -4,21 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
         <LinearLayout
+            android:background="@color/gray1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/app_bar" />
+
             <com.google.android.material.tabs.TabLayout
+                android:background="@color/gray"
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ndp_40"
                 android:textSize="@dimen/nsp_15"
-                app:tabIndicatorColor="@color/red"
+                app:tabIndicator="@null"
                 app:tabMode="auto"
-                app:tabRippleColor="@color/red"
-                app:tabSelectedTextColor="@color/red"
+                app:tabRippleColor="@color/app2"
+                app:tabSelectedTextColor="@color/app2"
                 app:tabTextAppearance="@style/PostTabTextAppearance"
-                app:tabTextColor="@color/gray"/>
+                app:tabTextColor="@color/gray_dark"/>
             
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"

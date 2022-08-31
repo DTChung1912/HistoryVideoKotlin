@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.WatchAnswerFragment">
+
+        <FrameLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app2">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginHorizontal="@dimen/ndp_5"
+                android:layout_marginVertical="@dimen/ndp_5"
+                android:background="@drawable/background_quiz_toolbar"
+                android:gravity="top"
+                android:paddingHorizontal="@dimen/ndp_5">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_back_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:layout_marginBottom="@dimen/ndp_10"
+                    android:background="@drawable/background_quiz_time"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/ndp_10"
+                    android:text="Danh sách đáp án"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerWatchAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</layout>

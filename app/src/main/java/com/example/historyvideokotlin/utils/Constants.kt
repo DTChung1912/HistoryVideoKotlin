@@ -1,6 +1,10 @@
 package com.example.historyvideokotlin.utils
 
 object Constants {
+
+    val CURRENT_USER = "CURRENT_USER"
+    val IS_USER_KEY = "IS_USER_KEY"
+
     val DETAIL_KEY = "DETAIL_KEY"
 
     val POST_DATA_KEY = "POST_DATA_KEY"
@@ -13,4 +17,5 @@ object Constants {
 
     val RANDOM_QUIZ_ID_KEY = "0"
     val RANDOM_QUIZ_NAME_KEY = ""
+
 }

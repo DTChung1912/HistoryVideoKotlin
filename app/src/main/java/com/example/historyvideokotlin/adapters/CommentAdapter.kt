@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.databinding.ItemCommentBinding
 import com.example.historyvideokotlin.model.Comment
-import com.example.historyvideokotlin.model.User
 
 class CommentAdapter(
     val commentList: List<Comment>,
@@ -22,19 +21,25 @@ class CommentAdapter(
             context: Context,
             onItemClickListener: OnItemClickListener
         ) = with(binding) {
-                if (comment.user_image.isNullOrEmpty()) {
-                    Glide.with(context).load(comment.user_image).into(civUserAvatar)
-                }
-                tvUserName.text = comment.user_name
-                tvContent.text = comment.content
-                tvDateSubmitted.text = comment.date_submitted
-                tvLikeCount.text = comment.like_count
-                tvDislikeCount.text = comment.dislike_count
-                tvReplyCount.text = comment.reply_count
-                itemComment.setOnClickListener {
-                    onItemClickListener.onItemClick(comment)
-                }
+            if (comment.user_image.isNullOrEmpty()) {
+                Glide.with(context).load(comment.user_image).into(civUserAvatar)
             }
+            tvUserName.text = comment.user_name
+            tvContent.text = comment.content
+            tvDateSubmitted.text = comment.date_submitted
+            tvLikeCount.text = comment.like_count
+            tvDislikeCount.text = comment.dislike_count
+            tvReplyCount.text = comment.reply_count
+            itemComment.setOnClickListener {
+                onItemClickListener.onReply(comment)
+            }
+            ivLike.setOnClickListener {
+                onItemClickListener.onLiked(comment.comment_id)
+            }
+            ivDislike.setOnClickListener {
+                onItemClickListener.onDisliked(comment.comment_id)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -48,6 +53,8 @@ class CommentAdapter(
     override fun getItemCount(): Int = commentList.size
 
     interface OnItemClickListener {
-        fun onItemClick(comment: Comment)
+        fun onReply(comment: Comment)
+        fun onLiked(commentId: String)
+        fun onDisliked(commentId: String)
     }
 }

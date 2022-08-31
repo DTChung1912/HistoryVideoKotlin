@@ -1,24 +1,29 @@
 package com.example.historyvideokotlin.fragments
 
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.historyvideokotlin.R
+import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.adapters.CommentAdapter
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentCommentBinding
+import com.example.historyvideokotlin.dialogfragments.LoginDialogFragment
+import com.example.historyvideokotlin.dialogfragments.OnLoginItemClickListener
 import com.example.historyvideokotlin.model.Comment
-import com.example.historyvideokotlin.model.User
-import com.example.historyvideokotlin.utils.Utils
+import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.CommentViewModel
 import java.util.*
-import kotlin.collections.ArrayList
 
-class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>(), CommentAdapter.OnItemClickListener {
+class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>(),
+    CommentAdapter.OnItemClickListener {
 
-    var adapter : CommentAdapter? = null
-    var videoId = "0"
+    var adapter: CommentAdapter? = null
+//    var videoId = "0"
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_comment
@@ -30,18 +35,61 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
     override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
-        videoId = arguments?.getString(VIDEO_ID_KEY).toString()
+        val videoId = arguments?.getString(VIDEO_ID_KEY).toString()
         viewModel.getCommentData(videoId)
-        viewModel.commentList.observe(this, {data ->
+        viewModel.commentList.observe(this, { data ->
             data.let {
                 setRecyclerView(it)
             }
         })
+
+
+        binding.run {
+            var content = ""
+            edtComment.doAfterTextChanged {
+                content = it.toString()
+            }
+
+            if (content.isEmpty()) {
+                ivSend.visibility = GONE
+            } else {
+                ivSend.visibility = VISIBLE
+            }
+
+            edtComment.setOnClickListener {
+                if (!HistoryUserManager.checkUserLogined()) {
+                    LoginDialogFragment.newInstance(object : OnLoginItemClickListener{
+                        override fun onLogin() {
+                            pushFragment(
+                                HistoryLoginFragment.newInstance(),
+                                HistoryUtils.getSlideTransitionAnimationOptions()
+                            )
+                        }
+
+                        override fun onRegister() {
+                            pushFragment(
+                                RegisterFragment.newInstance(),
+                                HistoryUtils.getSlideTransitionAnimationOptions()
+                            )
+                        }
+
+                    })
+                        .show(parentFragmentManager, null)
+                } else {
+                    viewModel.updateCommentCountVideo(videoId)
+                    viewModel.postComment(HistoryUserManager.FUid(), videoId, content)
+                }
+            }
+
+            ivBack.setOnClickListener {
+
+            }
+        }
     }
 
     private fun setRecyclerView(commentList: List<Comment>) {
         val linearLayoutManager = LinearLayoutManager(view?.context)
-        adapter = CommentAdapter(commentList, requireContext(),this)
+        adapter = CommentAdapter(commentList, requireContext(), this)
         binding.recyclerViewComment.setHasFixedSize(true)
         binding.recyclerViewComment.layoutManager = linearLayoutManager
         binding.recyclerViewComment.adapter = adapter
@@ -51,18 +99,35 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        showBottomMenu(false)
+    }
+
     companion object {
         const val VIDEO_ID_KEY = "VIDEO_ID_KEY"
 
         @JvmStatic
-        fun newInstance(videoId : String) =
+        fun newInstance(videoId: String) =
             CommentFragment().apply {
                 arguments = bundleOf(VIDEO_ID_KEY to videoId)
             }
     }
 
-    override fun onItemClick(comment: Comment) {
-        replaceFragment(R.id.fragmentContainerVideoDetail, ReplyFragment.newInstance(comment), false, null)
-//        pushFragment(ReplyFragment.newInstance(comment),Utils.getSlideTransitionAnimationOptions())
+    override fun onReply(comment: Comment) {
+        replaceFragment(
+            R.id.fragmentContainerVideoDetail,
+            ReplyFragment.newInstance(comment),
+            false,
+            null
+        )
+    }
+
+    override fun onLiked(commentId: String) {
+        viewModel.updateLikeCountComment(commentId)
+    }
+
+    override fun onDisliked(commentId: String) {
+        viewModel.updateDisikeCountComment(commentId)
     }
 }

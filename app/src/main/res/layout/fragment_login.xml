@@ -30,7 +30,7 @@
             android:background="@drawable/background_login"
             android:drawableLeft="@drawable/mail"
             android:drawablePadding="@dimen/ndp_10"
-            android:hint="Nhap Email"
+            android:hint="Nhập Email"
             android:paddingStart="@dimen/ndp_20"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -46,7 +46,7 @@
             android:background="@drawable/background_login"
             android:drawableLeft="@drawable/lock"
             android:drawablePadding="@dimen/ndp_10"
-            android:hint="Nhap Mat Khau"
+            android:hint="Nhập mật khẩu"
             android:paddingStart="@dimen/ndp_20"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -54,6 +54,7 @@
             tools:ignore="HardcodedText,RtlSymmetry" />
 
         <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ndp_20"
@@ -68,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ndp_10"
             android:layout_marginEnd="@dimen/ndp_20"
-            android:text="Quen mat khau"
+            android:text="Quên mật khẩu"
             android:textColor="@color/black"
             android:textSize="@dimen/nsp_18"
             app:layout_constraintRight_toRightOf="parent"
@@ -107,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:elevation="10dp"
-                android:text="Hoac"
+                android:text="Hoặc"
                 android:textColor="@color/black"
                 android:textSize="@dimen/nsp_20"
                 android:textStyle="bold" />
@@ -138,14 +139,14 @@
             app:layout_constraintTop_toBottomOf="@id/flLogin" />
 
         <ImageButton
-            android:id="@+id/ibZalo"
+            android:id="@+id/ibPhoneNumber"
             android:layout_width="@dimen/ndp_70"
             android:layout_height="@dimen/ndp_70"
             android:layout_marginTop="@dimen/ndp_20"
             android:layout_marginEnd="@dimen/ndp_20"
             android:background="@color/login"
             android:scaleType="centerCrop"
-            android:src="@drawable/zalo_other"
+            android:src="@drawable/phone_number_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/flLogin" />
 
@@ -164,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ndp_30"
                 android:layout_marginTop="20dp"
-                android:text="Ban chua co tai khoan?"
+                android:text="Bạn chưa có tài khoản? "
                 android:textColor="@color/black"
                 android:textSize="@dimen/nsp_20" />
 
@@ -173,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Dang ki ngay"
+                android:text="Đăng ký ngay"
                 android:textColor="@color/scient"
                 android:textSize="@dimen/nsp_20"
                 android:textStyle="bold" />

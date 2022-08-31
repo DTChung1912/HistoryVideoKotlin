@@ -139,17 +139,17 @@
             <EditText
                 android:id="@+id/edtReply"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/ndp_30"
+                android:layout_height="@dimen/ndp_40"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginHorizontal="@dimen/ndp_10"
                 android:layout_weight="8"
-                android:background="@drawable/background_edit_text_reply"
+                android:background="@drawable/background_edittext_comment"
                 android:hint="Phản hồi bình luận"
                 android:paddingStart="@dimen/ndp_10" />
 
             <ImageView
-                android:id="@+id/ivSendReply"
+                android:id="@+id/ivSend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

@@ -2,10 +2,11 @@ package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
 import com.example.historyvideokotlin.base.BaseViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ForgotPasswordViewModel(application: Application) : BaseViewModel(application) {
-    val firebaseAuth = FirebaseAuth.getInstance()
+    val firebaseAuth = Firebase.auth
 
     fun resetPassword(email : String) : Boolean {
         var isReset = false

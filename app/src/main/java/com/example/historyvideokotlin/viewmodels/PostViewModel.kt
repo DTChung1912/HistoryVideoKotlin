@@ -1,16 +1,12 @@
 package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
-import android.content.Context
-import android.os.UserManager
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.Repository.PostRepository
-import com.example.historyvideokotlin.Repository.UserRepository
+import com.example.historyvideokotlin.repository.PostRepository
 import com.example.historyvideokotlin.base.BaseViewModel
 import com.example.historyvideokotlin.model.*
-import com.facebook.login.LoginFragment
+import com.example.historyvideokotlin.utils.MyLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -23,13 +19,36 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
     var postPlace = MutableLiveData<List<PostPlace>>()
     var postEvent = MutableLiveData<List<PostEvent>>()
     var postTimeline = MutableLiveData<List<PostTimeline>>()
+    var postList = MutableLiveData<List<Post>>()
     var postRepository = PostRepository()
 
     fun getPostData() {
+        getPost()
         getPostPerson()
         getPostEvent()
         getPostPlace()
         getPostTimeline()
+    }
+
+    private fun getPost() {
+        disposable.add(
+            postRepository.getPost()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { loadingLiveData.postValue(true) }
+                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .subscribeWith(object : DisposableSingleObserver<List<Post>>() {
+                    override fun onSuccess(t: List<Post>) {
+                        postList.value = t
+                        MyLog.e("chung", "Ok")
+                    }
+
+                    override fun onError(e: Throwable) {
+                        MyLog.e("chung", e.message.toString())
+                    }
+
+                })
+        )
     }
 
     private fun getPostPerson() {
@@ -37,14 +56,16 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
             postRepository.getPostPerson()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { loadingLiveData.postValue(true) }
+                .doAfterTerminate { loadingLiveData.postValue(false) }
                 .subscribeWith(object : DisposableSingleObserver<List<PostPerson>>() {
                     override fun onSuccess(t: List<PostPerson>) {
                         postPerson.value = t
-                        Log.e("chung" , "Ok")
+                        MyLog.e("chung", "Ok")
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("chung" , e.message.toString())
+                        MyLog.e("chung", e.message.toString())
                     }
 
                 })
@@ -56,14 +77,16 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
             postRepository.getPostPlace()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { loadingLiveData.postValue(true) }
+                .doAfterTerminate { loadingLiveData.postValue(false) }
                 .subscribeWith(object : DisposableSingleObserver<List<PostPlace>>() {
                     override fun onSuccess(t: List<PostPlace>) {
                         postPlace.value = t
-                        Log.e("chung" , "Ok")
+                        MyLog.e("chung", "Ok")
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("chung" , e.message.toString())
+                        MyLog.e("chung", e.message.toString())
                     }
 
                 })
@@ -75,14 +98,16 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
             postRepository.getPostEvent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { loadingLiveData.postValue(true) }
+                .doAfterTerminate { loadingLiveData.postValue(false) }
                 .subscribeWith(object : DisposableSingleObserver<List<PostEvent>>() {
                     override fun onSuccess(t: List<PostEvent>) {
                         postEvent.value = t
-                        Log.e("chung" , "Ok")
+                        MyLog.e("chung", "Ok")
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("chung" , e.message.toString())
+                        MyLog.e("chung", e.message.toString())
                     }
 
                 })
@@ -94,14 +119,16 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
             postRepository.getPostTimeline()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { loadingLiveData.postValue(true) }
+                .doAfterTerminate { loadingLiveData.postValue(false) }
                 .subscribeWith(object : DisposableSingleObserver<List<PostTimeline>>() {
                     override fun onSuccess(t: List<PostTimeline>) {
                         postTimeline.value = t
-                        Log.e("chung" , "Ok")
+                        MyLog.e("chung", "Ok")
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("chung" , e.message.toString())
+                        MyLog.e("chung", e.message.toString())
                     }
 
                 })

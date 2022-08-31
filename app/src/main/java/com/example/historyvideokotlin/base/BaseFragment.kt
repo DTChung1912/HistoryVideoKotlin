@@ -20,6 +20,9 @@ import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
 import com.example.historyvideokotlin.viewmodels.MainViewModel
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -31,6 +34,9 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
     private lateinit var fragmentNavigation: FragmentNavigation
     private lateinit var progressBarDialog: ProgressBarDialog
     private var dialogs: ConcurrentHashMap<String, Dialog> = ConcurrentHashMap()
+
+    val auth = Firebase.auth
+    val user: FirebaseUser? = auth.getCurrentUser()
 
     @LayoutRes
     protected abstract fun getLayoutId(): Int
@@ -52,6 +58,14 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
             throw RuntimeException("MainViewModel can only use in MainActivity")
         }
         return mainViewModel
+    }
+
+    fun checkUserLogined() : Boolean {
+        if(user != null) {
+            return true
+        } else {
+            return false
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,16 +95,17 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
 
         progressBarDialog = ProgressBarDialog(requireContext())
         viewModel = getViewModel()
-        if (activity !is MainActivity) {
-            mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        }
+//        if (activity !is MainActivity) {
+//            mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+//        }
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         viewModel.getViewEventLiveData().observe(viewLifecycleOwner) { event ->
             if (event == null) {
                 return@observe
             }
             onAppEvent(event)
         }
-        viewModel.getLoadingLiveData().observe(viewLifecycleOwner) { loading ->
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) { loading ->
             showLoading(loading != null && loading)
         }
         initData()

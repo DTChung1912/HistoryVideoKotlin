@@ -3,13 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.MainViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray1"
+        tools:context=".activities.MainActivity">
+
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            tools:openDrawer="right"
-            tools:context=".activities.MainActivity">
+            android:visibility="visible"
+            tools:openDrawer="right">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -20,22 +33,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <include
-                        android:id="@+id/toolbar"
-                        layout="@layout/app_bar" />
-
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fragmentContainer"
+                        android:name="androidx.navigation.fragment.NavHostFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:defaultNavHost="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+                        app:layout_constraintTop_toBottomOf="@id/toolbar"
+                        app:navGraph="@navigation/nav_graph"
+                        tools:ignore="NotSibling" />
 
                     <com.google.android.material.bottomnavigation.BottomNavigationView
                         android:id="@+id/bottomNavigationView"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ndp_60"
+                        android:background="@color/gray_dark"
                         android:theme="@style/BottomNavigationView"
                         app:itemIconTint="@color/color_bottom_menu_item"
                         app:itemTextAppearanceActive="@style/BottomMenuTextItemActive"
@@ -52,11 +66,13 @@
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navigationview"
-                android:layout_width="@dimen/ndp_150"
+                android:layout_width="@dimen/ndp_200"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:background="@drawable/background_button"
+                android:background="@drawable/background_menu"
                 android:fitsSystemWindows="true"
                 app:menu="@menu/menu_main" />
         </androidx.drawerlayout.widget.DrawerLayout>
+    </FrameLayout>
+
 </layout>

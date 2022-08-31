@@ -35,6 +35,11 @@ class ForgotPasswordFragment : BaseFragment<ForgotPasswordViewModel,FragmentForg
     override fun onAppEvent(event: AppEvent<String, Objects>) {
     }
 
+    override fun onResume() {
+        super.onResume()
+        showBottomMenu(false)
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = ForgotPasswordFragment()

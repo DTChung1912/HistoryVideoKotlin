@@ -1,132 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/gray1"
+        android:paddingTop="@dimen/ndp_10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".fragments.UserInfoFragment">
 
-        <ScrollView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civUserAvatar"
+            android:scaleType="centerCrop"
+            android:layout_width="@dimen/ndp_60"
+            android:layout_height="@dimen/ndp_60"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit"
+            app:layout_constraintBottom_toBottomOf="@id/civUserAvatar"
+            app:layout_constraintEnd_toEndOf="@id/civUserAvatar" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dtchung2k@gmail.com"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/civUserAvatar" />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvName"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="@dimen/ndp_50"-->
+        <!--            android:text="Đặng Thành Chung"-->
+        <!--            android:textSize="@dimen/nsp_15"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/toolbar"-->
+        <!--            app:layout_constraintEnd_toEndOf="@id/toolbar"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/toolbar" />-->
+
+        <TextView
+            android:id="@+id/tvVideoTitle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_15"
+            android:background="@drawable/background_mypage_title"
+            android:paddingStart="@dimen/ndp_15"
+            android:text="Video"
+            android:textColor="@color/white"
+            android:textSize="@dimen/nsp_20"
+            app:layout_constraintTop_toBottomOf="@id/tvEmail" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/ndp_20"
-                tools:context=".fragments.UserInfoFragment">
+        <TextView
+            android:id="@+id/tvViewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/ndp_10"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:drawableLeft="@drawable/time"
+            android:drawablePadding="@dimen/ndp_20"
+            android:text="Danh sách video đã xem"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvVideoTitle" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Thông tin cá nhân"
-                    android:textSize="@dimen/ndp_25"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvLater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/ndp_20"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:drawableLeft="@drawable/hourglass"
+            android:drawablePadding="@dimen/ndp_20"
+            android:text="Danh sách video xem sau"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvViewed" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tên:"
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/ndp_20"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:drawableLeft="@drawable/like_video"
+            android:drawablePadding="@dimen/ndp_20"
+            android:text="Danh sách video đã thích"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLater" />
 
-                <EditText
-                    android:id="@+id/edtUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_name"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text="chung"
-                    android:textSize="@dimen/nsp_20" />
+        <TextView
+            android:id="@+id/tvDownload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/ndp_20"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:drawableLeft="@drawable/download"
+            android:drawablePadding="@dimen/ndp_20"
+            android:text="Danh sách video tải xuống"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLike" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày sinh: "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvPostTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_15"
+            android:background="@drawable/background_mypage_title"
+            android:paddingStart="@dimen/ndp_15"
+            android:text="Bài viết"
+            android:textColor="@color/white"
+            android:textSize="@dimen/nsp_20"
+            app:layout_constraintTop_toBottomOf="@id/tvDownload" />
 
-                <EditText
-                    android:id="@+id/edtBirthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_birthday"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập ngày sinh"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
+        <TextView
+            android:id="@+id/tvViewedPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/ndp_20"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:drawableLeft="@drawable/view"
+            android:drawablePadding="@dimen/ndp_20"
+            android:text="Danh sách bài viết đã đọc"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPostTitle" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email: "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edtEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_email"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập email"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Số điện thoại: "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/edtPhoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_telephone"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập số điện thoại"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Địa chỉ : "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/edtAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_address"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập địa chỉ"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
-
-            </LinearLayout>
-
-        </ScrollView>
-    </FrameLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

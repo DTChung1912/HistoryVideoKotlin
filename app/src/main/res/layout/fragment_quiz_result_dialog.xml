@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/ndp_10"
+        android:background="@drawable/background_dialog_quiz_result"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/flTiltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_back_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/ndp_10"
+                android:layout_toRightOf="@id/ivBack"
+                android:gravity="center"
+                android:text="Danh sách câu trả lời"
+                android:textSize="@dimen/nsp_30"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <ScrollView
+            android:id="@+id/svQuizResult"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_200"
+            android:layout_below="@id/flTiltle">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerQuizResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/ndp_10"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_20"
+                android:layout_weight="1"
+                android:background="@drawable/background_button_quiz_result"
+                android:text="Tiếp tục"
+                android:textSize="@dimen/nsp_20"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnComplete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_20"
+                android:layout_weight="1"
+                android:background="@drawable/background_button_quiz_result"
+                android:text="Hoàn Thành"
+                android:textSize="@dimen/nsp_20"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

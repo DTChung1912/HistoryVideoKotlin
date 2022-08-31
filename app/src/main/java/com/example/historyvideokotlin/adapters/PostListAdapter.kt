@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.databinding.ItemPostListBinding
-import com.example.historyvideokotlin.model.PostListData
+import com.example.historyvideokotlin.model.Post
 
 class PostListAdapter(
-    val postList: List<PostListData>,
+    val postList: List<Post>,
     val context: Context,
     val onItemClickListener: OnItemClickListener
 ) :
@@ -17,19 +17,24 @@ class PostListAdapter(
 
     class ViewHolder(val binding: ItemPostListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            postListData: PostListData,
+            post: Post,
             context: Context,
             onItemClickListener: OnItemClickListener
         ) = with(binding) {
-            if (postListData.image != null && !postListData.image.isEmpty()) {
-                Glide.with(context).load(postListData.image).into(binding.ivPostList)
+            binding.run {
+                if (post.image != null && !post.image.isNullOrEmpty()) {
+                    Glide.with(context).load(post.image).into(ivPostList)
+                }
+                tvPostListTitle.text = post.title
+                tvReadCount.text = post.read_count + " lượt đọc"
+                tvDownloadCount.text = post.download_count + " lượt tải xuống"
+//            binding.tvPostListYear.text = post.timeline
+//                tvPostListDescription.text = post.description
+                itemPostList.setOnClickListener {
+                    onItemClickListener.onItemClick(post)
+                }
             }
-            binding.tvPostListTitle.text = postListData.title
-            binding.tvPostListYear.text = postListData.year
-            binding.tvPostListDescription.text = ""
-            binding.itemPostList.setOnClickListener {
-                onItemClickListener.onItemClick(postListData)
-            }
+
         }
     }
 
@@ -44,6 +49,6 @@ class PostListAdapter(
     override fun getItemCount(): Int = postList.size
 
     interface OnItemClickListener {
-        fun onItemClick(postListData: PostListData)
+        fun onItemClick(postListData: Post)
     }
 }

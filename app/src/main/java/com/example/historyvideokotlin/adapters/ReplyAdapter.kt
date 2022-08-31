@@ -25,15 +25,20 @@ class ReplyAdapter(
             tvLikeCount.text = reply.like_count
             tvDislikeCount.text = reply.dislike_count
             itemReply.setOnClickListener {
-                onItemClickListener.onItemClick()
+                onItemClickListener.onReply(reply.user_name)
+            }
+            ivLike.setOnClickListener {
+                onItemClickListener.onLike(reply.reply_id)
+            }
+            ivDislike.setOnClickListener {
+                onItemClickListener.onDislike(reply.reply_id)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemReplyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ReplyAdapter.ViewHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder (
+        ItemReplyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(replyList[position], context, onItemClickListener)
@@ -42,7 +47,9 @@ class ReplyAdapter(
     override fun getItemCount(): Int = replyList.size
 
     interface OnItemClickListener {
-        fun onItemClick()
+        fun onReply(userName: String)
+        fun onLike(replyId: String)
+        fun onDislike(replyId: String)
     }
 
 }

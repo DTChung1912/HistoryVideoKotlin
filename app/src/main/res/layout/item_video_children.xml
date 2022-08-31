@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/videoChildrenItem"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivPoster"
+        android:layout_width="150dp"
+        android:layout_height="@dimen/ndp_80"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/ndp_15"
+        android:src="@drawable/moo_without_text" />
+
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ndp_10"
+        android:layout_toRightOf="@id/ivPoster"
+        android:text="Chung"
+        android:textSize="@dimen/nsp_15"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvCreaterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="@dimen/ndp_10"
+        android:layout_toRightOf="@id/ivPoster"
+        android:text="Chung" />
+
+    <TextView
+        android:id="@+id/tvViewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCreaterName"
+        android:layout_marginTop="@dimen/ndp_5"
+        android:layout_toRightOf="@id/ivPoster"
+        android:text="100 lượt xem" />
+
+
+    <ImageView
+        android:id="@+id/ivMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/ndp_15"
+        android:layout_marginEnd="@dimen/ndp_15"
+        android:src="@drawable/threedots" />
+</RelativeLayout>
+
+

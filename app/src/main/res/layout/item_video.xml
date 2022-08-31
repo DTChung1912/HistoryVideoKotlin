@@ -4,26 +4,16 @@
     android:id="@+id/item_video"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/ndp_10"
-    android:layout_marginVertical="@dimen/ndp_10"
+    android:layout_marginHorizontal="@dimen/ndp_5"
+    android:layout_marginVertical="@dimen/ndp_2"
     android:background="@drawable/background_video_list"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/ndp_10"
-        android:layout_marginVertical="@dimen/ndp_5"
-        android:paddingVertical="@dimen/ndp_5"
-        android:text="test"
-        android:textSize="@dimen/nsp_20"
-        android:textStyle="bold" />
 
     <FrameLayout
         android:id="@+id/flPlay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_player">
 
         <ImageView
             android:id="@+id/ivPoster"
@@ -38,172 +28,73 @@
             android:src="@drawable/ic_baseline_play_circle_outline" />
     </FrameLayout>
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/ndp_10"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:background="@drawable/background_video_info"
+        android:paddingVertical="@dimen/ndp_10"
+        android:paddingStart="@dimen/ndp_5">
 
-        <LinearLayout
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civCreaterAvatar"
+            android:layout_width="@dimen/ndp_60"
+            android:layout_height="@dimen/ndp_60"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_marginBottom="@dimen/ndp_5"
+            android:layout_toLeftOf="@id/ivMore"
+            android:layout_toRightOf="@id/civCreaterAvatar"
+            android:text="test"
+            android:textSize="@dimen/nsp_15"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCreaterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_below="@id/tvTitle"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_toRightOf="@id/civCreaterAvatar"
+            android:text="Chung"
+            android:textSize="10sp" />
 
-            <ImageView
-                android:id="@+id/ivEmojiIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/like" />
-
-            <TextView
-                android:id="@+id/tvEmojiCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/ndp_5"
-                android:text="100" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvViewCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_below="@id/tvTitle"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_toRightOf="@id/tvCreaterName"
+            android:text="100 lượt xem"
+            android:textSize="@dimen/nsp_10" />
 
-            <TextView
-                android:id="@+id/tvCommentCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/ndp_5"
-                android:text="100" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="bình luận" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvDateSubmitted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_below="@id/tvTitle"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_toRightOf="@id/tvViewCount"
+            android:text="01/01/2022"
+            android:textSize="@dimen/nsp_10" />
 
-            <TextView
-                android:id="@+id/tvShareCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/ndp_5"
-                android:text="100" />
+        <ImageView
+            android:layout_marginTop="@dimen/ndp_5"
+            android:id="@+id/ivMore"
+            android:layout_width="@dimen/ndp_15"
+            android:layout_height="@dimen/ndp_15"
+            android:layout_alignParentEnd="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/threedots" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="chia sẻ" />
-        </LinearLayout>
+    </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvVewCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/ndp_5"
-                android:text="100" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="lượt xem" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ndp_1"
-        android:layout_marginHorizontal="@dimen/ndp_5"
-        android:background="@color/colorPrimary" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/ndp_10"
-        android:orientation="horizontal"
-        android:weightSum="3">
-
-        <LinearLayout
-            android:id="@+id/llEmoji"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/like_video" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/ndp_5"
-                android:text="Thích" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/comment_video" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/ndp_5"
-                android:text="Bình Luận" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/share_video" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="right"
-                android:text="Chia Sẻ" />
-        </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

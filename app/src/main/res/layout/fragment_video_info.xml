@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="isLiked"
             type="Boolean" />
@@ -228,7 +227,7 @@
                         android:fillViewport="true"
                         android:textSize="@dimen/nsp_15"
                         app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/red"
+                        app:tabIndicatorColor="@color/app2"
                         app:tabIndicatorFullWidth="false"
                         app:tabIndicatorHeight="@dimen/ndp_1"
                         app:tabMaxWidth="0dp"

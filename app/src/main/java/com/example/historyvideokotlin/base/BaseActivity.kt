@@ -43,9 +43,10 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
             }
             onAppEvent(event)
         }
-        viewModel!!.getLoadingLiveData().observe(this) { loading ->
+        viewModel!!.loadingLiveData.observe(this) { loading ->
             showLoading(loading != null && loading)
         }
+        setScreenNoLimit()
     }
 
     protected fun showLoading(isLoading: Boolean) {}

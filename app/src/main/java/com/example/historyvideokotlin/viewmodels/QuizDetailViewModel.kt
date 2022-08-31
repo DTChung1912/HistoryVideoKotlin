@@ -1,11 +1,11 @@
 package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.historyvideokotlin.Repository.QuizRepository
+import com.example.historyvideokotlin.repository.QuizRepository
 import com.example.historyvideokotlin.base.BaseViewModel
 import com.example.historyvideokotlin.model.Quiz
+import com.example.historyvideokotlin.utils.MyLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -25,13 +25,15 @@ class QuizDetailViewModel(application: Application) : BaseViewModel(application)
             quizRepository.getQuiz()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { loadingLiveData.postValue(true) }
+                .doAfterTerminate { loadingLiveData.postValue(false) }
                 .subscribeWith(object : DisposableSingleObserver<List<Quiz>>() {
                     override fun onSuccess(t: List<Quiz>) {
                         quizList.value = t
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("chung",e.message.toString())
+                        MyLog.e("chung",e.message.toString())
                     }
 
                 })
@@ -45,14 +47,16 @@ class QuizDetailViewModel(application: Application) : BaseViewModel(application)
             quizRepository.getQuiz()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { loadingLiveData.postValue(true) }
+                .doAfterTerminate { loadingLiveData.postValue(false) }
                 .subscribeWith(object : DisposableSingleObserver<List<Quiz>>() {
                     override fun onSuccess(t: List<Quiz>) {
                         quizList.value = t
-                        Log.e("chung", "Ok")
+                        MyLog.e("chung", "Ok")
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("chung", e.message.toString())
+                        MyLog.e("chung", e.message.toString())
                     }
 
                 })

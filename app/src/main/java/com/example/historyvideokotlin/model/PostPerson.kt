@@ -5,7 +5,7 @@ data class PostPerson (
     val post_name : String,
     val year : String,
     val content : String,
-    val post_theme_id : String,
+    val theme_id : String,
     val viewed_count : String,
     val shared_count : String,
     val date_submitted : String,

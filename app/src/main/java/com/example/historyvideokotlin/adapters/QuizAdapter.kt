@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.historyvideokotlin.databinding.ItemQuizBinding
-import com.example.historyvideokotlin.model.PostTheme
+import com.example.historyvideokotlin.model.Theme
 
 class QuizAdapter(
-    val themeList: List<PostTheme>,
+    val themeList: List<Theme>,
     val context: Context,
     val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<QuizAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemQuizBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            theme: PostTheme,
+            theme: Theme,
             context: Context,
             onItemClickListener: OnItemClickListener
         ) = with(binding) {
@@ -38,6 +38,6 @@ class QuizAdapter(
     override fun getItemCount(): Int = themeList.size
 
     interface OnItemClickListener {
-        fun onItemClick(postTheme: PostTheme)
+        fun onItemClick(theme: Theme)
     }
 }

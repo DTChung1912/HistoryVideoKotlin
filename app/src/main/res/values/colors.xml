@@ -12,7 +12,7 @@
     <color name="grayyy">#5c5959</color>
     <color name="owl">#b1523e</color>
     <color name="white">#FFFFFF</color>
-    <color name="mau_nen">#FFF9F9F9</color>
+    <color name="text_5050">#D1CDCD</color>
     <color name="gray_with_opacity">#5c5959</color>
     <color name="label">#455AA6</color>
     <color name="sectionHeader">#000000</color>
@@ -33,4 +33,14 @@
     <color name="red">#D60909</color>
     <color name="black_overlay">#66000000</color>
     <color name="login">#66E6E3E3</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="green">#29F631</color>
+    <color name="quiz_detail">#751F04</color>
+    <color name="quiz_result_dialog">#C8C5C4</color>
+
+    <color name="app1">#2F2D2D</color>
+    <color name="app2">#FA8B15</color>
+    <color name="gray1">#F7F5F5</color>
+    <color name="ic_launcher_background">#FF9800</color>
+
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,22 +9,36 @@
         android:orientation="vertical"
         tools:context=".fragments.RegisterFragment">
 
-        <TextView
-            android:id="@+id/tvLoginTile"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ndp_36"
-            android:text="Đăng Kí"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/nsp_40"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_back_black" />
+
+            <TextView
+                android:id="@+id/tvLoginTile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ndp_36"
+                android:text="Đăng Kí"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/nsp_40"
+                android:textStyle="bold" />
+        </LinearLayout>
+
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivUserAvatar"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"
             android:layout_width="@dimen/ndp_150"
-            android:layout_height="@dimen/ndp_150"/>
+            android:layout_height="@dimen/ndp_150"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher" />
 
         <EditText
             android:id="@+id/edtName"
@@ -85,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ndp_30"
                 android:layout_marginTop="20dp"
-                android:text="Ban da co tai khoan?"
+                android:text="Bạn đã có tài khoản? "
                 android:textColor="@color/black"
                 android:textSize="@dimen/nsp_20" />
 
@@ -94,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Dang Nhap ngay"
+                android:text=" Đăng nhập ngay"
                 android:textColor="@color/scient"
                 android:textSize="@dimen/nsp_20"
                 android:textStyle="bold" />

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="fragments.MyPageLoginFragment">
+
+        <LinearLayout
+            android:background="@color/gray1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="BẠN CHƯA ĐĂNG NHẬP"
+                android:textSize="@dimen/nsp_30"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ndp_5"
+                android:text="Hãy đăng nhập đề sử dụng chức năng này"
+                android:textSize="@dimen/nsp_15" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_50"
+                android:layout_marginTop="@dimen/ndp_50"
+                android:background="@drawable/background_button_dialog_login"
+                android:text="Đăng nhập"
+                android:textColor="@color/white"
+                android:textSize="@dimen/nsp_18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="@dimen/ndp_10"
+                android:text="Hoặc bạn chưa có tài khoản"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_50"
+                android:layout_marginBottom="@dimen/ndp_10"
+                android:background="@drawable/background_button_dialog_login"
+                android:text="Đăng kí"
+                android:textColor="@color/white"
+                android:textSize="@dimen/nsp_18" />
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/tvCancel"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_gravity="center_horizontal"-->
+            <!--            android:layout_marginBottom="@dimen/ndp_20"-->
+            <!--            android:text="Hủy"-->
+            <!--            android:textSize="@dimen/nsp_20"-->
+            <!--            android:textStyle="bold" />-->
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

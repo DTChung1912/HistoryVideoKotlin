@@ -10,14 +10,15 @@ import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentRegisterBinding
+import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.RegisterViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
-class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding>(),
-    View.OnClickListener {
+class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding>(){
 
-    val firebaseAuth = FirebaseAuth.getInstance()
+    val firebaseAuth = Firebase.auth
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_register
@@ -29,18 +30,16 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
-        setUpButtonClick()
-    }
+        binding.run {
+            ivUserAvatar.setOnClickListener {
+                pushFragment(CameraFragment.newInstance(),HistoryUtils.getSlideTransitionAnimationOptions())
+            }
 
-    override fun onClick(v: View?) {
-        if (lifecycle.currentState !== Lifecycle.State.RESUMED) {
-            return
-        }
-        when (v!!.id) {
-            R.id.btnRegister -> {
+            btnRegister.setOnClickListener {
                 registerUser()
             }
-            R.id.tvLogin -> {
+
+            tvLogin.setOnClickListener {
                 replaceFragment(
                     R.id.fragmentContainer,
                     HistoryLoginFragment.newInstance(),
@@ -49,6 +48,7 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
                 )
             }
         }
+
     }
 
     private fun registerUser() {
@@ -58,7 +58,8 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    viewModel.postUser(name, email)
+                    val userId = task.result.user?.uid ?: "null"
+                    viewModel.postUser(userId,name, email)
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
@@ -72,9 +73,9 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     override fun onAppEvent(event: AppEvent<String, Objects>) {
     }
 
-    private fun setUpButtonClick() {
-        binding.btnRegister.setOnClickListener(this)
-        binding.tvLogin.setOnClickListener(this)
+    override fun onResume() {
+        super.onResume()
+        showBottomMenu(false)
     }
 
     companion object {

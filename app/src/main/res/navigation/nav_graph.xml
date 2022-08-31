@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_host"
+    app:startDestination="@id/postFragment">
+
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.example.historyvideokotlin.fragments.PostFragment"
+        android:label="PostFragment" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.example.historyvideokotlin.fragments.VideoFragment"
+        android:label="VideoFragment" />
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.historyvideokotlin.fragments.QuizFragment"
+        android:label="QuizFragment" />
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.example.historyvideokotlin.fragments.MyPageFragment"
+        android:label="MyPageFragment" />
+</navigation>

@@ -5,6 +5,7 @@ import java.io.Serializable
 data class Comment (
     val comment_id : String,
     val video_id : String,
+    val user_id: String,
     val user_name : String,
     val user_image : String,
     val content : String,

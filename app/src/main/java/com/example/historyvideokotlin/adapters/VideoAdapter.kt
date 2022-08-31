@@ -8,34 +8,39 @@ import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.databinding.ItemVideoBinding
 import com.example.historyvideokotlin.model.Video
 
-class VideoAdapter(val videoList : List<Video>,val context: Context, val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+class VideoAdapter(
+    val videoList: List<Video>,
+    val context: Context,
+    val onItemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemVideoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(video: Video, context: Context, onItemClickListener: OnItemClickListener) = with(binding) {
-            binding.tvTitle.text = video.title
-            if (!video.poster_image.isNullOrEmpty() ) {
-                Glide.with(context).load(video.poster_image).into(binding.ivPoster)
-            }
-            binding.tvEmojiCount.text = video.emoji_count.toString()
-            binding.tvVewCount.text = video.view_count.toString()
-            binding.tvCommentCount.text = video.comment_count.toString()
-            binding.tvShareCount.text = video.share_count.toString()
-            binding.flPlay.setOnClickListener {
-                onItemClickListener.onItemClick(video)
-            }
-            binding.llEmoji.setOnClickListener {
+        fun bind(video: Video, context: Context, onItemClickListener: OnItemClickListener) =
+            with(binding) {
+                binding.run {
+                    tvTitle.text = video.title
+                    tvCreaterName.text = video.creater
+                    if (!video.poster_image.isNullOrEmpty()) {
+                        Glide.with(context).load(video.poster_image).into(ivPoster)
+                    }
+                    if (!video.creater_image.isNullOrEmpty()) {
+                        Glide.with(context).load(video.creater_image).into(civCreaterAvatar)
+                    }
+                    tvViewCount.text = video.view_count.toString() + " lượt xem"
+                    tvDateSubmitted.text = video.date_submitted
+                    ivMore.setOnClickListener {
+                        onItemClickListener.onMore(video.video_id)
+                    }
+
+                    flPlay.setOnClickListener {
+                        onItemClickListener.onItemClick(video)
+                    }
+                }
 
             }
-            binding.llComment.setOnClickListener {
-
-            }
-            binding.llShare.setOnClickListener {
-
-            }
-        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder (
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemVideoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
@@ -47,5 +52,6 @@ class VideoAdapter(val videoList : List<Video>,val context: Context, val onItemC
 
     interface OnItemClickListener {
         fun onItemClick(video: Video)
+        fun onMore(videoId: String)
     }
 }

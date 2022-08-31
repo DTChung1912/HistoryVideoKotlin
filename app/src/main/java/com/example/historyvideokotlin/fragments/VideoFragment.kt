@@ -1,27 +1,26 @@
 package com.example.historyvideokotlin.fragments
 
-import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.activities.DetailActivity
+import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.adapters.VideoAdapter
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentVideoBinding
+import com.example.historyvideokotlin.dialogfragments.VideoMoreDialogFragment
 import com.example.historyvideokotlin.model.Video
-import com.example.historyvideokotlin.utils.Constants.DETAIL_KEY
-import com.example.historyvideokotlin.utils.Constants.VIDEO_DATA_KEY
-import com.example.historyvideokotlin.utils.Constants.VIDEO_DETAIl_KEY
+import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.VideoViewModel
 import java.util.*
 
 class VideoFragment : BaseFragment<VideoViewModel, FragmentVideoBinding>(),
-    VideoAdapter.OnItemClickListener {
+    VideoAdapter.OnItemClickListener, VideoMoreDialogFragment.OnItemClickListener {
 
     private var adapter: VideoAdapter? = null
 
     companion object {
+
         @JvmStatic
         fun newInstance() =
             VideoFragment()
@@ -38,10 +37,19 @@ class VideoFragment : BaseFragment<VideoViewModel, FragmentVideoBinding>(),
         viewModel.getVideoData()
         viewModel.videoList.observe(this, { data ->
             data.let {
-                adapter = VideoAdapter(data, requireContext(), this)
-                setRecyclerView(data)
+                adapter = VideoAdapter(it, requireContext(), this)
+                setRecyclerView(it)
             }
         })
+        binding.run {
+            toolbar.tvTitle.text = "Video"
+            toolbar.ivSearch.setOnClickListener {
+                (activity as? MainActivity)?.onSearchClick()
+            }
+            toolbar.ivMenu.setOnClickListener {
+                (activity as? MainActivity)?.onSettingClick()
+            }
+        }
     }
 
     private fun setRecyclerView(videoList: List<Video>) {
@@ -54,11 +62,36 @@ class VideoFragment : BaseFragment<VideoViewModel, FragmentVideoBinding>(),
     override fun onAppEvent(event: AppEvent<String, Objects>) {
     }
 
+    override fun onResume() {
+        super.onResume()
+        showBottomMenu(true)
+    }
+
     override fun onItemClick(video: Video) {
-        val intent = Intent(requireActivity(), DetailActivity::class.java)
-        intent.putExtra(DETAIL_KEY, VIDEO_DETAIl_KEY)
-        intent.putExtra(VIDEO_DATA_KEY, video)
-        requireActivity().startActivity(intent)
-//        pushFragment(VideoDetailFragment.newInstance(video), Utils.getSlideTransitionAnimationOptions())
+
+        pushFragment(
+            VideoDetailFragment.newInstance(video),
+            HistoryUtils.getSlideTransitionAnimationOptions()
+        )
+    }
+
+    override fun onMore(videoId: String) {
+        VideoMoreDialogFragment.newInstance(videoId, this).show(parentFragmentManager, null)
+    }
+
+    override fun onLater(videoId: String) {
+        viewModel.updateLaterVideo(videoId, 1)
+    }
+
+    override fun onDownload(videoId: String) {
+        viewModel.updateDownloadMyVideo(videoId, 1)
+    }
+
+    override fun onShare(videoId: String) {
+        viewModel.updateShareVideo(videoId, 1)
+    }
+
+    override fun onDontCare(videoId: String) {
+        viewModel.updateDontCareVideo(videoId, 1)
     }
 }

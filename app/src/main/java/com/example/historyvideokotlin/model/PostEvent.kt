@@ -7,7 +7,7 @@ data class PostEvent (
     val content : String,
     val viewed_count : String,
     val shared_count : String,
-    val post_theme_id : String,
+    val theme_id : String,
     val date_submitted : String,
     val image :String
     )

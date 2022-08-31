@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/ndp_10"
+        android:background="@drawable/background_quiz_answer"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/ndp_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:background="@drawable/background_question_title"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/ndp_10"
+            android:paddingVertical="@dimen/ndp_10">
+
+            <TextView
+                android:id="@+id/tvNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cau 1 "
+                android:textColor="@color/app2"
+                android:textSize="@dimen/nsp_20"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivImageQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="@dimen/ndp_60"
+                android:scaleType="fitXY"
+                android:src="@drawable/history_quiz_image"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/ndp_5"
+                android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/nsp_15"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvAnswerA"
+            style="@style/QuizAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:background="@drawable/background_answer"
+            android:text="A. aaaaaaaaaaaaaaaa"
+            tools:background="@drawable/background_answer" />
+
+        <TextView
+            android:id="@+id/tvAnswerB"
+            style="@style/QuizAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:background="@drawable/background_answer"
+            android:paddingVertical="@dimen/ndp_5"
+            android:paddingStart="@dimen/ndp_10"
+            android:text="B. aaaaaaaaaaaaaaaa"
+            tools:background="@drawable/background_answer" />
+
+        <TextView
+            android:id="@+id/tvAnswerC"
+            style="@style/QuizAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:background="@drawable/background_answer"
+            android:paddingVertical="@dimen/ndp_5"
+            android:paddingStart="@dimen/ndp_10"
+            android:text="C. aaaaaaaaaaaaaaaa"
+            tools:background="@drawable/background_answer" />
+
+        <TextView
+            android:id="@+id/tvAnswerD"
+            style="@style/QuizAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:background="@drawable/background_answer"
+            android:paddingVertical="@dimen/ndp_5"
+            android:paddingStart="@dimen/ndp_10"
+            android:text="D. aaaaaaaaaaaaaaaa"
+            tools:background="@drawable/background_answer" />
+    </LinearLayout>
+
+</layout>

@@ -2,50 +2,139 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true"
+        android:orientation="vertical"
         tools:context=".fragments.PostDetailFragment">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app2">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginHorizontal="@dimen/ndp_5"
+                android:layout_marginVertical="@dimen/ndp_5"
+                android:background="@drawable/background_quiz_toolbar"
+                android:gravity="top"
+                android:paddingHorizontal="@dimen/ndp_5">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_back_white" />
+
+                <TextView
+                    android:id="@+id/tvTitleToolBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:layout_marginBottom="@dimen/ndp_10"
+                    android:background="@drawable/background_quiz_time"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/ndp_10"
+                    android:text="HO CHI MINH"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nsp_25"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="@dimen/ndp_15"
-            android:orientation="vertical">
+            android:fillViewport="true"
+            android:fitsSystemWindows="true">
 
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_marginTop="@dimen/ndp_10"
-                android:text="HO CHI MINH"
-                android:textSize="@dimen/nsp_25"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <ImageView
-                android:layout_marginTop="@dimen/ndp_10"
-                android:id="@+id/ivPost"
-                android:layout_gravity="left"
-                android:src="@mipmap/ic_launcher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"/>
-
-            <TextView
-                android:layout_marginTop="@dimen/ndp_10"
-                android:id="@+id/tvYear"
-                android:text="(1000-2000)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_marginTop="@dimen/ndp_10"
-                android:id="@+id/tvPostContent"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/ndp_15">
 
-    </ScrollView>
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:layout_toRightOf="@id/ivPost"
+                    android:text="HO CHI MINH"
+                    android:textSize="@dimen/nsp_25"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTimeline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTitle"
+                    android:layout_toRightOf="@id/ivPost"
+                    android:text="(1000-2000)" />
+
+                <ImageView
+                    android:id="@+id/ivPost"
+                    android:layout_width="@dimen/ndp_70"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:layout_marginEnd="@dimen/ndp_15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_launcher" />
+
+                <!--            <RatingBar-->
+                <!--                android:id="@+id/rate"-->
+                <!--                style="@style/CustomRatingBar"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_below="@id/tvTitle"-->
+                <!--                android:layout_marginStart="@dimen/ndp_10"-->
+                <!--                android:layout_toRightOf="@id/ivPost"-->
+                <!--                android:clickable="false"-->
+                <!--                android:isIndicator="true"-->
+                <!--                android:numStars="5"-->
+                <!--                android:stepSize="1" />-->
+
+                <RatingBar
+
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTimeline"
+                    android:layout_toRightOf="@id/ivPost"
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:progressTint="#FFCC01"
+                    android:stepSize="1" />
+
+                <TextView
+                    android:id="@+id/tvPostContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ratingBar"
+                    android:layout_marginTop="@dimen/ndp_10" />
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
 </layout>

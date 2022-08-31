@@ -1,31 +1,21 @@
 package com.example.historyvideokotlin.fragments
 
-import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.activities.LoginAndRegisterActivity
 import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentLoginBinding
+import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.LoginViewModel
 import java.util.*
 
-
 class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>(), View.OnClickListener {
-    var isUserLogined: Boolean = false
-
-    override fun onStart() {
-        super.onStart()
-
-        if (isUserLogined) {
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            startActivity(intent)
-        }
-    }
+    var correctEmail = ""
+    var correctPassword = ""
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_login
@@ -37,11 +27,25 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
     override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
-
         setUpButtonClick()
     }
 
+    private fun rememberAccount(isRemember : Boolean) {
+        if (isRemember) {
+            binding.edtEmail.setText(correctEmail)
+            binding.edtPassword.setText(correctPassword)
+        } else {
+            binding.edtEmail.setText("")
+            binding.edtPassword.setText("")
+        }
+    }
+
     override fun onAppEvent(event: AppEvent<String, Objects>) {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomMenu(false)
     }
 
     override fun onClick(v: View?) {
@@ -53,13 +57,13 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
                 openMainActivity()
             }
             R.id.ibFacebook -> {
-                (requireActivity() as LoginAndRegisterActivity ).loginWithFacebook()
+                (requireActivity() as MainActivity ).loginWithFacebook()
             }
-            R.id.ibZalo -> {
-                (requireActivity() as LoginAndRegisterActivity ).loginWithZalo()
+            R.id.ibPhoneNumber -> {
+                (requireActivity() as MainActivity ).loginWithZalo()
             }
             R.id.ibGoogle -> {
-                (requireActivity() as LoginAndRegisterActivity ).loginWithGoogle()
+                (requireActivity() as MainActivity ).loginWithGoogle()
             }
             R.id.tvForgotPassword -> {
                 replaceFragment(R.id.fragmentContainer,ForgotPasswordFragment.newInstance(),true,null)
@@ -73,7 +77,7 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
     private fun setUpButtonClick() {
         binding.btnLogin.setOnClickListener(this)
         binding.ibFacebook.setOnClickListener(this)
-        binding.ibZalo.setOnClickListener(this)
+        binding.ibPhoneNumber.setOnClickListener(this)
         binding.ibGoogle.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
         binding.tvForgotPassword.setOnClickListener(this)
@@ -91,10 +95,14 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            requireActivity().finish()
+            correctEmail = binding!!.edtEmail.text.toString()
+            correctPassword = binding!!.edtPassword.text.toString()
+            if (binding.checkbox.isChecked) {
+                rememberAccount(true)
+            } else {
+                rememberAccount(false)
+            }
+            popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
         }
     }
 

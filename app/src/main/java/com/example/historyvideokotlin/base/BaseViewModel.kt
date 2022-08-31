@@ -10,18 +10,18 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.util.*
 
-abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
+open class BaseViewModel(application: Application) : AndroidViewModel(application) {
     private val disposables = CompositeDisposable()
     private val viewEventLiveData : MutableLiveData<AppEvent<String, Objects>> = MutableLiveData()
-    private val loadingLiveData : MutableLiveData<Boolean> = MutableLiveData()
+    val loadingLiveData : MutableLiveData<Boolean> = MutableLiveData()
 
-    open fun getViewEventLiveData(): MutableLiveData<AppEvent<String, Objects>> {
+    fun getViewEventLiveData(): MutableLiveData<AppEvent<String, Objects>> {
         return viewEventLiveData
     }
 
-    open fun getLoadingLiveData(): MutableLiveData<Boolean> {
-        return loadingLiveData
-    }
+//    fun getLoadingLiveData(): MutableLiveData<Boolean> {
+//        return loadingLiveData
+//    }
 
     fun subscribe(disposable: Disposable): Disposable {
         disposables!!.add(disposable)
