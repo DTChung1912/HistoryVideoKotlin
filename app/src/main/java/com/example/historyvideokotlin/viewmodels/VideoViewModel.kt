@@ -32,7 +32,7 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
     val ktorVideoRepository = application.repositoryProvider.ktorVideoRepository
 
     fun getVideoData() {
-        getVideo()
+//        getVideo()
         getVideo2()
         getComment()
         getMyVideo()
@@ -59,13 +59,13 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun getVideo2() {
-        var videoList = mutableListOf<Video>()
+//        videoList = mutableListOf<Video>()
         viewModelScope.launch {
             runCatching {
                 ktorVideoRepository.getVideo()
             }.onSuccess {
-                videoList.addAll(it)
-                MyLog.e("ktorVideoRepositoryvideo", "" + videoList.size + " ")
+                videoList.value = it
+//                MyLog.e("ktorVideoRepositoryvideo", "" + videoList.size + " ")
             }.onFailure {
             }
         }
@@ -122,7 +122,7 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
 //        }
 //    }
 
-    fun updateLikeMyVideo(videoId: String, isLike: Int) {
+    fun updateLikeMyVideo(videoId: Int, isLike: Int) {
         disposable =
             userRepository
                 .updateLikeMyVideo(userId, videoId, isLike)
@@ -137,7 +137,7 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
                 )
     }
 
-    fun updateViewedMyVideo(videoId: String, isView: Int) {
+    fun updateViewedMyVideo(videoId: Int, isView: Int) {
         disposable =
             userRepository
                 .updateViewedMyVideo(userId, videoId, isView)
@@ -152,7 +152,7 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun updateLaterVideo(videoId: String, isLater: Int) {
+    fun updateLaterVideo(videoId: Int, isLater: Int) {
         disposable =
             userRepository
                 .updateLaterMyVideo(userId, videoId, isLater)
@@ -166,7 +166,7 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateDownloadMyVideo(videoId: String, isDownload: Int) {
+    fun updateDownloadMyVideo(videoId: Int, isDownload: Int) {
         disposable =
             userRepository
                 .updateDownloadMyVideo(userId, videoId, isDownload)
@@ -180,7 +180,7 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateShareVideo(videoId: String, isShare: Int) {
+    fun updateShareVideo(videoId: Int, isShare: Int) {
         disposable =
             userRepository
                 .updateShareMyVideo(userId, videoId, isShare)
@@ -194,7 +194,7 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateDontCareVideo(videoId: String, isDontCared: Int) {
+    fun updateDontCareVideo(videoId: Int, isDontCared: Int) {
         disposable =
             userRepository
                 .updateDontCareMyVideo(userId, videoId, isDontCared)

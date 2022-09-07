@@ -143,8 +143,8 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
 
     private class PagerAdapter(
         fragment: Fragment,
-        val video_id: String,
-        val theme_id: String
+        val video_id: Int,
+        val theme_id: Int
     ) :
         FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = 2

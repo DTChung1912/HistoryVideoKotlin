@@ -27,7 +27,7 @@ class VideoMoreDialogFragment( val onItemClickListener: OnItemClickListener) :
         binding =
             FragmentVideoMoreDialogBinding.inflate(LayoutInflater.from(context), container, false)
 
-        val videoId = arguments?.getString(VIDEO_ID_KEY).toString()
+        val videoId = arguments?.getInt(VIDEO_ID_KEY)!!
 
         binding.run {
             tvLater.setOnClickListener {
@@ -72,7 +72,7 @@ class VideoMoreDialogFragment( val onItemClickListener: OnItemClickListener) :
         const val VIDEO_ID_KEY = "VIDEO_ID_KEY"
 
         @JvmStatic
-        fun newInstance(videoId: String, onItemClickListener: OnItemClickListener) =
+        fun newInstance(videoId: Int, onItemClickListener: OnItemClickListener) =
             VideoMoreDialogFragment(onItemClickListener).apply {
                 arguments = bundleOf(
                     VIDEO_ID_KEY to videoId
@@ -81,9 +81,9 @@ class VideoMoreDialogFragment( val onItemClickListener: OnItemClickListener) :
     }
 
     interface OnItemClickListener {
-        fun onLater(videoId: String)
-        fun onDownload(videoId: String)
-        fun onShare(videoId: String)
-        fun onDontCare(videoId: String)
+        fun onLater(videoId: Int)
+        fun onDownload(videoId: Int)
+        fun onShare(videoId: Int)
+        fun onDontCare(videoId: Int)
     }
 }

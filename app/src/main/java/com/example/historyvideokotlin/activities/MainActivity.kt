@@ -1,12 +1,10 @@
 package com.example.historyvideokotlin.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
 import android.view.Gravity
@@ -20,20 +18,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseActivity
 import com.example.historyvideokotlin.databinding.ActivityMainBinding
 import com.example.historyvideokotlin.fragments.*
 import com.example.historyvideokotlin.listener.OnToolBarListener
+import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
 import com.example.historyvideokotlin.utils.HistoryUtils
@@ -49,10 +43,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -61,8 +53,6 @@ import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.FragNavTransactionOptions.Builder
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
-import com.zing.zalo.zalosdk.oauth.*
-import com.zing.zalo.zalosdk.oauth.model.ErrorResponse
 import org.json.JSONObject
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -93,9 +83,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     private lateinit var auth: FirebaseAuth
 
-    private var contentHasLoaded = false
-
     private var verificationId = ""
+
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_HistoryVideoKotlin)
@@ -115,16 +106,18 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         loginViewModel.userList.observe(this, { data ->
             data.let {
                 userId = it[0].user_id
-//                user = it[0]
             }
         })
+        getViewModel()!!.getIsShowBottomMenu().observe(this) { show ->
+            getBinding()!!.bottomNavigationView.visibility =
+                if (show != null && show) VISIBLE else GONE
+        }
 
-//        setupBottomNavigationView()
-        setupBottomNavigationWithNavigationComponent()
+        setupBottomNavigationView()
+//        setupBottomNavigationWithNavigationComponent()
 
         initFacebook()
         initGoogle()
-        initZalo()
 
 
         var accessToken = AccessToken.getCurrentAccessToken()
@@ -136,45 +129,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         })
     }
 
-    private fun init() {
-        progressBarDialog = ProgressBarDialog(this)
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-
-        loginViewModel.loadingLiveData.observe(this) { show ->
-            if (show) {
-                progressBarDialog.show()
-            } else {
-                progressBarDialog.dismiss()
-            }
-        }
-
-        loginViewModel.userList.observe(this, { data ->
-            data.let {
-                userId = it[0].user_id
-//                user = it[0]
-            }
-        })
-        auth = Firebase.auth
-        initFacebook()
-        initGoogle()
-        initZalo()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return super.onSupportNavigateUp() || findNavController(R.id.fragmentContainer).navigateUp()
-    }
-
     private fun setupBottomNavigationWithNavigationComponent() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
-        val navController: NavController = navHostFragment.navController
-//        val appBarConfiguration = AppBarConfiguration(setOf(R.id.postFragment,R.id.videoFragment,R.id.quizFragment,R.id.myPageFragment))
-//        setupActionBarWithNavController(navController,appBarConfiguration)
-
-//        getBinding()!!.bottomNavigationView.setupWithNavController(navController)
-
-        NavigationUI.setupWithNavController(getBinding()!!.bottomNavigationView, navController)
-
+        getBinding()!!.run {
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+            navController = navHostFragment.navController
+            bottomNavigationView.setupWithNavController(navController)
+        }
     }
 
     private fun setupBottomNavigationView() {
@@ -203,16 +164,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             R.anim.slide_out_to_right
         ).build()
         controller.initialize(TAB_POST, null)
-        getViewModel()!!.getIsShowBottomMenu().observe(this) { show ->
-            getBinding()!!.bottomNavigationView.visibility =
-                if (show != null && show) VISIBLE else GONE
-        }
+
 
         getBinding()!!.bottomNavigationView.visibility = VISIBLE;
         getBinding()!!.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             val tabIndex = getTabIndex(item.itemId)
             controller.switchTab(tabIndex, Builder().build())
-//            getBinding()!!.toolbar.tvTitle.text = item.title
             true
         }
         getBinding()!!.bottomNavigationView.setOnNavigationItemReselectedListener { item -> controller.clearStack() }
@@ -240,7 +197,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                             MyLog.e("FUid", HistoryUserManager.FUid())
                             Firebase.auth.signOut()
                             LoginManager.getInstance().logOut()
-                            ZaloSDK.Instance.unauthenticate()
                             drawer.closeDrawer(Gravity.RIGHT)
                         } else {
                             drawer.closeDrawer(Gravity.RIGHT)
@@ -269,20 +225,20 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     private fun getTabId(i: Int): Int {
         when (i) {
-            TAB_POST -> return R.id.menu_post
-            TAB_VIDEO -> return R.id.menu_video
-            TAB_QUIZ -> return R.id.menu_quiz
-            TAB_MY_PAGE -> return R.id.menu_my_page
+            TAB_POST -> return R.id.postFragment
+            TAB_VIDEO -> return R.id.videoFragment
+            TAB_QUIZ -> return R.id.quizFragment
+            TAB_MY_PAGE -> return R.id.myPageFragment
         }
         return -1
     }
 
     private fun getTabIndex(i: Int): Int {
         when (i) {
-            R.id.menu_post -> return TAB_POST
-            R.id.menu_video -> return TAB_VIDEO
-            R.id.menu_quiz -> return TAB_QUIZ
-            R.id.menu_my_page -> return TAB_MY_PAGE
+            R.id.postFragment -> return TAB_POST
+            R.id.videoFragment -> return TAB_VIDEO
+            R.id.quizFragment -> return TAB_QUIZ
+            R.id.myPageFragment -> return TAB_MY_PAGE
         }
         return TAB_POST
     }
@@ -353,7 +309,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     override fun showDialogFragment(fragment: DialogFragment) {
         dismissCurrentDialogFragment()
         currentDialogFragment = fragment
-//        currentDialogFragment.show(supportFragmentManager, PlayerFullFragment::class.java.getName())
     }
 
     override fun pushFragment(fragment: Fragment, options: FragNavTransactionOptions) {
@@ -390,37 +345,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         AppEventsLogger.activateApp(application)
     }
 
-    fun printKeyHash(context: Activity): String? {
-        val packageInfo: PackageInfo
-        var key: String? = null
-        try {
-            //getting application package name, as defined in manifest
-            val packageName = context.applicationContext.packageName
-
-            //Retriving package info
-            packageInfo = context.packageManager.getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNATURES
-            )
-            MyLog.e("Package Name=", context.applicationContext.packageName)
-            for (signature in packageInfo.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                key = String(Base64.encode(md.digest(), 0))
-
-                // String key = new String(Base64.encodeBytes(md.digest()));
-                MyLog.e("Key Hash=", key)
-            }
-        } catch (e1: PackageManager.NameNotFoundException) {
-            MyLog.e("Name not found", e1.toString())
-        } catch (e: NoSuchAlgorithmException) {
-            MyLog.e("No such an algorithm", e.toString())
-        } catch (e: Exception) {
-            MyLog.e("Exception", e.toString())
-        }
-        return key
-    }
-
     fun printHashKey() {
 
         try {
@@ -445,11 +369,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     fun loginWithPhoneNumber() {
-
+        pushFragment(PhoneNumberLoginFragment.newInstance(),HistoryUtils.getSlideTransitionAnimationOptions())
     }
 
     fun phoneVerifyCode(code: String) {
-        val credential = PhoneAuthProvider.getCredential(verificationId,code)
+        val credential = PhoneAuthProvider.getCredential(verificationId, code)
         signInbyCredentials(credential)
     }
 
@@ -458,7 +382,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithCredential:success")
                     val user = auth.currentUser
                     MyLog.e("UID", user?.uid)
@@ -491,14 +414,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            val code : String? = credential.smsCode
+            val code: String? = credential.smsCode
             if (code != null) {
                 phoneVerifyCode(code)
             }
         }
 
         override fun onVerificationFailed(e: FirebaseException) {
-            Toast.makeText(this@MainActivity,"fail",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "fail", Toast.LENGTH_SHORT).show()
         }
 
         override fun onCodeSent(
@@ -627,40 +550,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         startActivityForResult(intent, RC_SIGN_IN)
     }
 
-    private fun initZalo() {
-        ZaloSDKApplication.wrap(application)
-//        if(!ZaloSDK.Instance.isAuthenticate(null,null)) {
-//        }
-    }
-
-
     fun onLoginError(code: Int, message: String) {
         Toast.makeText(this, "[$code] $message", Toast.LENGTH_LONG).show()
     }
 
-    private val listener = object : OAuthCompleteListener() {
-        override fun onGetOAuthComplete(response: OauthResponse?) {
-            if (TextUtils.isEmpty(response?.oauthCode)) {
-                onLoginError(response?.errorCode ?: -1, response?.errorMessage ?: "Unknown error")
-            } else {
-                popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
-
-            }
-        }
-
-        override fun onAuthenError(errorCode: ErrorResponse?) {
-            onLoginError(errorCode!!.errorCode, errorCode.errorMsg ?: "Unknown error")
-        }
-
-    }
-
-    fun loginWithZalo() {
-        ZaloSDK.Instance.authenticateZaloWithAuthenType(this, LoginVia.APP_OR_WEB, "", listener)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        ZaloSDK.Instance.onActivityResult(this, requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
         if (requestCode === RC_SIGN_IN) {
 

@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ndp_15"
+        android:layout_toLeftOf="@id/ivMore"
         android:layout_toRightOf="@id/ivPostList"
         android:text="Ho Chi Minh"
         android:textSize="@dimen/nsp_20"
@@ -63,22 +64,22 @@
     <!--        android:text="1890 - 1989"-->
     <!--        android:textSize="@dimen/nsp_15" />-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/tvPostListDescription"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/tvDownloadCount"-->
-<!--        android:layout_marginStart="@dimen/ndp_15"-->
-<!--        android:layout_toRightOf="@id/ivPostList"-->
-<!--        android:text="Nghe An"-->
-<!--        android:textSize="@dimen/nsp_15" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvPostListDescription"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/tvDownloadCount"-->
+    <!--        android:layout_marginStart="@dimen/ndp_15"-->
+    <!--        android:layout_toRightOf="@id/ivPostList"-->
+    <!--        android:text="Nghe An"-->
+    <!--        android:textSize="@dimen/nsp_15" />-->
 
     <ImageView
         android:id="@+id/ivMore"
-        android:layout_marginTop="@dimen/ndp_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/ndp_10"
         android:layout_marginEnd="@dimen/ndp_10"
         android:src="@drawable/threedots" />
 </RelativeLayout>

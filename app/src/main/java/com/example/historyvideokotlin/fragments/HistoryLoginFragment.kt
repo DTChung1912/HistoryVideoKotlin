@@ -60,7 +60,7 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
                 (requireActivity() as MainActivity ).loginWithFacebook()
             }
             R.id.ibPhoneNumber -> {
-                (requireActivity() as MainActivity ).loginWithZalo()
+                (requireActivity() as MainActivity ).loginWithPhoneNumber()
             }
             R.id.ibGoogle -> {
                 (requireActivity() as MainActivity ).loginWithGoogle()

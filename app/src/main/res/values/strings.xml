@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">HistoryVideoKotlin</string>
     <string name="facebook_app_id">564232778533348</string>
-    <string name="Zalo_app_id">4190825215736463498</string>
     <string name="facebook_client_token">3c23ba296c1aa29ad6b8c89e3b7baf02</string>
     <string name="fb_login_protocol_scheme">fb564232778533348</string>
     <string name="title_post_tab_person">Nhân vật lịch sử</string>
@@ -9,17 +8,11 @@
     <string name="title_post_tab_places">Địa danh lịch sử</string>
     <string name="title_post_tab_timeline">Mốc thời gian</string>
     <string name="title_post_tab_country">Quốc gia</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_video_tab_next_video">Tiếp theo</string>
     <string name="title_video_tab_commet">Bình luận</string>
     <string name="title_activity_kotlin_main">KotlinMainActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

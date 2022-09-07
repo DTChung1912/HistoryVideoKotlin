@@ -11,22 +11,6 @@ class PostRepository : BaseRepository() {
         return apiService?.getPost()!!
     }
 
-    fun getPostPerson(): Single<List<PostPerson>> {
-        return apiService?.getPostPerson()!!
-    }
-
-    fun getPostEvent(): Single<List<PostEvent>> {
-        return apiService?.getPostEvent()!!
-    }
-
-    fun getPostPlace(): Single<List<PostPlace>> {
-        return apiService?.getPostPlace()!!
-    }
-
-    fun getPostTimeline(): Single<List<PostTimeline>> {
-        return apiService?.getPostTimeline()!!
-    }
-
     fun updateReadCountPost(postId: String, read: Int): Observable<Post> {
         return apiService?.updateReadCountPost(postId, read)!!
     }

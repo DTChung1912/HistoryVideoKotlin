@@ -32,17 +32,6 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
         }
     }
 
-    suspend fun register(user: User): List<User> = coroutineScope {
-        withContext(Dispatchers.IO) {
-            val reponse = apiService.register(user)
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
-            } else {
-                listOf()
-            }
-        }
-    }
-
     suspend fun getVideo(userId: String, videoId: Int): List<MyVideo> = coroutineScope {
         withContext(Dispatchers.IO) {
             val reponse = apiService.getMyVideo(userId, videoId)

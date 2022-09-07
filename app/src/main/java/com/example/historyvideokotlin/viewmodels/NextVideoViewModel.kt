@@ -48,7 +48,7 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
         )
     }
 
-    fun updateLikeVideo(videoId: String, isLike: Int) {
+    fun updateLikeVideo(videoId: Int, isLike: Int) {
         disposable =
             userRepository
                 .updateLikeMyVideo(userId, videoId, isLike)
@@ -63,7 +63,7 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
                 )
     }
 
-    fun updateViewedVideo(videoId: String, isView: Int) {
+    fun updateViewedVideo(videoId: Int, isView: Int) {
         disposable =
             userRepository
                 .updateViewedMyVideo(userId, videoId, isView)
@@ -78,7 +78,7 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
 
     }
 
-    fun updateLaterVideo( videoId: String, isLater: Int) {
+    fun updateLaterVideo( videoId: Int, isLater: Int) {
         disposable =
             userRepository
                 .updateLaterMyVideo(userId, videoId, isLater)
@@ -92,7 +92,7 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateDownloadVideo( videoId: String, isDownload: Int) {
+    fun updateDownloadVideo( videoId: Int, isDownload: Int) {
         disposable =
             userRepository
                 .updateDownloadMyVideo(userId, videoId, isDownload)
@@ -106,7 +106,7 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateShareVideo( videoId: String, isShare: Int) {
+    fun updateShareVideo( videoId: Int, isShare: Int) {
         disposable =
             userRepository
                 .updateShareMyVideo(userId, videoId, isShare)
@@ -120,7 +120,7 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateDontCareVideo(videoId: String, isDontCared: Int) {
+    fun updateDontCareVideo(videoId: Int, isDontCared: Int) {
         disposable =
             userRepository
                 .updateDontCareMyVideo(userId, videoId, isDontCared)

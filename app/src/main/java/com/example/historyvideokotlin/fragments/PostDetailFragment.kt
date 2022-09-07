@@ -16,18 +16,6 @@ import java.util.*
 
 class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailBinding>() {
 
-
-    companion object {
-
-        const val POST_DATA_KEY = "POST_DATA_KEY"
-
-        @JvmStatic
-        fun newInstance(post: Post) =
-            PostDetailFragment().apply {
-                arguments = bundleOf(POST_DATA_KEY to post)
-            }
-    }
-
     override fun onResume() {
         super.onResume()
         showBottomMenu(false)
@@ -42,7 +30,7 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
 
     override fun initData() {
         val post = arguments?.getSerializable(POST_DATA_KEY) as Post
-        viewModel.updateReadCountPost(post.post_id, 1)
+//        viewModel.updateReadCountPost(post.post_id, 1)
         binding.run {
             tvTitleToolBar.text = post.title
             tvTitle.text = post.title
@@ -67,5 +55,16 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
     }
 
     override fun onAppEvent(event: AppEvent<String, Objects>) {
+    }
+    
+    companion object {
+
+        const val POST_DATA_KEY = "POST_DATA_KEY"
+
+        @JvmStatic
+        fun newInstance(post: Post) =
+            PostDetailFragment().apply {
+                arguments = bundleOf(POST_DATA_KEY to post)
+            }
     }
 }

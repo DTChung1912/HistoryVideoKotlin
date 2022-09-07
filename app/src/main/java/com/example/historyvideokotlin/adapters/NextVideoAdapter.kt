@@ -48,6 +48,6 @@ class NextVideoAdapter(
 
     interface OnItemClickListener {
         fun onPlay(video: Video)
-        fun onMore(videoId: String)
+        fun onMore(videoId: Int)
     }
 }

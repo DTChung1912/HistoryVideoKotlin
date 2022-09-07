@@ -1,6 +1,7 @@
 package com.example.historyvideokotlin.fragments
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
@@ -26,6 +27,7 @@ class MyPageLoginFragment : BaseFragment<MyPageLoginViewModel, FragmentMyPageLog
                     HistoryLoginFragment.newInstance(),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
+//                findNavController().navigate(R.id.action_myPageFragment_to_historyLoginFragment)
             }
             btnRegister.setOnClickListener {
                 pushFragment(
@@ -37,7 +39,6 @@ class MyPageLoginFragment : BaseFragment<MyPageLoginViewModel, FragmentMyPageLog
     }
 
     override fun onAppEvent(event: AppEvent<String, Objects>) {
-
     }
 
     companion object {

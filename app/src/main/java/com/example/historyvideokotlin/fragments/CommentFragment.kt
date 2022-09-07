@@ -35,7 +35,7 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
     override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
-        val videoId = arguments?.getString(VIDEO_ID_KEY).toString()
+        val videoId = arguments?.getInt(VIDEO_ID_KEY)!!
         viewModel.getCommentData(videoId)
         viewModel.commentList.observe(this, { data ->
             data.let {
@@ -108,7 +108,7 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
         const val VIDEO_ID_KEY = "VIDEO_ID_KEY"
 
         @JvmStatic
-        fun newInstance(videoId: String) =
+        fun newInstance(videoId: Int) =
             CommentFragment().apply {
                 arguments = bundleOf(VIDEO_ID_KEY to videoId)
             }

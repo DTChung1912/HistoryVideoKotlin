@@ -16,6 +16,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
@@ -210,7 +211,6 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         }
     }
 
-
     protected open fun showMessage(
         title: String?,
         message: String?,
@@ -239,6 +239,10 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
             dialogs[message!!] = dialog
             dialog.show()
         }
+    }
+
+    protected open fun nextFragment(fragment: Fragment) {
+        findNavController().navigate(fragment!!.id)
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.historyvideokotlin.fragments
 
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.adapters.PostListAdapter
@@ -9,6 +10,7 @@ import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentPostListBinding
 import com.example.historyvideokotlin.model.Post
+import com.example.historyvideokotlin.utils.Constants.POST_DATA_KEY
 import com.example.historyvideokotlin.viewmodels.PostViewModel
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import java.util.*
@@ -71,5 +73,10 @@ class PostListFragment(val postList: List<Post>) :
             PostDetailFragment.newInstance(post),
             FragNavTransactionOptions.Builder().allowReordering(true).build()
         )
+//        nextFragment(PostDetailFragment.newInstance(post))
+//        findNavController().navigate(
+//            R.id.action_postFragment_to_postDetailFragment,
+//            bundleOf(Pair(POST_DATA_KEY, post))
+//        )
     }
 }

@@ -34,33 +34,33 @@ class UserRepository : BaseRepository() {
         return apiService?.getMyPostList(userId)!!
     }
 
-    fun getMyVideo(userId: String, videoId: String): Observable<List<MyVideo>> {
+    fun getMyVideo(userId: String, videoId: Int): Observable<List<MyVideo>> {
         return apiService?.getMyVideo(userId, videoId)!!
     }
 
-    fun updateViewedMyVideo(userId: String, videoId: String, isView: Int): Observable<MyVideo> {
+    fun updateViewedMyVideo(userId: String, videoId: Int, isView: Int): Observable<MyVideo> {
         return apiService?.updateViewedMyVideo(userId, videoId, isView)!!
     }
 
-    fun updateLikeMyVideo(userId: String, videoId: String, isLike: Int): Observable<MyVideo> {
+    fun updateLikeMyVideo(userId: String, videoId: Int, isLike: Int): Observable<MyVideo> {
         return apiService?.updateLikeMyVideo(userId, videoId, isLike)!!
     }
 
-    fun updateLaterMyVideo(userId: String, videoId: String, isLike: Int): Observable<MyVideo> {
+    fun updateLaterMyVideo(userId: String, videoId: Int, isLike: Int): Observable<MyVideo> {
         return apiService?.updateLaterMyVideo(userId, videoId, isLike)!!
     }
 
-    fun updateDownloadMyVideo(userId: String, videoId: String, isLike: Int): Observable<MyVideo> {
+    fun updateDownloadMyVideo(userId: String, videoId: Int, isLike: Int): Observable<MyVideo> {
         return apiService?.updateDownloadMyVideo(userId, videoId, isLike)!!
     }
 
-    fun updateShareMyVideo(userId: String, videoId: String, isLike: Int): Observable<MyVideo> {
+    fun updateShareMyVideo(userId: String, videoId: Int, isLike: Int): Observable<MyVideo> {
         return apiService?.updateShareMyVideo(userId, videoId, isLike)!!
     }
 
     fun updateDontCareMyVideo(
         userId: String,
-        videoId: String,
+        videoId: Int,
         isDontCared: Int
     ): Observable<MyVideo> {
         return apiService?.updateDontCareMyVideo(userId, videoId, isDontCared)!!

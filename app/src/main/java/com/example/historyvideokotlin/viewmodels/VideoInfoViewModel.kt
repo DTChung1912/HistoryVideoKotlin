@@ -38,7 +38,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         return titleIds
     }
 
-    fun getMyVideo(videoId: String) {
+    fun getMyVideo(videoId: Int) {
         disposable2.add(
             userRepository.getMyVideo(userId, videoId)
                 .subscribeOn(Schedulers.io())
@@ -56,7 +56,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         )
     }
 
-    fun updateLikeMyVideo(videoId: String) {
+    fun updateLikeMyVideo(videoId: Int) {
         disposable =
             userRepository
                 .updateLikeMyVideo(userId, videoId, 1)
@@ -71,7 +71,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                 )
     }
 
-    fun updateViewedMyVideo(videoId: String) {
+    fun updateViewedMyVideo(videoId: Int) {
         disposable =
             userRepository
                 .updateViewedMyVideo(userId, videoId, 1)
@@ -86,7 +86,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
 
     }
 
-    fun updateLaterMyVideo(videoId: String) {
+    fun updateLaterMyVideo(videoId: Int) {
         disposable =
             userRepository
                 .updateLaterMyVideo(userId, videoId, 1)
@@ -100,7 +100,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateDownloadMyVideo(videoId: String) {
+    fun updateDownloadMyVideo(videoId: Int) {
         disposable =
             userRepository
                 .updateDownloadMyVideo(userId, videoId, 1)
@@ -114,7 +114,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateShareMyVideo(videoId: String) {
+    fun updateShareMyVideo(videoId: Int) {
         disposable =
             userRepository
                 .updateShareMyVideo(userId, videoId, 1)
@@ -128,7 +128,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateDontCareVideo(videoId: String) {
+    fun updateDontCareVideo(videoId: Int) {
         disposable =
             userRepository
                 .updateDontCareMyVideo(userId, videoId, 1)
@@ -142,7 +142,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                     { Log.i("TAG", "Login Completed") })
     }
 
-    fun updateViewCountVideo(videoId: String) {
+    fun updateViewCountVideo(videoId: Int) {
         disposable =
             videoRepository.updateViewCountVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
@@ -156,7 +156,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                 )
     }
 
-    fun updateLikeCountVideo(videoId: String) {
+    fun updateLikeCountVideo(videoId: Int) {
         disposable =
             videoRepository.updateLikeCountVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
@@ -170,7 +170,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                 )
     }
 
-    fun updateDislikeCountVideo(videoId: String) {
+    fun updateDislikeCountVideo(videoId: Int) {
         disposable =
             videoRepository.updateDislikeCountVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
@@ -184,7 +184,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                 )
     }
 
-    fun updateLikeCancelVideo(videoId: String) {
+    fun updateLikeCancelVideo(videoId: Int) {
         disposable =
             videoRepository.updateLikeCancelVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
@@ -198,7 +198,7 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
                 )
     }
 
-    fun updateDislikeCancelVideo(videoId: String) {
+    fun updateDislikeCancelVideo(videoId: Int) {
         disposable =
             videoRepository.updateDislikeCancelVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())

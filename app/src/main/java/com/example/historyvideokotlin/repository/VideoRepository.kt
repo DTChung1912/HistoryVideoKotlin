@@ -13,7 +13,7 @@ class VideoRepository : BaseRepository() {
         return apiService?.getVideo()!!
     }
 
-    fun getComment(videoId: String): Observable<List<Comment>> {
+    fun getComment(videoId: Int): Observable<List<Comment>> {
         return apiService?.getComment(videoId)!!
     }
 
@@ -21,7 +21,7 @@ class VideoRepository : BaseRepository() {
         return apiService?.getReply(commentId)!!
     }
 
-    fun postComment(userId: String, videoId: String, content: String): Observable<List<Comment>> {
+    fun postComment(userId: String, videoId: Int, content: String): Observable<List<Comment>> {
         return apiService?.postComment(userId, videoId, content)!!
     }
 
@@ -34,31 +34,31 @@ class VideoRepository : BaseRepository() {
         return apiService?.postReply(userId, partnerName, commentId, content)!!
     }
 
-    fun updateViewCountVideo(videoId: String, viewed: Int): Observable<Video> {
+    fun updateViewCountVideo(videoId: Int, viewed: Int): Observable<Video> {
         return apiService?.updateViewCountVideo(videoId, viewed)!!
     }
 
-    fun updateLikeCountVideo(videoId: String, liked: Int): Observable<Video> {
+    fun updateLikeCountVideo(videoId: Int, liked: Int): Observable<Video> {
         return apiService?.updateLikeCountVideo(videoId, liked)!!
     }
 
-    fun updateDislikeCountVideo(videoId: String, disliked: Int): Observable<Video> {
+    fun updateDislikeCountVideo(videoId: Int, disliked: Int): Observable<Video> {
         return apiService?.updateDislikeCountVideo(videoId, disliked)!!
     }
 
-    fun updateLikeCancelVideo(videoId: String, likeCancel: Int): Observable<Video> {
+    fun updateLikeCancelVideo(videoId: Int, likeCancel: Int): Observable<Video> {
         return apiService?.updateLikeCancelVideo(videoId, likeCancel )!!
     }
 
-    fun updateDislikeCancelVideo(videoId: String, dislikeCancel: Int): Observable<Video> {
+    fun updateDislikeCancelVideo(videoId: Int, dislikeCancel: Int): Observable<Video> {
         return apiService?.updateDislikeCancelVideo(videoId, dislikeCancel )!!
     }
 
-    fun updateCommentCountVideo(videoId: String, commented: Int): Observable<Video> {
+    fun updateCommentCountVideo(videoId: Int, commented: Int): Observable<Video> {
         return apiService?.updateCommentCountVideo(videoId, commented)!!
     }
 
-    fun updateShareCountVideo(videoId: String, shared: Int): Observable<Video> {
+    fun updateShareCountVideo(videoId: Int, shared: Int): Observable<Video> {
         return apiService?.updateShareCountVideo(videoId, shared)!!
     }
 

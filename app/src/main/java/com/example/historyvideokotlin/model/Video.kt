@@ -3,9 +3,9 @@ package com.example.historyvideokotlin.model
 import java.io.Serializable
 
 data class Video(
-    val video_id: String,
+    val video_id: Int,
     val title: String,
-    val theme_id: String,
+    val theme_id: Int,
     val creater_image: String,
     val creater: String,
     val platform: String,

@@ -24,18 +24,6 @@ interface APIService {
     @GET("getPost.php")
     fun getPost(): Single<List<Post>>
 
-    @GET("getPostPerson.php")
-    fun getPostPerson(): Single<List<PostPerson>>
-
-    @GET("getPostEvent.php")
-    fun getPostEvent(): Single<List<PostEvent>>
-
-    @GET("getPostPlace.php")
-    fun getPostPlace(): Single<List<PostPlace>>
-
-    @GET("getPostTimeline.php")
-    fun getPostTimeline(): Single<List<PostTimeline>>
-
     @POST("postUser.php")
     fun postUser(
         @Body postUserRequest: PostUserRequest
@@ -53,7 +41,7 @@ interface APIService {
     @POST("postComment.php")
     fun postComment(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("content") content: String
     ): Observable<List<Comment>>
 
@@ -74,7 +62,7 @@ interface APIService {
     @POST("getMyVideo.php")
     fun getMyVideo(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String
+        @Field("videoId") videoId: Int
     ): Observable<List<MyVideo>>
 
     @FormUrlEncoded
@@ -88,7 +76,7 @@ interface APIService {
 
     @FormUrlEncoded
     @POST("getComment.php")
-    fun getComment(@Field("videoId") videoId: String): Observable<List<Comment>>
+    fun getComment(@Field("videoId") videoId: Int): Observable<List<Comment>>
 
     @FormUrlEncoded
     @POST("getReply.php")
@@ -105,49 +93,49 @@ interface APIService {
     @FormUrlEncoded
     @POST("updateVideoInfo.php")
     fun updateViewCountVideo(
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("viewed") viewed: Int
     ): Observable<Video>
 
     @FormUrlEncoded
     @POST("updateVideoInfo.php")
     fun updateLikeCountVideo(
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("liked") liked: Int
     ): Observable<Video>
 
     @FormUrlEncoded
     @POST("updateVideoInfo.php")
     fun updateDislikeCountVideo(
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("disliked") disliked: Int
     ): Observable<Video>
 
     @FormUrlEncoded
     @POST("updateVideoInfo.php")
     fun updateLikeCancelVideo(
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("likeCancel") likeCancel: Int
     ): Observable<Video>
 
     @FormUrlEncoded
     @POST("updateVideoInfo.php")
     fun updateDislikeCancelVideo(
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("dislikeCancel") dislikeCancel: Int
     ): Observable<Video>
 
     @FormUrlEncoded
     @POST("updateVideoInfo.php")
     fun updateCommentCountVideo(
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("commented") commented: Int
     ): Observable<Video>
 
     @FormUrlEncoded
     @POST("updateVideoInfo.php")
     fun updateShareCountVideo(
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("shared") shared: Int
     ): Observable<Video>
 
@@ -212,7 +200,7 @@ interface APIService {
     @POST("updateMyVideo.php")
     fun updateViewedMyVideo(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("isViewed") isViewed: Int
     ): Observable<MyVideo>
 
@@ -220,7 +208,7 @@ interface APIService {
     @POST("updateMyVideo.php")
     fun updateLikeMyVideo(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("isLiked") isLiked: Int
     ): Observable<MyVideo>
 
@@ -228,7 +216,7 @@ interface APIService {
     @POST("updateMyVideo.php")
     fun updateLaterMyVideo(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("isLatered") isLatered: Int
     ): Observable<MyVideo>
 
@@ -236,7 +224,7 @@ interface APIService {
     @POST("updateMyVideo.php")
     fun updateDownloadMyVideo(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("isDownloaded") isDownloaded: Int
     ): Observable<MyVideo>
 
@@ -244,7 +232,7 @@ interface APIService {
     @POST("updateMyVideo.php")
     fun updateShareMyVideo(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("isShared") isShared: Int
     ): Observable<MyVideo>
 
@@ -252,7 +240,7 @@ interface APIService {
     @POST("updateMyVideo.php")
     fun updateDontCareMyVideo(
         @Field("userId") userId: String,
-        @Field("videoId") videoId: String,
+        @Field("videoId") videoId: Int,
         @Field("isDontCared") isDontCared: Int
     ): Observable<MyVideo>
 

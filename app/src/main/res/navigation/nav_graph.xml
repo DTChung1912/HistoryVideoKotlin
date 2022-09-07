@@ -7,17 +7,75 @@
     <fragment
         android:id="@+id/postFragment"
         android:name="com.example.historyvideokotlin.fragments.PostFragment"
-        android:label="PostFragment" />
+        android:label="PostFragment">
+        <action
+            android:id="@+id/action_postFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/videoFragment"
         android:name="com.example.historyvideokotlin.fragments.VideoFragment"
-        android:label="VideoFragment" />
+        android:label="VideoFragment">
+        <action
+            android:id="@+id/action_videoFragment_to_videoDetailFragment"
+            app:destination="@id/videoDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.example.historyvideokotlin.fragments.QuizFragment"
-        android:label="QuizFragment" />
+        android:label="QuizFragment">
+        <action
+            android:id="@+id/action_quizFragment_to_quizDetailFragment"
+            app:destination="@id/quizDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.example.historyvideokotlin.fragments.MyPageFragment"
-        android:label="MyPageFragment" />
+        android:label="MyPageFragment">
+        <action
+            android:id="@+id/action_myPageFragment_to_historyLoginFragment"
+            app:destination="@id/historyLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyLoginFragment"
+        android:name="com.example.historyvideokotlin.fragments.HistoryLoginFragment"
+        android:label="HistoryLoginFragment">
+        <action
+            android:id="@+id/action_historyLoginFragment_to_phoneNumberLoginFragment"
+            app:destination="@id/phoneNumberLoginFragment" />
+        <action
+            android:id="@+id/action_historyLoginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_historyLoginFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneNumberLoginFragment"
+        android:name="com.example.historyvideokotlin.fragments.PhoneNumberLoginFragment"
+        android:label="PhoneNumberLoginFragment">
+        <action
+            android:id="@+id/action_phoneNumberLoginFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.historyvideokotlin.fragments.RegisterFragment"
+        android:label="RegisterFragment">
+        <action
+            android:id="@+id/action_registerFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.historyvideokotlin.fragments.PostDetailFragment"
+        android:label="PostDetailFragment" />
+    <fragment
+        android:id="@+id/videoDetailFragment"
+        android:name="com.example.historyvideokotlin.fragments.VideoDetailFragment"
+        android:label="VideoDetailFragment" />
+    <fragment
+        android:id="@+id/quizDetailFragment"
+        android:name="com.example.historyvideokotlin.fragments.QuizDetailFragment"
+        android:label="QuizDetailFragment" />
 </navigation>

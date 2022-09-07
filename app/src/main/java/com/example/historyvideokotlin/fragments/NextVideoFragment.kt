@@ -23,7 +23,7 @@ class NextVideoFragment : BaseFragment<NextVideoViewModel, FragmentNextVideoBind
         const val THEME_ID_KEY = "THEME_ID_KEY"
 
         @JvmStatic
-        fun newInstance(theme_id: String) =
+        fun newInstance(theme_id: Int) =
             NextVideoFragment().apply {
                 arguments = bundleOf(
                     THEME_ID_KEY to theme_id
@@ -41,7 +41,7 @@ class NextVideoFragment : BaseFragment<NextVideoViewModel, FragmentNextVideoBind
     override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
-        val theme_id = arguments?.getString(THEME_ID_KEY)
+        val theme_id = arguments?.getInt(THEME_ID_KEY)
 
         viewModel.getVideoData()
         viewModel.videoList.observe(this, { data ->
@@ -73,23 +73,23 @@ class NextVideoFragment : BaseFragment<NextVideoViewModel, FragmentNextVideoBind
     }
 
 
-    override fun onMore(videoId: String) {
+    override fun onMore(videoId: Int) {
         VideoMoreDialogFragment.newInstance(videoId,this).show(parentFragmentManager,null)
     }
 
-    override fun onLater(videoId: String) {
+    override fun onLater(videoId: Int) {
         viewModel.updateLaterVideo( videoId, 1)
     }
 
-    override fun onDownload(videoId: String) {
+    override fun onDownload(videoId: Int) {
         viewModel.updateDownloadVideo( videoId, 1)
     }
 
-    override fun onShare(videoId: String) {
+    override fun onShare(videoId: Int) {
         viewModel.updateShareVideo( videoId, 1)
     }
 
-    override fun onDontCare(videoId: String) {
+    override fun onDontCare(videoId: Int) {
         viewModel.updateDontCareVideo(videoId,1)
     }
 

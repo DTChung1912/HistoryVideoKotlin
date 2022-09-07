@@ -23,7 +23,6 @@ class VideoDetailFragment : BaseFragment<VideoDetailViewModel, FragmentVideoDeta
 
     companion object {
         const val VIDEO_KEY = "VIDEO_KEY"
-        const val USER_ID_KEY = "USER_ID_KEY"
 
         @JvmStatic
         fun newInstance(video: Video) =

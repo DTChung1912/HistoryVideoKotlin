@@ -23,9 +23,6 @@
     <queries>
         <package android:name="com.facebook.katana" />
     </queries>
-    <queries>
-        <package android:name="com.zing.zalo" />
-    </queries>
 
     <application
         android:name=".HistoryApplication"
@@ -72,22 +69,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.zing.zalo.zalosdk.oauth.BrowserLoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="zalo-xxxxx" />
-            </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="com.zing.zalo.zalosdk.appID"
-            android:value="@string/Zalo_app_id" />
 
         <provider
             android:name="com.facebook.FacebookContentProvider"

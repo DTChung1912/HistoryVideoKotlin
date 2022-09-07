@@ -81,7 +81,7 @@ class QuizFragment : BaseFragment<QuizViewModel, FragmentQuizBinding>(),
 
     private fun moveToQuizDetail(theme: Theme) {
         pushFragment(
-            QuizDetailFragment.newInstance((theme.theme_id).toInt()),
+            QuizDetailFragment.newInstance(theme.theme_id),
             HistoryUtils.getSlideTransitionAnimationOptions()
         )
     }

@@ -2,25 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_post"
+        android:id="@+id/postFragment"
         android:icon="@drawable/ic_bottom_menu_home"
         android:title="Trang chủ"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_video"
+        android:id="@+id/videoFragment"
         android:icon="@drawable/ic_bottom_menu_video"
         android:title="Video"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_quiz"
+        android:id="@+id/quizFragment"
         android:icon="@drawable/ic_bottom_menu_feed"
         android:title="Kiểm tra"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_my_page"
+        android:id="@+id/myPageFragment"
         android:icon="@drawable/ic_bottom_menu_my_page"
         android:title="Cá nhân"
         app:showAsAction="ifRoom" />

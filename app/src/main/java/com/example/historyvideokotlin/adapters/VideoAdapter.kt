@@ -52,6 +52,6 @@ class VideoAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(video: Video)
-        fun onMore(videoId: String)
+        fun onMore(videoId: Int)
     }
 }

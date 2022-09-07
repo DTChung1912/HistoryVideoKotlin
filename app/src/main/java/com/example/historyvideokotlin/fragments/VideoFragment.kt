@@ -73,25 +73,26 @@ class VideoFragment : BaseFragment<VideoViewModel, FragmentVideoBinding>(),
             VideoDetailFragment.newInstance(video),
             HistoryUtils.getSlideTransitionAnimationOptions()
         )
+//        nextFragment(R.id.action_videoFragment_to_videoDetailFragment,VideoDetailFragment.newInstance(video))
     }
 
-    override fun onMore(videoId: String) {
+    override fun onMore(videoId: Int) {
         VideoMoreDialogFragment.newInstance(videoId, this).show(parentFragmentManager, null)
     }
 
-    override fun onLater(videoId: String) {
+    override fun onLater(videoId: Int) {
         viewModel.updateLaterVideo(videoId, 1)
     }
 
-    override fun onDownload(videoId: String) {
+    override fun onDownload(videoId: Int) {
         viewModel.updateDownloadMyVideo(videoId, 1)
     }
 
-    override fun onShare(videoId: String) {
+    override fun onShare(videoId: Int) {
         viewModel.updateShareVideo(videoId, 1)
     }
 
-    override fun onDontCare(videoId: String) {
+    override fun onDontCare(videoId: Int) {
         viewModel.updateDontCareVideo(videoId, 1)
     }
 }

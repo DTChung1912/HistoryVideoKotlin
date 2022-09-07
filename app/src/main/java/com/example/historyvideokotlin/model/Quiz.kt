@@ -3,9 +3,9 @@ package com.example.historyvideokotlin.model
 import java.io.Serializable
 
 data class Quiz (
-    val quiz_id : String,
+    val quiz_id : Int,
     val question : String,
-    val theme_id : String,
+    val theme_id : Int,
     val image : String,
     val answer_id : String,
     val correct : String,

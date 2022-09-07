@@ -31,7 +31,7 @@ class PostFragment : BaseFragment<PostViewModel, FragmentPostBinding>() {
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
                 tab.text = getString(titleIds[position])
             }.attach()
-            MyLog.e("postList", it.toString())
+//            MyLog.e("postList", it.toString())
         }
         binding.run {
             toolbar.tvTitle.text = "Trang chủ"
