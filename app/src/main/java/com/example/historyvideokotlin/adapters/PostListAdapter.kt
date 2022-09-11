@@ -33,6 +33,9 @@ class PostListAdapter(
                 itemPostList.setOnClickListener {
                     onItemClickListener.onItemClick(post)
                 }
+                ivMore.setOnClickListener {
+                    onItemClickListener.onMore(post.post_id)
+                }
             }
 
         }
@@ -50,5 +53,6 @@ class PostListAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(postListData: Post)
+        fun onMore(postId: Int)
     }
 }

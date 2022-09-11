@@ -31,10 +31,13 @@ class QuizViewModel(application: Application) : BaseViewModel(application) {
     private fun getTheme() {
         viewModelScope.launch {
             runCatching {
+                loadingLiveData.postValue(true)
                 ktorQuizRepository.getTheme()
             }.onSuccess {
+                loadingLiveData.postValue(false)
                 themeList.value = it
             }.onFailure {
+                loadingLiveData.postValue(false)
             }
         }
     }

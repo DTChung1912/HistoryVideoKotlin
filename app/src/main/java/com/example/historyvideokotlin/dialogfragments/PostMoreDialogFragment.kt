@@ -10,14 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
-import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.databinding.FragmentVideoMoreDialogBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.fragment.app.DialogFragment
+import com.example.historyvideokotlin.databinding.FragmentPostMoreDialogBinding
 
-class VideoMoreDialogFragment( val onItemClickListener: OnItemClickListener) :
-    BottomSheetDialogFragment() {
+class PostMoreDialogFragment(val onItemClickListener: OnItemClickListener) : DialogFragment() {
 
-    private lateinit var binding: FragmentVideoMoreDialogBinding
+    private lateinit var binding: FragmentPostMoreDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,22 +23,22 @@ class VideoMoreDialogFragment( val onItemClickListener: OnItemClickListener) :
         savedInstanceState: Bundle?
     ): View? {
         binding =
-            FragmentVideoMoreDialogBinding.inflate(LayoutInflater.from(context), container, false)
+            FragmentPostMoreDialogBinding.inflate(LayoutInflater.from(context), container, false)
 
-        val videoId = arguments?.getInt(VIDEO_ID_KEY)!!
+        val postId = arguments?.getInt(POST_ID_KEY)!!
 
         binding.run {
             tvLater.setOnClickListener {
-                onItemClickListener.onLater(videoId)
+                onItemClickListener.onLater(postId)
             }
             tvDownload.setOnClickListener {
-                onItemClickListener.onDownload(videoId)
+                onItemClickListener.onDownload(postId)
             }
             tvShare.setOnClickListener {
-                onItemClickListener.onShare(videoId)
+                onItemClickListener.onShare(postId)
             }
             tvDontCare.setOnClickListener {
-                onItemClickListener.onDontCare(videoId)
+                onItemClickListener.onDontCare(postId)
             }
         }
 
@@ -70,21 +68,24 @@ class VideoMoreDialogFragment( val onItemClickListener: OnItemClickListener) :
     }
 
     companion object {
-        const val VIDEO_ID_KEY = "VIDEO_ID_KEY"
+        const val POST_ID_KEY = "POST_ID_KEY"
 
         @JvmStatic
-        fun newInstance(videoId: Int, onItemClickListener: OnItemClickListener) =
-            VideoMoreDialogFragment(onItemClickListener).apply {
+        fun newInstance(
+            postId: Int,
+            onItemClickListener: OnItemClickListener
+        ) =
+            PostMoreDialogFragment(onItemClickListener).apply {
                 arguments = bundleOf(
-                    VIDEO_ID_KEY to videoId
+                    POST_ID_KEY to postId
                 )
             }
     }
 
     interface OnItemClickListener {
-        fun onLater(videoId: Int)
-        fun onDownload(videoId: Int)
-        fun onShare(videoId: Int)
-        fun onDontCare(videoId: Int)
+        fun onLater(postId: Int)
+        fun onDownload(postId: Int)
+        fun onShare(postId: Int)
+        fun onDontCare(postId: Int)
     }
 }

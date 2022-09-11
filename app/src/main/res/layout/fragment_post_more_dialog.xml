@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/ndp_15"
+    android:paddingTop="@dimen/ndp_10">
+
+    <TextView
+        android:id="@+id/tvLater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/ndp_10"
+        android:drawableLeft="@drawable/save"
+        android:drawablePadding="@dimen/ndp_20"
+        android:text="Lưu vào danh sách xem sau"
+        android:textSize="@dimen/nsp_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/ndp_10"
+        android:drawableLeft="@drawable/download"
+        android:drawablePadding="@dimen/ndp_20"
+        android:text="Tải xuống"
+        android:textSize="@dimen/nsp_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/ndp_10"
+        android:drawableLeft="@drawable/share_video"
+        android:drawablePadding="@dimen/ndp_20"
+        android:text="Chia sẻ"
+        android:textSize="@dimen/nsp_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDontCare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/ndp_10"
+        android:drawableLeft="@drawable/empty"
+        android:drawablePadding="@dimen/ndp_20"
+        android:text="Không quan tâm"
+        android:textSize="@dimen/nsp_20"
+        android:textStyle="bold" />
+</LinearLayout>

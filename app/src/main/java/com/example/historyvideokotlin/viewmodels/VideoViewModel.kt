@@ -4,15 +4,14 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.historyvideokotlin.repository.HistoryUserManager
-import com.example.historyvideokotlin.repository.UserRepository
-import com.example.historyvideokotlin.repository.VideoRepository
 import com.example.historyvideokotlin.base.BaseViewModel
 import com.example.historyvideokotlin.di.repositoryProvider
 import com.example.historyvideokotlin.model.Comment
 import com.example.historyvideokotlin.model.MyVideo
-import com.example.historyvideokotlin.model.User
 import com.example.historyvideokotlin.model.Video
+import com.example.historyvideokotlin.repository.HistoryUserManager
+import com.example.historyvideokotlin.repository.UserRepository
+import com.example.historyvideokotlin.repository.VideoRepository
 import com.example.historyvideokotlin.utils.MyLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -62,11 +61,13 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
 //        videoList = mutableListOf<Video>()
         viewModelScope.launch {
             runCatching {
+                loadingLiveData.postValue(true)
                 ktorVideoRepository.getVideo()
             }.onSuccess {
+                loadingLiveData.postValue(false)
                 videoList.value = it
-//                MyLog.e("ktorVideoRepositoryvideo", "" + videoList.size + " ")
             }.onFailure {
+                loadingLiveData.postValue(false)
             }
         }
     }
@@ -88,11 +89,95 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
         var myVideoList = mutableListOf<MyVideo>()
         viewModelScope.launch {
             runCatching {
-                ktorVideoRepository.getVideo("EL6HKxq15Oey5F9wmrnMn2CNd032",1)
+                ktorVideoRepository.getMyVideo("EL6HKxq15Oey5F9wmrnMn2CNd032", 1)
             }.onSuccess {
                 myVideoList.addAll(it)
                 MyLog.e("ktorVideoRepositoryMyVIdeo", "" + myVideoList.size + " ")
             }.onFailure {
+            }
+        }
+    }
+
+    fun updateVideoView(videoId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateVideoView(videoId)
+            }.onSuccess {
+                MyLog.e("updateVideoView", it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateVideoView", it.message.toString())
+            }
+        }
+    }
+
+    fun updateVideoLike(videoId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateVideoLike(videoId)
+            }.onSuccess {
+                MyLog.e("updateVideoLike", it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateVideoLike", it.message.toString())
+            }
+        }
+    }
+
+    fun updateVideoLikeCancel(videoId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateVideoLikeCancel(videoId)
+            }.onSuccess {
+                MyLog.e("updateVideoLikeCancel", it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateVideoLikeCancel", it.message.toString())
+            }
+        }
+    }
+
+    fun updateVideoDislike(videoId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateVideoDislike(videoId)
+            }.onSuccess {
+                MyLog.e("updateVideoDislike", it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateVideoDislike", it.message.toString())
+            }
+        }
+    }
+
+    fun updateVideoDislikeCancel(videoId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateVideoDislikeCancel(videoId)
+            }.onSuccess {
+                MyLog.e("updateVideoDislikeCancel", it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateVideoDislikeCancel", it.message.toString())
+            }
+        }
+    }
+
+    fun updateVideoDownload(videoId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateVideoDownload(videoId)
+            }.onSuccess {
+                MyLog.e("updateVideoDownload", it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateVideoDownload", it.message.toString())
+            }
+        }
+    }
+
+    fun updateVideoComment(videoId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateVideoComment(videoId)
+            }.onSuccess {
+                MyLog.e("updateVideoComment", it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateVideoComment", it.message.toString())
             }
         }
     }

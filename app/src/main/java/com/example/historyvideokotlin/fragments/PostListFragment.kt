@@ -9,6 +9,8 @@ import com.example.historyvideokotlin.adapters.PostListAdapter
 import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentPostListBinding
+import com.example.historyvideokotlin.dialogfragments.PostMoreDialogFragment
+import com.example.historyvideokotlin.dialogfragments.VideoMoreDialogFragment
 import com.example.historyvideokotlin.model.Post
 import com.example.historyvideokotlin.utils.Constants.POST_DATA_KEY
 import com.example.historyvideokotlin.viewmodels.PostViewModel
@@ -17,7 +19,7 @@ import java.util.*
 
 class PostListFragment(val postList: List<Post>) :
     BaseFragment<PostViewModel, FragmentPostListBinding>(),
-    PostListAdapter.OnItemClickListener {
+    PostListAdapter.OnItemClickListener,PostMoreDialogFragment.OnItemClickListener {
     private var postType: Int = 0
     private var adapter: PostListAdapter? = null
 
@@ -78,5 +80,25 @@ class PostListFragment(val postList: List<Post>) :
 //            R.id.action_postFragment_to_postDetailFragment,
 //            bundleOf(Pair(POST_DATA_KEY, post))
 //        )
+    }
+
+    override fun onMore(postId: Int) {
+        PostMoreDialogFragment.newInstance(postId, this).show(parentFragmentManager, null)
+    }
+
+    override fun onLater(postId: Int) {
+
+    }
+
+    override fun onDownload(postId: Int) {
+        viewModel.updatePostDownload(postId)
+    }
+
+    override fun onShare(postId: Int) {
+
+    }
+
+    override fun onDontCare(postId: Int) {
+
     }
 }

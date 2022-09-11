@@ -31,6 +31,7 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
     override fun initData() {
         val post = arguments?.getSerializable(POST_DATA_KEY) as Post
 //        viewModel.updateReadCountPost(post.post_id, 1)
+        viewModel.updatePostRead(post.post_id)
         binding.run {
             tvTitleToolBar.text = post.title
             tvTitle.text = post.title
@@ -41,6 +42,7 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
             }
 
             ratingBar.setOnRatingBarChangeListener(OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                viewModel.updatePostRate(post.post_id)
                 Toast.makeText(
                     requireContext(),
                     rating.toString(),

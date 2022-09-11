@@ -81,18 +81,19 @@ class VideoFragment : BaseFragment<VideoViewModel, FragmentVideoBinding>(),
     }
 
     override fun onLater(videoId: Int) {
-        viewModel.updateLaterVideo(videoId, 1)
+//        viewModel.updateLaterVideo(videoId, 1)
     }
 
     override fun onDownload(videoId: Int) {
-        viewModel.updateDownloadMyVideo(videoId, 1)
+//        viewModel.updateDownloadMyVideo(videoId, 1)
+        viewModel.updateVideoDownload(videoId)
     }
 
     override fun onShare(videoId: Int) {
-        viewModel.updateShareVideo(videoId, 1)
+//        viewModel.updateShareVideo(videoId, 1)
     }
 
     override fun onDontCare(videoId: Int) {
-        viewModel.updateDontCareVideo(videoId, 1)
+//        viewModel.updateDontCareVideo(videoId, 1)
     }
 }

@@ -43,7 +43,6 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
                     override fun onError(e: Throwable) {
                         MyLog.e("chung", e.message.toString())
                     }
-
                 })
         )
     }
@@ -51,10 +50,26 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
     private fun getPostKtor() {
         viewModelScope.launch {
             runCatching {
+                loadingLiveData.postValue(true)
                 ktorPostRepository.getPost()
             }.onSuccess {
+                loadingLiveData.postValue(false)
                 postList.value = it
             }.onFailure {
+                loadingLiveData.postValue(false)
+                MyLog.e("postList",it.message)
+            }
+        }
+    }
+
+    fun updatePostDownload(postId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorPostRepository.updatePostDownload(postId)
+            }.onSuccess {
+                MyLog.e("updatePostDownload: ",it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updatePostDownload: ",it.message.toString())
             }
         }
     }

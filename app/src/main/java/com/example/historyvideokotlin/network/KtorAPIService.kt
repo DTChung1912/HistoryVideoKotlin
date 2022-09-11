@@ -1,16 +1,15 @@
 package com.example.historyvideokotlin.network
 
 import com.example.historyvideokotlin.model.*
-import io.reactivex.Completable
 import retrofit2.Response
 import retrofit2.http.*
 
 interface KtorAPIService {
 
-    @GET("user/")
+    @GET("user/detail")
     suspend fun getUser(@Path("userId") userId: String): Response<List<User>>
 
-    @GET("video/")
+    @GET("video/list")
     suspend fun getVideo(): Response<List<Video>>
 
     @GET("quiz/random")
@@ -19,17 +18,17 @@ interface KtorAPIService {
     @GET("quiz/theme")
     suspend fun getQuizByTheme(@Query("theme_id") themeInt: Int): Response<List<Quiz>>
 
-    @GET("theme/")
+    @GET("theme/list")
     suspend fun getTheme(): Response<List<Theme>>
 
-    @GET("post/")
+    @GET("post/list")
     suspend fun getPost(): Response<List<Post>>
 
-    @GET("comment/{video_id}")
-    suspend fun getComment(@Path("video_id") videoId: Int): Response<List<Comment>>
+    @GET("comment/list")
+    suspend fun getComment(@Query("video_id") videoId: Int): Response<List<Comment>>
 
-    @GET("reply/")
-    suspend fun getReply(@Field("comment_id") commentId: String): Response<List<Reply>>
+    @GET("reply/list")
+    suspend fun getReply(@Query("comment_id") commentId: String): Response<List<Reply>>
 
     @POST("user/register")
     suspend fun register(
@@ -87,7 +86,6 @@ interface KtorAPIService {
 
     @PUT("user/update")
     suspend fun updateUser(
-        @Query("user_id") userId: String,
         @Body user: User
     ): Response<User>
 
@@ -98,123 +96,112 @@ interface KtorAPIService {
     ): Response<Post>
 
     @PUT("video/update")
-    fun updateVideo(
+    suspend fun updateVideo(
         @Query("video_id") videoId: Int,
         @Body video: Video
     ): Response<Video>
 
     // Update Post
-
     @PUT("post/update/read")
-    fun updatePostRead(
+    suspend fun updatePostRead(
         @Query("post_id") postId: Int
-    ): Response<Post>
+    ): Response<UpdateResponse>
 
     @PUT("post/update/download")
-    fun updatePostDownload(
+    suspend fun updatePostDownload(
         @Query("post_id") postId: Int
-    ): Response<Post>
+    ): Response<UpdateResponse>
 
     @PUT("post/update/rate")
-    fun updatePostRate(
+    suspend fun updatePostRate(
         @Query("post_id") postId: Int
-    ): Response<Post>
+    ): Response<UpdateResponse>
 
     // Update Video
 
     @PUT("video/update/view")
-    fun updateVideoView(
+    suspend fun updateVideoView(
         @Query("video_id") videoId: Int
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
     @PUT("video/update/like")
-    fun updateVideoLike(
+    suspend fun updateVideoLike(
         @Query("video_id") videoId: Int
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
     @PUT("video/update/dislike")
-    fun updateVideoDislike(
+    suspend fun updateVideoDislike(
         @Query("video_id") videoId: Int
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
     @PUT("video/update/like/cancel")
-    fun updateVideoLikeCancel(
+    suspend fun updateVideoLikeCancel(
         @Query("video_id") videoId: Int
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
     @PUT("video/update/dislike/cancel")
-    fun updateVideoDislikeCancel(
+    suspend fun updateVideoDislikeCancel(
         @Query("video_id") videoId: Int
-    ): Response<Video>
-
-    @PUT("video/update/later")
-    fun updateVideoLater(
-        @Query("video_id") videoId: Int
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
     @PUT("video/update/download")
-    fun updateVideoDownload(
+    suspend fun updateVideoDownload(
         @Query("video_id") videoId: Int
-    ): Response<Video>
-
-    @PUT("video/update/share")
-    fun updateVideoShare(
-        @Query("video_id") videoId: Int
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
     @PUT("video/update/comment")
-    fun updateVideoComment(
+    suspend fun updateVideoComment(
         @Query("video_id") videoId: Int
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
     // Update Comment
 
     @PUT("comment/update/like")
-    fun updateCommentLike(
+    suspend fun updateCommentLike(
         @Query("comment_id") commentId: Int
-    ): Response<Comment>
+    ): Response<UpdateResponse>
 
     @PUT("comment/update/dislike")
-    fun updateCommentDislike(
+    suspend fun updateCommentDislike(
         @Query("comment_id") commentId: Int
-    ): Response<Comment>
+    ): Response<UpdateResponse>
 
     @PUT("comment/update/like/cancel")
-    fun updateCommentLikeCancel(
+    suspend fun updateCommentLikeCancel(
         @Query("comment_id") commentId: Int
-    ): Response<Comment>
+    ): Response<UpdateResponse>
 
     @PUT("comment/update/dislike/cancel")
-    fun updateCommentDislikeCancel(
+    suspend fun updateCommentDislikeCancel(
         @Query("comment_id") commentId: Int
-    ): Response<Comment>
+    ): Response<UpdateResponse>
 
     @PUT("comment/update/reply")
-    fun updateCommentReply(
+    suspend fun updateCommentReply(
         @Query("video_id") commentId: Int
-    ): Response<Comment>
+    ): Response<UpdateResponse>
 
     // Update Reply
 
     @PUT("reply/update/like")
-    fun updateReplyLike(
+    suspend fun updateReplyLike(
         @Query("reply_id") replyId: Int
-    ): Response<Reply>
+    ): Response<UpdateResponse>
 
     @PUT("reply/update/dislike")
-    fun updateReplyDislike(
+    suspend fun updateReplyDislike(
         @Query("reply_id") replyId: Int
-    ): Response<Reply>
+    ): Response<UpdateResponse>
 
     @PUT("reply/update/like/cancel")
-    fun updateReplyLikeCancel(
+    suspend fun updateReplyLikeCancel(
         @Query("reply_id") replyId: Int
-    ): Response<Reply>
+    ): Response<UpdateResponse>
 
     @PUT("reply/update/dislike/cancel")
-    fun updateReplyDislikeCancel(
+    suspend fun updateReplyDislikeCancel(
         @Query("reply_id") replyId: Int
-    ): Response<Reply>
+    ): Response<UpdateResponse>
 
 //    @PUT("myvideo/update")
 //    suspend fun updateMyVideo(
@@ -225,60 +212,60 @@ interface KtorAPIService {
     // Update MyPost
 
     @PUT("mypost/update/read")
-    fun updateMyPostRead(
+    suspend fun updateMyPostRead(
         @Query("my_post_id") myPostId: Int,
         @Query("is_read") isRead: Int
-    ): Response<MyPost>
+    ): Response<UpdateResponse>
 
     @PUT("mypost/update/download")
-    fun updateMyPostDownload(
+    suspend fun updateMyPostDownload(
         @Query("my_post_id") myPostId: Int,
         @Query("is_download") isDownload: Int
-    ): Response<MyPost>
+    ): Response<UpdateResponse>
 
     @PUT("mypost/update/read")
-    fun updateMyPostRate(
+    suspend fun updateMyPostRate(
         @Query("my_post_id") myPostId: Int,
         @Query("rate") rate: Int
-    ): Response<MyPost>
+    ): Response<UpdateResponse>
 
     // Update MY Video
 
     @PUT("myvideo/update/view")
-    fun updateMyVideoView(
+    suspend fun updateMyVideoView(
         @Query("my_video_id") myVideoId: Int,
         @Query("is_view") isView: Int
-    ): Response<MyVideo>
+    ): Response<UpdateResponse>
 
     @PUT("myvideo/update/download")
-    fun updateMyVideoDownload(
+    suspend fun updateMyVideoDownload(
         @Query("my_video_id") myVideoId: Int,
         @Query("is_download") isDownload: Int
-    ): Response<MyVideo>
+    ): Response<UpdateResponse>
 
     @PUT("myvideo/update/like")
-    fun updateMyVideoLike(
+    suspend fun updateMyVideoLike(
         @Query("my_video_id") myVideoId: Int,
         @Query("is_like") isLike: Int
-    ): Response<MyVideo>
+    ): Response<UpdateResponse>
 
     @PUT("myvideo/update/later")
-    fun updateMyVideoLater(
+    suspend fun updateMyVideoLater(
         @Query("my_video_id") myVideoId: Int,
         @Query("is_later") isLater: Int
-    ): Response<MyVideo>
+    ): Response<UpdateResponse>
 
     @PUT("myvideo/update/dontcare")
-    fun updateMyVideoDontCare(
+    suspend fun updateMyVideoDontCare(
         @Query("my_video_id") myVideoId: Int,
         @Query("is_dont_care") isDontCare: Int
-    ): Response<MyVideo>
+    ): Response<UpdateResponse>
 
     @PUT("myvideo/update/viewtime")
-    fun updateMyVideoViewTime(
+    suspend fun updateMyVideoViewTime(
         @Query("my_video_id") myVideoId: Int,
         @Query("view_time") viewTime: Int
-    ): Response<MyVideo>
+    ): Response<UpdateResponse>
 
     // Delete
 

@@ -2,152 +2,154 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/ndp_20"
         tools:context=".fragments.UserEditFragment">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/ndp_20">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/ndp_5">
 
-                <RelativeLayout
-                    android:paddingVertical="@dimen/ndp_5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_back_black" />
 
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:id="@+id/ivBack"
-                        android:src="@drawable/ic_back_black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="Thông tin cá nhân"
+                android:textSize="@dimen/ndp_25"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:text="Thông tin cá nhân"
-                        android:textSize="@dimen/ndp_25"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/user_avatar"
+            android:id="@+id/ivUserAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tên:"
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên:"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edtUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_name"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text="chung"
-                    android:textSize="@dimen/nsp_20" />
+        <EditText
+            android:id="@+id/edtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginBottom="@dimen/ndp_10"
+            android:background="@drawable/background_user_info"
+            android:drawableLeft="@drawable/user_name"
+            android:drawablePadding="@dimen/ndp_20"
+            android:paddingStart="@dimen/ndp_15"
+            android:text="chung"
+            android:textSize="@dimen/nsp_20" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày sinh: "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày sinh: "
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edtBirthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_birthday"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập ngày sinh"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
+        <EditText
+            android:id="@+id/edtBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginBottom="@dimen/ndp_10"
+            android:background="@drawable/background_user_info"
+            android:drawableLeft="@drawable/user_birthday"
+            android:drawablePadding="@dimen/ndp_20"
+            android:hint="Nhập ngày sinh"
+            android:paddingStart="@dimen/ndp_15"
+            android:text=""
+            android:textSize="@dimen/nsp_20" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email: "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edtEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_email"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập email"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginBottom="@dimen/ndp_10"
+            android:background="@drawable/background_user_info"
+            android:drawableLeft="@drawable/user_email"
+            android:drawablePadding="@dimen/ndp_20"
+            android:hint="Nhập email"
+            android:paddingStart="@dimen/ndp_15"
+            android:text=""
+            android:textSize="@dimen/nsp_20" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Số điện thoại: "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại: "
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edtPhoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_telephone"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập số điện thoại"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
+        <EditText
+            android:id="@+id/edtPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginBottom="@dimen/ndp_10"
+            android:background="@drawable/background_user_info"
+            android:drawableLeft="@drawable/user_telephone"
+            android:drawablePadding="@dimen/ndp_20"
+            android:hint="Nhập số điện thoại"
+            android:paddingStart="@dimen/ndp_15"
+            android:text=""
+            android:textSize="@dimen/nsp_20" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Địa chỉ : "
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ : "
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edtAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ndp_50"
-                    android:layout_marginBottom="@dimen/ndp_10"
-                    android:background="@drawable/background_user_info"
-                    android:drawableLeft="@drawable/user_address"
-                    android:drawablePadding="@dimen/ndp_20"
-                    android:hint="Nhập địa chỉ"
-                    android:paddingStart="@dimen/ndp_15"
-                    android:text=""
-                    android:textSize="@dimen/nsp_20" />
+        <EditText
+            android:id="@+id/edtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginBottom="@dimen/ndp_10"
+            android:background="@drawable/background_user_info"
+            android:drawableLeft="@drawable/user_address"
+            android:drawablePadding="@dimen/ndp_20"
+            android:hint="Nhập địa chỉ"
+            android:paddingStart="@dimen/ndp_15"
+            android:text=""
+            android:textSize="@dimen/nsp_20" />
 
-                <Button
-                    android:layout_marginTop="@dimen/ndp_20"
-                    android:text="Cập nhật"
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold"
-                    android:paddingHorizontal="@dimen/ndp_10"
-                    android:textColor="@color/white"
-                    android:background="@drawable/background_button_edit"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:background="@drawable/background_button_edit"
+            android:paddingHorizontal="@dimen/ndp_10"
+            android:text="Cập nhật"
+            android:textColor="@color/white"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
 
-            </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
 </layout>
