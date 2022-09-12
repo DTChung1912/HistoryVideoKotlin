@@ -36,7 +36,7 @@ class PostFragment : BaseFragment<PostViewModel, FragmentPostBinding>() {
         binding.run {
             toolbar.tvTitle.text = "Trang chủ"
             toolbar.ivSearch.setOnClickListener {
-                (activity as? MainActivity)?.onSearchClick()
+                (activity as? MainActivity)?.onSearchClick(0)
             }
             toolbar.ivMenu.setOnClickListener {
                 (activity as? MainActivity)?.onSettingClick()

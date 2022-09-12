@@ -1,5 +1,6 @@
 package com.example.historyvideokotlin.fragments
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.R
@@ -7,6 +8,7 @@ import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentUserInfoBinding
 import com.example.historyvideokotlin.model.MyVideoListData
+import com.example.historyvideokotlin.model.User
 import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.UserInfoViewModel
 import java.util.*
@@ -14,6 +16,7 @@ import java.util.*
 class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding>() {
 
     private lateinit var myVideoListData: MyVideoListData
+    private var userInfo: User? = null
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_user_info
@@ -25,23 +28,29 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
     override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
+
         viewModel.getMyVideoData()
+
+//        viewModel.userList.observe(this, { data ->
+//            data.let {
+//                var user = it[0]
+//                if (!user.user_image.isNullOrEmpty()) {
+//                    Glide.with(requireContext()).load(user.user_image).into(binding.civUserAvatar)
+//                }
+//
+//                binding.tvEmail.text = user.email
+//            }
+//        })
+        viewModel.userInfo.observe(this,{data ->
+            data.let {
+                userInfo = it
+            }
+        })
 
         viewModel.myVideoList.observe(this, { data ->
             data.let {
                 myVideoListData = MyVideoListData(it)
                 setItemClick(myVideoListData)
-            }
-        })
-
-        viewModel.userList.observe(this, { data ->
-            data.let {
-                var user = it[0]
-                if (!user.user_image.isNullOrEmpty()) {
-                    Glide.with(requireContext()).load(user.user_image).into(binding.civUserAvatar)
-                }
-
-                binding.tvEmail.text = user.email
             }
         })
     }
@@ -50,7 +59,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         binding.run {
             ivEdit.setOnClickListener {
                 pushFragment(
-                    UserEditFragment.newInstance(),
+                    UserEditFragment.newInstance(userInfo!!),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
@@ -88,7 +97,10 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
 
         @JvmStatic
         fun newInstance() =
-            UserInfoFragment()
+            UserInfoFragment().apply {
+                arguments = bundleOf(
+                )
+            }
     }
 
     enum class MyVideoType(val id: Int) {

@@ -17,21 +17,22 @@
             android:background="@drawable/background_edittext_search"
             android:drawableEnd="@drawable/ic_search_black_24dp"
             android:hint="Nhập từ khóa tìm kiếm"
+            android:imeOptions="actionSearch"
             android:paddingHorizontal="@dimen/ndp_15"
             android:paddingVertical="@dimen/ndp_10" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ndp_10"
             android:layout_marginVertical="@dimen/ndp_5"
+            android:layout_marginStart="@dimen/ndp_10"
             android:text="Từ khóa đã tìm kiếm"
             android:textSize="@dimen/nsp_15" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerKeyword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </layout>

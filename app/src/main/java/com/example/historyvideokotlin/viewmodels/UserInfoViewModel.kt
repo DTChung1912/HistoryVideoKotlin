@@ -2,9 +2,11 @@ package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.repository.UserRepository
 import com.example.historyvideokotlin.base.BaseViewModel
+import com.example.historyvideokotlin.di.repositoryProvider
 import com.example.historyvideokotlin.model.MyPost
 import com.example.historyvideokotlin.model.MyVideo
 import com.example.historyvideokotlin.model.User
@@ -13,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class UserInfoViewModel(application: Application) : BaseViewModel(application) {
 
@@ -23,13 +26,18 @@ class UserInfoViewModel(application: Application) : BaseViewModel(application) {
 
     var disposable2: Disposable? = null
     var userList = MutableLiveData<List<User>>()
+    var userInfo = MutableLiveData<User>()
 
     var userId = HistoryUserManager.FUid()
+    val ktorUserRepository = application.repositoryProvider.ktorUserRepository
+
+
 
     fun getMyVideoData() {
         getMyVideoList( )
         getMyPostList()
         getUser()
+        getUserInfo(userId)
     }
 
     private fun getMyVideoList() {
@@ -83,6 +91,21 @@ class UserInfoViewModel(application: Application) : BaseViewModel(application) {
                     },
                     { error -> MyLog.e("this", error.message.toString()) }
                 )
+    }
+
+    fun getUserInfo(userId: String) {
+        viewModelScope.launch {
+            runCatching {
+                loadingLiveData.postValue(true)
+                ktorUserRepository.getUser(userId)
+            }.onSuccess {
+                loadingLiveData.postValue(false)
+                userInfo.value = it
+            }.onFailure {
+                loadingLiveData.postValue(false)
+                MyLog.e("postList",it.message)
+            }
+        }
     }
 
 

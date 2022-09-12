@@ -7,7 +7,7 @@ import retrofit2.http.*
 interface KtorAPIService {
 
     @GET("user/detail")
-    suspend fun getUser(@Path("userId") userId: String): Response<List<User>>
+    suspend fun getUser(@Query("userId") userId: String): Response<User>
 
     @GET("video/list")
     suspend fun getVideo(): Response<List<Video>>
@@ -29,6 +29,12 @@ interface KtorAPIService {
 
     @GET("reply/list")
     suspend fun getReply(@Query("comment_id") commentId: String): Response<List<Reply>>
+
+    @GET("post/search")
+    suspend fun getSearchPost(@Query("keyword") keyword: String): Response<List<Post>>
+
+    @GET("video/search")
+    suspend fun getSearchVideo(@Query("keyword") keyword: String): Response<List<Video>>
 
     @POST("user/register")
     suspend fun register(
@@ -77,12 +83,6 @@ interface KtorAPIService {
     suspend fun postMyPost(
         @Body myPost: MyPost
     ): Response<List<MyPost>>
-
-    @GET("post/search")
-    suspend fun getSearchPost(@Query("keyword") keyword: String): Response<List<Post>>
-
-    @GET("video/search")
-    suspend fun getSearchVideo(@Query("keyword") keyword: String): Response<List<Video>>
 
     @PUT("user/update")
     suspend fun updateUser(

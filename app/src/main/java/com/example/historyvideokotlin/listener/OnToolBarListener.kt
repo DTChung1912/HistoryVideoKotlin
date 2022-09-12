@@ -1,6 +1,6 @@
 package com.example.historyvideokotlin.listener
 
 interface OnToolBarListener {
-    fun onSearchClick()
+    fun onSearchClick(searchType: Int)
     fun onSettingClick()
 }

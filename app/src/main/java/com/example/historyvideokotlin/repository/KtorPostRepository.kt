@@ -21,6 +21,17 @@ class KtorPostRepository(val apiService: KtorAPIService) {
         }
     }
 
+    suspend fun getSearchPost(keyword: String): List<Post> = coroutineScope {
+        withContext(Dispatchers.IO) {
+            val reponse = apiService.getSearchPost(keyword)
+            if (reponse.isSuccessful) {
+                reponse.body().orEmpty()
+            } else {
+                listOf()
+            }
+        }
+    }
+
     suspend fun updatePostRead(postId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
             val reponse: Response<UpdateResponse> = apiService.updatePostRead(postId)

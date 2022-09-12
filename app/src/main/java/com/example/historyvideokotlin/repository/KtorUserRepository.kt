@@ -13,14 +13,13 @@ import retrofit2.Response
 
 class KtorUserRepository(val apiService: KtorAPIService) {
 
-    suspend fun getUser(userId: String) = coroutineScope {
+    suspend fun getUser(userId: String): User = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse: Response<List<User>> = apiService.getUser(userId)
+            val reponse: Response<User> = apiService.getUser(userId)
             if (reponse.isSuccessful) {
-                val body = reponse.body()
-                body?.let {
-                    MyLog.e("chungnew", it[0].user_id)
-                }
+                reponse.body()!!
+            } else {
+                User("","","","","","","","",0)
             }
         }
     }

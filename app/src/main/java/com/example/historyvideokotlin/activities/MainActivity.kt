@@ -369,7 +369,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     fun loginWithPhoneNumber() {
-        pushFragment(PhoneNumberLoginFragment.newInstance(),HistoryUtils.getSlideTransitionAnimationOptions())
+        pushFragment(
+            PhoneNumberLoginFragment.newInstance(),
+            HistoryUtils.getSlideTransitionAnimationOptions()
+        )
     }
 
     fun phoneVerifyCode(code: String) {
@@ -565,9 +568,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         }
     }
 
-    override fun onSearchClick() {
+    override fun onSearchClick(searchType: Int) {
         pushFragment(
-            SearchFragment.newInstance("a"),
+            SearchFragment.newInstance(searchType),
             HistoryUtils.getSlideTransitionAnimationOptions()
         )
     }

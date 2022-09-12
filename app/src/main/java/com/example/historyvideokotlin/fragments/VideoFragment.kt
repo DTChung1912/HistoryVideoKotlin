@@ -44,7 +44,7 @@ class VideoFragment : BaseFragment<VideoViewModel, FragmentVideoBinding>(),
         binding.run {
             toolbar.tvTitle.text = "Video"
             toolbar.ivSearch.setOnClickListener {
-                (activity as? MainActivity)?.onSearchClick()
+                (activity as? MainActivity)?.onSearchClick(1)
             }
             toolbar.ivMenu.setOnClickListener {
                 (activity as? MainActivity)?.onSettingClick()
