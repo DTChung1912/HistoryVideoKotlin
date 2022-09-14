@@ -54,7 +54,7 @@ class CommentAdapter(
 
     interface OnItemClickListener {
         fun onReply(comment: Comment)
-        fun onLiked(commentId: String)
-        fun onDisliked(commentId: String)
+        fun onLiked(commentId: Int)
+        fun onDisliked(commentId: Int)
     }
 }

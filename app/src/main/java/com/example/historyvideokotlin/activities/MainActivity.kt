@@ -89,7 +89,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_HistoryVideoKotlin)
+//        setTheme(R.style.Theme_HistoryVideoKotlin)
         super.onCreate(savedInstanceState)
         initData()
         progressBarDialog = ProgressBarDialog(this)
@@ -406,10 +406,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     fun phoneSendVerifyCode(phoneNumber: String) {
         val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber("+84" + phoneNumber)       // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(this)                 // Activity (for callback binding)
-            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
+            .setPhoneNumber("+84" + phoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(callbacks)
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
@@ -471,13 +471,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithCredential:success")
-                    val user = auth.currentUser
-                    MyLog.e("UID", user?.uid)
-
-                    getViewModel()!!.postUser(
-                        user!!.uid, user.displayName.toString(),
-                        user?.email.toString()
+                    val user = auth.currentUser!!
+                    MyLog.e(
+                        "facebook_user",
+                        user.uid + " " + user.displayName + " " + user.photoUrl
                     )
+
+//                    getViewModel()!!.postUser(
+//                        user!!.uid, user.displayName.toString(),
+//                        user?.email.toString()
+//                    )
 
                     popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
                 } else {
@@ -494,7 +497,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     private fun initGoogle() {
         var gso: GoogleSignInOptions =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -522,17 +525,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithCredential:success")
-                    val user = auth.currentUser
-                    MyLog.e("UID", user?.uid)
+                    val user = auth.currentUser!!
+                    MyLog.e("google_user", user.uid + " " + user.displayName + " " + user.photoUrl)
 
-                    getViewModel()!!.postUser(
-                        user!!.uid, user.displayName.toString(),
-                        user?.email.toString()
-                    )
+//                    getViewModel()!!.postUser(
+//                        user!!.uid, user.displayName.toString(),
+//                        user?.email.toString()
+//                    )
 
                     popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.w("TAG", "signInWithCredential:failure", task.exception)
                     Toast.makeText(
                         baseContext, "Authentication failed.",

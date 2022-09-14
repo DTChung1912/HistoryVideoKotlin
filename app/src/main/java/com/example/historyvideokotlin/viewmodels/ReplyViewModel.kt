@@ -3,13 +3,16 @@ package com.example.historyvideokotlin.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.historyvideokotlin.repository.VideoRepository
 import com.example.historyvideokotlin.base.BaseViewModel
+import com.example.historyvideokotlin.di.repositoryProvider
 import com.example.historyvideokotlin.model.Reply
 import com.example.historyvideokotlin.utils.MyLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class ReplyViewModel(application: Application) : BaseViewModel(application) {
 
@@ -17,25 +20,87 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
     var videoRepository = VideoRepository()
     var disposable: Disposable? = null
 
-    fun getReplyData(commentId: String) {
+    val ktorVideoRepository = application.repositoryProvider.ktorVideoRepository
+
+    fun getReplyData(commentId: Int) {
         getReply(commentId)
     }
 
-    private fun getReply(commentId: String) {
-        disposable = videoRepository.getReply(commentId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { loadingLiveData.postValue(true) }
-            .doAfterTerminate { loadingLiveData.postValue(false) }
-            .subscribe(
-                { data ->
-                    data.let {
-                        replyList.value = it
-                    }
-                },
-                { error -> MyLog.e("this", error.message.toString()) }
-            )
+    private fun getReply(commentId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.getReply(commentId)
+            }.onSuccess {
+                replyList.value = it
+            }.onFailure {
+                MyLog.e("getReply: " ,it.message)
+            }
+        }
     }
+
+    fun updateReplyLike(replyId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateReplyLike(replyId)
+            }.onSuccess {
+                MyLog.e("updateReplyLike: " ,it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateReplyLike: " ,it.message)
+            }
+        }
+    }
+
+    fun updateReplyLikeCancel(replyId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateReplyLikeCancel(replyId)
+            }.onSuccess {
+                MyLog.e("updateReplyLikeCancel: " ,it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateReplyLikeCancel: " ,it.message)
+            }
+        }
+    }
+
+    fun updateReplyDislike(replyId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateReplyDislike(replyId)
+            }.onSuccess {
+                MyLog.e("updateReplyDislike: " ,it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateReplyDislike: " ,it.message)
+            }
+        }
+    }
+
+    fun updateReplyDislikeCancel(replyId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateReplyDislikeCancel(replyId)
+            }.onSuccess {
+                MyLog.e("updateReplyDislikeCancel: " ,it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateReplyDislikeCancel: " ,it.message)
+            }
+        }
+    }
+
+//    private fun getReply(commentId: String) {
+//        disposable = videoRepository.getReply(commentId)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .doOnSubscribe { loadingLiveData.postValue(true) }
+//            .doAfterTerminate { loadingLiveData.postValue(false) }
+//            .subscribe(
+//                { data ->
+//                    data.let {
+//                        replyList.value = it
+//                    }
+//                },
+//                { error -> MyLog.e("this", error.message.toString()) }
+//            )
+//    }
 
     fun updateLikeCountComment(commentId: String) {
         disposable =

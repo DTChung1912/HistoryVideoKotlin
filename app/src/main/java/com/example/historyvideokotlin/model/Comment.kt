@@ -3,8 +3,8 @@ package com.example.historyvideokotlin.model
 import java.io.Serializable
 
 data class Comment (
-    val comment_id : String,
-    val video_id : String,
+    val comment_id : Int,
+    val video_id : Int,
     val user_id: String,
     val user_name : String,
     val user_image : String,

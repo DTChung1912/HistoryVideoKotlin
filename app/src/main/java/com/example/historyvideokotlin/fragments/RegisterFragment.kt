@@ -32,7 +32,7 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     override fun initData() {
         binding.run {
             ivUserAvatar.setOnClickListener {
-                pushFragment(CameraFragment.newInstance(),HistoryUtils.getSlideTransitionAnimationOptions())
+//                pushFragment(CameraFragment.newInstance(),HistoryUtils.getSlideTransitionAnimationOptions())
             }
 
             btnRegister.setOnClickListener {

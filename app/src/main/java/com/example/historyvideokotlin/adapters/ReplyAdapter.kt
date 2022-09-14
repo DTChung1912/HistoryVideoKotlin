@@ -48,8 +48,8 @@ class ReplyAdapter(
 
     interface OnItemClickListener {
         fun onReply(userName: String)
-        fun onLike(replyId: String)
-        fun onDislike(replyId: String)
+        fun onLike(replyId: Int)
+        fun onDislike(replyId: Int)
     }
 
 }

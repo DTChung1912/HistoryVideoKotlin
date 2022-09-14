@@ -15,4 +15,7 @@
 
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="message_cannot_attach_image">chung</string>
+    <string name="message_select_other_image">chung</string>
+    <string name="back">back</string>
 </resources>

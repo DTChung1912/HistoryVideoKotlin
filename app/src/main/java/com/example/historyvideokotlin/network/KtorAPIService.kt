@@ -28,7 +28,7 @@ interface KtorAPIService {
     suspend fun getComment(@Query("video_id") videoId: Int): Response<List<Comment>>
 
     @GET("reply/list")
-    suspend fun getReply(@Query("comment_id") commentId: String): Response<List<Reply>>
+    suspend fun getReply(@Query("comment_id") commentId: Int): Response<List<Reply>>
 
     @GET("post/search")
     suspend fun getSearchPost(@Query("keyword") keyword: String): Response<List<Post>>
@@ -44,12 +44,12 @@ interface KtorAPIService {
     @POST("comment/create")
     suspend fun postComment(
         @Body comment: Comment
-    ): Response<List<Comment>>
+    ): Response<Comment>
 
     @POST("reply/create")
     suspend fun postReply(
         @Body reply: Reply
-    ): Response<List<Reply>>
+    ): Response<Reply>
 
     @GET("myvideo/list")
     suspend fun getMyVideoList(
@@ -82,7 +82,12 @@ interface KtorAPIService {
     @POST("mypost/create")
     suspend fun postMyPost(
         @Body myPost: MyPost
-    ): Response<List<MyPost>>
+    ): Response<CreateResponse>
+
+    @POST("myvideo/create")
+    suspend fun postMyVideo(
+        @Body myVideo: MyVideo
+    ): Response<CreateResponse>
 
     @PUT("user/update")
     suspend fun updateUser(
@@ -272,20 +277,20 @@ interface KtorAPIService {
     @DELETE("comment/delete")
     suspend fun deleteComment(
         @Query("comment_id") commentId: Int
-    ): Response<Comment>
+    ): Response<DeleteResponse>
 
     @DELETE("reply/delete")
     suspend fun deleteReply(
         @Query("reply_id") replyId: Int
-    ): Response<Reply>
+    ): Response<DeleteResponse>
 
     @DELETE("myvideo/delete")
     suspend fun deleteMyVideo(
         @Query("my_video_id") myVideoId: Int
-    ): Response<MyVideo>
+    ): Response<DeleteResponse>
 
     @DELETE("mypost/delete")
     suspend fun deleteMyPost(
         @Query("my_post_id") myPostId: Int
-    ): Response<MyPost>
+    ): Response<DeleteResponse>
 }

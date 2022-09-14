@@ -1,9 +1,6 @@
 package com.example.historyvideokotlin.repository
 
-import com.example.historyvideokotlin.model.MyPost
-import com.example.historyvideokotlin.model.MyVideo
-import com.example.historyvideokotlin.model.UpdateResponse
-import com.example.historyvideokotlin.model.User
+import com.example.historyvideokotlin.model.*
 import com.example.historyvideokotlin.network.KtorAPIService
 import com.example.historyvideokotlin.utils.MyLog
 import kotlinx.coroutines.Dispatchers
@@ -91,6 +88,30 @@ class KtorUserRepository(val apiService: KtorAPIService) {
         }
     }
 
+    suspend fun postMyPost(myPost: MyPost): CreateResponse = coroutineScope {
+        withContext(Dispatchers.IO) {
+            val reponse = apiService.postMyPost(myPost)
+            if (reponse.isSuccessful) {
+                reponse.body()!!
+            } else {
+                CreateResponse(false,"")
+            }
+        }
+    }
+
+    suspend fun postMyVideo(myVideo: MyVideo): CreateResponse = coroutineScope {
+        withContext(Dispatchers.IO) {
+            val reponse = apiService.postMyVideo(myVideo)
+            if (reponse.isSuccessful) {
+                reponse.body()!!
+            } else {
+                CreateResponse(false,"")
+            }
+        }
+    }
+
+    // Update My Post
+
     suspend fun updateMyPostRead(myPostId: Int, isRead: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
             val reponse = apiService.updateMyPostRead(myPostId, isRead)
@@ -127,6 +148,8 @@ class KtorUserRepository(val apiService: KtorAPIService) {
             }
         }
     }
+
+    // Update MyVideo
 
     suspend fun updateMyVideoView(myVideoId: Int, isView: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
@@ -199,6 +222,34 @@ class KtorUserRepository(val apiService: KtorAPIService) {
                     UpdateResponse(body.isSuccess, body.data)
                 } else {
                     UpdateResponse(false, "")
+                }
+            }
+        }
+
+    // Delete
+
+    suspend fun deleteMyPost(myPostId: Int): DeleteResponse =
+        coroutineScope {
+            withContext(Dispatchers.IO) {
+                val reponse = apiService.deleteMyPost(myPostId)
+                val body = reponse.body()!!
+                if (reponse.isSuccessful) {
+                    DeleteResponse(body.isSuccess, body.data)
+                } else {
+                    DeleteResponse(false, "")
+                }
+            }
+        }
+
+    suspend fun deleteMyVideo(myVideoId: Int): DeleteResponse =
+        coroutineScope {
+            withContext(Dispatchers.IO) {
+                val reponse = apiService.deleteMyVideo(myVideoId)
+                val body = reponse.body()!!
+                if (reponse.isSuccessful) {
+                    DeleteResponse(body.isSuccess, body.data)
+                } else {
+                    DeleteResponse(false, "")
                 }
             }
         }

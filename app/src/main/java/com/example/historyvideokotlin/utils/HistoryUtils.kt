@@ -1,5 +1,11 @@
 package com.example.historyvideokotlin.utils
 
+import android.annotation.SuppressLint
+import android.content.ContentResolver
+import android.net.Uri
+import android.provider.MediaStore
+import android.text.TextUtils
+import com.example.historyvideokotlin.HistoryApplication
 import com.example.historyvideokotlin.R
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 
@@ -22,4 +28,21 @@ object HistoryUtils {
             .allowReordering(true)
             .build()
     }
+
+//    @SuppressLint("Range")
+//    fun getContentType(uri: Uri?): String? {
+//        var type: String? = null
+//        val contentResolver: ContentResolver = HistoryApplication().getInstances().contentResolver
+//        val cursor = contentResolver.query(uri!!, null, null, null, null)
+//        try {
+//            if (cursor != null) {
+//                cursor.moveToFirst()
+//                type = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE))
+//                cursor.close()
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        return if (TextUtils.isEmpty(type)) "application/octet-stream" else type
+//    }
 }

@@ -58,11 +58,11 @@ class ReplyFragment : BaseFragment<ReplyViewModel, FragmentReplyBinding>(),
 
 
             ivLike.setOnClickListener {
-                viewModel.updateLikeCountComment(comment.comment_id)
+//                viewModel.updateLikeCountComment(comment.comment_id)
             }
 
             ivDislike.setOnClickListener {
-                viewModel.updateDisikeCountComment(comment.comment_id)
+//                viewModel.updateDisikeCountComment(comment.comment_id)
             }
 
             var content = ""
@@ -77,12 +77,12 @@ class ReplyFragment : BaseFragment<ReplyViewModel, FragmentReplyBinding>(),
             }
 
             ivSend.setOnClickListener {
-                viewModel.postReply(
-                    HistoryUserManager.FUid(),
-                    comment.user_id,
-                    comment.comment_id,
-                    content
-                )
+//                viewModel.postReply(
+//                    HistoryUserManager.FUid(),
+//                    comment.user_id,
+//                    comment.comment_id,
+//                    content
+//                )
             }
         }
     }
@@ -112,16 +112,16 @@ class ReplyFragment : BaseFragment<ReplyViewModel, FragmentReplyBinding>(),
         ReplyBottomSheetDialogFragment.newInstance(userName, this).show(parentFragmentManager, null)
     }
 
-    override fun onLike(replyId: String) {
-        viewModel.updateLikeCountReply(replyId)
+    override fun onLike(replyId: Int) {
+//        viewModel.updateLikeCountReply(replyId)
     }
 
-    override fun onDislike(replyId: String) {
-        viewModel.updateDislikeCountReply(replyId)
+    override fun onDislike(replyId: Int) {
+//        viewModel.updateDislikeCountReply(replyId)
     }
 
     override fun onSend(partnerName: String, content: String) {
-        viewModel.updateReplyCountComment(comment.comment_id)
-        viewModel.postReply(HistoryUserManager.FUid(), partnerName, comment.comment_id, content)
+//        viewModel.updateReplyCountComment(comment.comment_id)
+//        viewModel.postReply(HistoryUserManager.FUid(), partnerName, comment.comment_id, content)
     }
 }

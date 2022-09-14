@@ -41,6 +41,66 @@ class CommentViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+     fun updateCommentLike(commentId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateCommentLike(commentId)
+            }.onSuccess {
+                MyLog.e("updateCommentLike",it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateCommentLike",it.message)
+            }
+        }
+    }
+
+    fun updateCommentDislike(commentId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateCommentDislike(commentId)
+            }.onSuccess {
+                MyLog.e("updateCommentDislike",it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateCommentDislike",it.message)
+            }
+        }
+    }
+
+    fun updateCommentLikeCancel(commentId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateCommentLikeCancel(commentId)
+            }.onSuccess {
+                MyLog.e("updateCommentLikeCancel",it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateCommentLikeCancel",it.message)
+            }
+        }
+    }
+
+    fun updateCommentDislikeCancel(commentId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateCommentDislikeCancel(commentId)
+            }.onSuccess {
+                MyLog.e("updateCommentDislikeCancel",it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateCommentDislikeCancel",it.message)
+            }
+        }
+    }
+
+    fun updateCommentReply(commentId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                ktorVideoRepository.updateCommentReply(commentId)
+            }.onSuccess {
+                MyLog.e("updateCommentReply",it.isSuccess.toString())
+            }.onFailure {
+                MyLog.e("updateCommentReply",it.message)
+            }
+        }
+    }
+
 //    private fun getComment(videoId: Int) {
 //        disposable =
 //            videoRepository.getComment(videoId)

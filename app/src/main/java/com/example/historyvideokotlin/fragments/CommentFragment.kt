@@ -123,11 +123,11 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
         )
     }
 
-    override fun onLiked(commentId: String) {
-        viewModel.updateLikeCountComment(commentId)
+    override fun onLiked(commentId: Int) {
+//        viewModel.updateLikeCountComment(commentId)
     }
 
-    override fun onDisliked(commentId: String) {
-        viewModel.updateDisikeCountComment(commentId)
+    override fun onDisliked(commentId: Int) {
+//        viewModel.updateDisikeCountComment(commentId)
     }
 }

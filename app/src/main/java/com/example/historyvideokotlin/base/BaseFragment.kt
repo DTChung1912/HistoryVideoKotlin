@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
@@ -69,9 +70,9 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
