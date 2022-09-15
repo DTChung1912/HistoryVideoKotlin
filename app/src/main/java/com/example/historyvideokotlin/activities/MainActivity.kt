@@ -44,6 +44,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
@@ -114,19 +115,19 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         }
 
         setupBottomNavigationView()
-//        setupBottomNavigationWithNavigationComponent()
-
+        FirebaseApp.initializeApp(this)
+        auth = Firebase.auth
         initFacebook()
         initGoogle()
 
 
-        var accessToken = AccessToken.getCurrentAccessToken()
-        var request: GraphRequest = GraphRequest.newMeRequest(accessToken, object :
-            GraphRequest.GraphJSONObjectCallback {
-            override fun onCompleted(obj: JSONObject?, response: GraphResponse?) {
-
-            }
-        })
+//        var accessToken = AccessToken.getCurrentAccessToken()
+//        var request: GraphRequest = GraphRequest.newMeRequest(accessToken, object :
+//            GraphRequest.GraphJSONObjectCallback {
+//            override fun onCompleted(obj: JSONObject?, response: GraphResponse?) {
+//
+//            }
+//        })
     }
 
     private fun setupBottomNavigationWithNavigationComponent() {
@@ -495,7 +496,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     private fun initGoogle() {
-        var gso: GoogleSignInOptions =
+
+        var gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -510,41 +512,34 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-
-            loginAppWithGoogleAccount(account)
+            if (account != null) {
+                loginAppWithGoogleAccount(account)
+            }
         } catch (e: ApiException) {
-            loginAppWithGoogleAccount(null)
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun loginAppWithGoogleAccount(account: GoogleSignInAccount?) {
-
-        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("TAG", "signInWithCredential:success")
-                    val user = auth.currentUser!!
-                    MyLog.e("google_user", user.uid + " " + user.displayName + " " + user.photoUrl)
-
-//                    getViewModel()!!.postUser(
-//                        user!!.uid, user.displayName.toString(),
-//                        user?.email.toString()
-//                    )
-
-                    popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
-                } else {
-                    Log.w("TAG", "signInWithCredential:failure", task.exception)
-                    Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-
         if (account != null) {
+            val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+            auth.signInWithCredential(credential)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d("TAG", "signInWithCredential:success")
+                        val user = auth.currentUser!!
+                        MyLog.e("google_user", user.uid + " " + account?.displayName + " ")
+
+                        popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
+                    } else {
+                        Log.w("TAG", "signInWithCredential:failure", task.exception)
+                        Toast.makeText(
+                            baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
         }
 
@@ -564,8 +559,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         callbackManager.onActivityResult(requestCode, resultCode, data)
         if (requestCode === RC_SIGN_IN) {
 
-            val task: Task<GoogleSignInAccount> =
-                GoogleSignIn.getSignedInAccountFromIntent(data)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
     }
