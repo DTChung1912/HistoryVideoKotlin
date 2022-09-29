@@ -24,7 +24,7 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
     override fun getViewModel(): LoginViewModel =
         ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         setUpButtonClick()
@@ -40,12 +40,11 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     override fun onClick(v: View?) {
@@ -89,11 +88,7 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
         var isUserLogined = viewModel.loginWithEmail(email,password)
 
         if (isUserLogined) {
-            Toast.makeText(
-                requireContext(),
-                "Failed to login, ",
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast("Failed to login ")
         } else {
             correctEmail = binding!!.edtEmail.text.toString()
             correctPassword = binding!!.edtPassword.text.toString()

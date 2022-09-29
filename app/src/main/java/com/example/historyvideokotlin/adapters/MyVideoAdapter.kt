@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.databinding.ItemVideoChildrenBinding
-import com.example.historyvideokotlin.model.MyVideo
+import com.example.historyvideokotlin.model.MyVideoRespone
+import com.example.historyvideokotlin.model.MyVideoStatus
+import com.example.historyvideokotlin.model.Video
 
 class MyVideoAdapter(
-    val myVideoList: List<MyVideo>,
+    val myVideoRespone: MyVideoRespone,
     val myVideoType: Int,
     val context: Context,
     val onItemClickListener: OnItemClickListener
@@ -17,20 +19,40 @@ class MyVideoAdapter(
     RecyclerView.Adapter<MyVideoAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemVideoChildrenBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(myVideo: MyVideo,myVideoType: Int, context: Context, onItemClickListener: OnItemClickListener) =
+        fun bind(
+            video: Video,
+            myVideoStatus: MyVideoStatus,
+            myVideoType: Int,
+            context: Context,
+            onItemClickListener: OnItemClickListener
+        ) =
             with(binding) {
                 binding.run {
-                    if (!myVideo.poster_image.isNullOrEmpty()) {
-                        Glide.with(context).load(myVideo.poster_image).into(ivPoster)
+                    val seconds = myVideoStatus.duration / 1000
+                    val second = seconds % 60
+                    val minute = seconds / 60 % 60
+                    val hour = seconds / (60 * 60) % 24
+                    var duration = ""
+                    if (hour > 0) {
+                        duration = String.format("%02d:%02d:%02d", hour, minute, second)
+                    } else {
+                        duration = String.format("%02d:%02d", minute, second)
                     }
-                    tvCreaterName.text = myVideo.creater
-                    tvTitle.text = myVideo.title
-                    tvViewCount.text = myVideo.view_count.toString() + "lượt xem"
+
+                    tvDuration.text = duration
+
+                    if (!video.poster_image.isNullOrEmpty()) {
+                        Glide.with(context).load(video.poster_image).into(ivPoster)
+                    }
+                    tvCreaterName.text = video.creater
+                    tvTitle.text = video.title
+                    tvViewCount.text = video.view_count.toString() + " lượt xem"
+
                     videoChildrenItem.setOnClickListener {
-                        onItemClickListener.onMyVideoPlay()
+                        onItemClickListener.onMyVideoPlay(video)
                     }
                     ivMore.setOnClickListener {
-                        onItemClickListener.onMyVideoMore(myVideo.my_video_id,myVideoType)
+                        onItemClickListener.onMyVideoMore(myVideoStatus.my_video_id, myVideoType)
                     }
                 }
             }
@@ -41,14 +63,19 @@ class MyVideoAdapter(
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(myVideoList[position],myVideoType, context, onItemClickListener)
+        holder.bind(
+            myVideoRespone.videoList[position],
+            myVideoRespone.myVideoStatusList[position],
+            myVideoType,
+            context,
+            onItemClickListener
+        )
     }
 
-    override fun getItemCount(): Int = myVideoList.size
+    override fun getItemCount(): Int = myVideoRespone.size
 
     interface OnItemClickListener {
-        fun onMyVideoPlay()
-        fun onMyVideoMore(myVideoId: Int,myVideoType: Int)
+        fun onMyVideoPlay(video: Video)
+        fun onMyVideoMore(myVideoId: Int, myVideoType: Int)
     }
-
 }

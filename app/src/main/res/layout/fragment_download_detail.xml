@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragments.DownloadDetailFragment">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/ndp_10"
+                android:src="@drawable/ic_back_white" />
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/playerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_200"
+                android:elevation="@dimen/ndp_5" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvVideoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="Chung"
+                android:textSize="@dimen/nsp_20"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvViewCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvVideoTitle"
+                android:layout_marginTop="@dimen/ndp_5"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="100 luot xem"
+                android:textSize="@dimen/nsp_15" />
+
+            <TextView
+                android:id="@+id/tvDateSubmitted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvVideoTitle"
+                android:layout_marginStart="@dimen/ndp_20"
+                android:layout_marginTop="@dimen/ndp_5"
+                android:layout_toRightOf="@id/tvViewCount"
+                android:text="10/07/2022"
+                android:textSize="@dimen/nsp_15" />
+
+            <ImageView
+                android:id="@+id/ivExtend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/ndp_10"
+                android:src="@drawable/expand" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvViewCount"
+                android:text="chung"
+                android:textSize="@dimen/nsp_15"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/llLike1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDescription"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/ndp_5"
+                android:weightSum="4">
+
+                <ImageView
+                    android:id="@+id/ivLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/like_video" />
+
+                <ImageView
+                    android:id="@+id/ivDislike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:src="@drawable/dislike_video" />
+
+                <ImageView
+                    android:id="@+id/ivDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:src="@drawable/downloaded" />
+
+                <ImageView
+                    android:id="@+id/ivSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:src="@drawable/save" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLike2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llLike1"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <TextView
+                    android:id="@+id/tvLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:layout_marginTop="@dimen/ndp_5"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Thích" />
+
+                <TextView
+                    android:id="@+id/tvDislike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/ndp_20"
+                    android:layout_marginTop="@dimen/ndp_5"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Không thích" />
+
+                <TextView
+                    android:id="@+id/tvDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:layout_marginTop="@dimen/ndp_5"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Đã tải xuống" />
+
+                <TextView
+                    android:id="@+id/tvSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:layout_marginTop="@dimen/ndp_5"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Xem sau" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCreater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llLike2"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_creater"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/ndp_10"
+                android:paddingStart="@dimen/ndp_10">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivCreaterAvatar"
+                    android:layout_width="@dimen/ndp_50"
+                    android:layout_height="@dimen/ndp_50"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/tvCreaterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:layout_toRightOf="@id/ivCreaterAvatar"
+                    android:text="Chung"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

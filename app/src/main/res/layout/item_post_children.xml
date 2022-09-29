@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemPostChildren"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/ndp_5"
+    android:layout_marginVertical="@dimen/ndp_10"
+    android:background="@drawable/background_item_post_person"
+    android:paddingVertical="@dimen/ndp_10"
+    android:paddingStart="@dimen/ndp_10">
+
+    <ImageView
+        android:id="@+id/ivPostList"
+        android:layout_width="@dimen/ndp_70"
+        android:layout_height="@dimen/ndp_70"
+        android:background="@drawable/background_imageview_post_list"
+        android:clipToOutline="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ndp_15"
+        android:layout_toLeftOf="@id/ivMore"
+        android:layout_toRightOf="@id/ivPostList"
+        android:text="Ho Chi Minh"
+        android:textSize="@dimen/nsp_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvReadCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginStart="@dimen/ndp_15"
+        android:layout_marginTop="@dimen/ndp_5"
+        android:layout_toRightOf="@id/ivPostList"
+        android:drawableLeft="@drawable/reading_book"
+        android:drawablePadding="@dimen/ndp_10"
+        android:text="100 lượt đọc"
+        android:textSize="@dimen/nsp_15" />
+
+    <TextView
+        android:id="@+id/tvDownloadCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvReadCount"
+        android:layout_marginStart="@dimen/ndp_15"
+        android:layout_marginTop="@dimen/ndp_5"
+        android:layout_toRightOf="@id/ivPostList"
+        android:drawableLeft="@drawable/download_arrow"
+        android:drawablePadding="@dimen/ndp_10"
+        android:text="100 lượt tải xuống"
+        android:textSize="@dimen/nsp_15" />
+
+    <ImageView
+        android:id="@+id/ivMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/ndp_10"
+        android:layout_marginEnd="@dimen/ndp_10"
+        android:src="@drawable/threedots" />
+</RelativeLayout>

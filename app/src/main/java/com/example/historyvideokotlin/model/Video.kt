@@ -16,5 +16,6 @@ data class Video(
     val share_count: Int,
     val video_url: String,
     val poster_image: String,
+    val duration: Int,
     val date_submitted: String
 ) : Serializable

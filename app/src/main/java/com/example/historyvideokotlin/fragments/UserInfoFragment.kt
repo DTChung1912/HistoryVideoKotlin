@@ -2,16 +2,14 @@ package com.example.historyvideokotlin.fragments
 
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentUserInfoBinding
 import com.example.historyvideokotlin.model.MyVideoListData
+import com.example.historyvideokotlin.model.MyVideoType
 import com.example.historyvideokotlin.model.User
 import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.UserInfoViewModel
-import java.util.*
 
 class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding>() {
 
@@ -25,10 +23,9 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
     override fun getViewModel(): UserInfoViewModel =
         ViewModelProvider(requireActivity()).get(UserInfoViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
-
         viewModel.getMyVideoData()
 
 //        viewModel.userList.observe(this, { data ->
@@ -41,21 +38,22 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
 //                binding.tvEmail.text = user.email
 //            }
 //        })
-        viewModel.userInfo.observe(this,{data ->
+        viewModel.userInfo.observe(this, { data ->
             data.let {
                 userInfo = it
             }
         })
+        setItemClick()
 
-        viewModel.myVideoList.observe(this, { data ->
-            data.let {
-                myVideoListData = MyVideoListData(it)
-                setItemClick(myVideoListData)
-            }
-        })
+//        viewModel.myVideoList.observe(this, { data ->
+//            data.let {
+//                myVideoListData = MyVideoListData(it)
+//                setItemClick(myVideoListData)
+//            }
+//        })
     }
 
-    private fun setItemClick(videoListData: MyVideoListData) {
+    private fun setItemClick() {
         binding.run {
             ivEdit.setOnClickListener {
                 pushFragment(
@@ -65,49 +63,38 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             }
             tvLike.setOnClickListener {
                 pushFragment(
-                    MyVideoFragment.newInstance(videoListData, MyVideoType.Like.id),
+                    MyVideoFragment.newInstance(MyVideoType.LIKE.id),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
             tvLater.setOnClickListener {
                 pushFragment(
-                    MyVideoFragment.newInstance(videoListData, MyVideoType.Later.id),
+                    MyVideoFragment.newInstance(MyVideoType.LATER.id),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
             tvDownload.setOnClickListener {
                 pushFragment(
-                    MyVideoFragment.newInstance(videoListData, MyVideoType.Download.id),
+                    DownloadListFragment.newInstance(MyVideoType.DOWNLOAD.id),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
             tvViewed.setOnClickListener {
                 pushFragment(
-                    MyVideoFragment.newInstance(videoListData, MyVideoType.View.id),
+                    MyVideoFragment.newInstance(MyVideoType.VIEW.id),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     companion object {
-
         @JvmStatic
         fun newInstance() =
             UserInfoFragment().apply {
-                arguments = bundleOf(
-                )
+                arguments = bundleOf()
             }
-    }
-
-    enum class MyVideoType(val id: Int) {
-        Like(1),
-        Later(2),
-        Download(3),
-        View(4),
-        Share(5)
     }
 }

@@ -30,7 +30,7 @@ class QuestionFragment(val onClickListener: OnClickListener) :
     override fun getViewModel(): QuestionViewModel =
         ViewModelProvider(requireActivity()).get(QuestionViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         quiz = arguments?.getSerializable(QUIZ_DATA_KEY) as Quiz
@@ -152,12 +152,11 @@ class QuestionFragment(val onClickListener: OnClickListener) :
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     companion object {

@@ -10,11 +10,22 @@ import retrofit2.Response
 
 class KtorPostRepository(val apiService: KtorAPIService) {
 
-    suspend fun getPost(): List<Post> = coroutineScope {
+    suspend fun getPostList(): List<Post> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getPost()
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getPostList()
+            if (response.isSuccessful) {
+                response.body().orEmpty()
+            } else {
+                listOf()
+            }
+        }
+    }
+
+    suspend fun getPostDetail(postId: Int): List<Post> = coroutineScope {
+        withContext(Dispatchers.IO) {
+            val response = apiService.getPostDetail(postId)
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -23,9 +34,9 @@ class KtorPostRepository(val apiService: KtorAPIService) {
 
     suspend fun getSearchPost(keyword: String): List<Post> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getSearchPost(keyword)
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getSearchPost(keyword)
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -34,9 +45,9 @@ class KtorPostRepository(val apiService: KtorAPIService) {
 
     suspend fun updatePostRead(postId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse: Response<UpdateResponse> = apiService.updatePostRead(postId)
-            if (reponse.isSuccessful) {
-                val body = reponse.body()!!
+            val response: Response<UpdateResponse> = apiService.updatePostRead(postId)
+            if (response.isSuccessful) {
+                val body = response.body()!!
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "error")
@@ -46,9 +57,9 @@ class KtorPostRepository(val apiService: KtorAPIService) {
 
     suspend fun updatePostDownload(postId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse: Response<UpdateResponse> = apiService.updatePostDownload(postId)
-            if (reponse.isSuccessful) {
-                val body = reponse.body()!!
+            val response: Response<UpdateResponse> = apiService.updatePostDownload(postId)
+            if (response.isSuccessful) {
+                val body = response.body()!!
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "error")
@@ -58,9 +69,9 @@ class KtorPostRepository(val apiService: KtorAPIService) {
 
     suspend fun updatePostRate(postId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse: Response<UpdateResponse> = apiService.updatePostRate(postId)
-            if (reponse.isSuccessful) {
-                val body = reponse.body()!!
+            val response: Response<UpdateResponse> = apiService.updatePostRate(postId)
+            if (response.isSuccessful) {
+                val body = response.body()!!
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "error")

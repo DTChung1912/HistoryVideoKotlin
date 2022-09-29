@@ -10,7 +10,12 @@ interface KtorAPIService {
     suspend fun getUser(@Query("userId") userId: String): Response<User>
 
     @GET("video/list")
-    suspend fun getVideo(): Response<List<Video>>
+    suspend fun getVideoList(): Response<List<Video>>
+
+    @GET("video/detail")
+    suspend fun getVideoDetail(
+        @Query("video_id") videoId: Int
+    ): Response<List<Video>>
 
     @GET("quiz/random")
     suspend fun getRandomQuiz(): Response<List<Quiz>>
@@ -22,7 +27,12 @@ interface KtorAPIService {
     suspend fun getTheme(): Response<List<Theme>>
 
     @GET("post/list")
-    suspend fun getPost(): Response<List<Post>>
+    suspend fun getPostList(): Response<List<Post>>
+
+    @GET("post/detail")
+    suspend fun getPostDetail(
+        @Query("post_id") postId: Int
+    ): Response<List<Post>>
 
     @GET("comment/list")
     suspend fun getComment(@Query("video_id") videoId: Int): Response<List<Comment>>
@@ -54,13 +64,19 @@ interface KtorAPIService {
     @GET("myvideo/list")
     suspend fun getMyVideoList(
         @Query("user_id") userId: String
-    ): Response<List<MyVideo>>
+    ): Response<MyVideoRespone>
+
+    @GET("myvideo/list")
+    suspend fun getMyVideoListType(
+        @Query("user_id") userId: String,
+        @Query("type") type: Int,
+    ): Response<MyVideoRespone>
 
     @GET("myvideo/detail")
     suspend fun getMyVideo(
         @Query("user_id") userId: String,
         @Query("video_id") videoId: Int
-    ): Response<List<MyVideo>>
+    ): Response<List<MyVideoStatus>>
 
     @GET("video/test")
     suspend fun getTest(
@@ -71,7 +87,7 @@ interface KtorAPIService {
     @GET("mypost/list")
     suspend fun getMyPostList(
         @Query("user_id") userId: String
-    ): Response<List<MyPost>>
+    ): Response<MyPostResponse>
 
     @GET("mypost/detail")
     suspend fun getMyPost(
@@ -86,7 +102,7 @@ interface KtorAPIService {
 
     @POST("myvideo/create")
     suspend fun postMyVideo(
-        @Body myVideo: MyVideo
+        @Body myVideo: MyVideoStatus
     ): Response<CreateResponse>
 
     @PUT("user/update")

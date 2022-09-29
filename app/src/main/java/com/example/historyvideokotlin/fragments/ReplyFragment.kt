@@ -33,7 +33,7 @@ class ReplyFragment : BaseFragment<ReplyViewModel, FragmentReplyBinding>(),
     override fun getViewModel(): ReplyViewModel =
         ViewModelProvider(requireActivity()).get(ReplyViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         comment = arguments?.getSerializable(COMMENT_KEY) as Comment
@@ -95,8 +95,7 @@ class ReplyFragment : BaseFragment<ReplyViewModel, FragmentReplyBinding>(),
         binding.recylerViewReply.adapter = adapter
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     companion object {
         const val COMMENT_KEY = "COMMENT_ID_KEY"

@@ -11,9 +11,9 @@ class KtorQuizRepository(val apiService: KtorAPIService) {
 
     suspend fun getTheme(): List<Theme> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getTheme()
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getTheme()
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -22,9 +22,9 @@ class KtorQuizRepository(val apiService: KtorAPIService) {
 
     suspend fun getRandomQuiz(): List<Quiz> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getRandomQuiz()
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getRandomQuiz()
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -33,9 +33,9 @@ class KtorQuizRepository(val apiService: KtorAPIService) {
 
     suspend fun getQuizByTheme(themeInt: Int): List<Quiz> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getQuizByTheme(themeInt)
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getQuizByTheme(themeInt)
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }

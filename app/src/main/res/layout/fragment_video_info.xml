@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/ndp_10"
                     android:text="Chung"
-                    android:textSize="@dimen/ndp_20"
+                    android:textSize="@dimen/nsp_20"
                     android:textStyle="bold" />
 
                 <TextView
@@ -206,7 +206,7 @@
                         android:layout_marginStart="@dimen/ndp_10"
                         android:layout_toRightOf="@id/ivCreaterAvatar"
                         android:text="Chung"
-                        android:textSize="@dimen/ndp_20"
+                        android:textSize="@dimen/nsp_20"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
                 </LinearLayout>
@@ -244,7 +244,5 @@
             </RelativeLayout>
 
         </ScrollView>
-
     </FrameLayout>
-
 </layout>

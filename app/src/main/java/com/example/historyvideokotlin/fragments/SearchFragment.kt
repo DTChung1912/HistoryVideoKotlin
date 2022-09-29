@@ -22,7 +22,7 @@ class SearchFragment : BaseFragment<SearchViewModel,FragmentSearchBinding>() {
     override fun getViewModel(): SearchViewModel =
         ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         val searchType = arguments?.getInt(SEARCH_TYPE_KEY)
@@ -38,12 +38,11 @@ class SearchFragment : BaseFragment<SearchViewModel,FragmentSearchBinding>() {
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     companion object {

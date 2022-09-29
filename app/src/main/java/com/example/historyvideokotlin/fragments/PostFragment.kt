@@ -21,7 +21,7 @@ class PostFragment : BaseFragment<PostViewModel, FragmentPostBinding>() {
     override fun getViewModel(): PostViewModel =
         ViewModelProvider(requireActivity()).get(PostViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         viewModel.getPostData()
@@ -44,12 +44,11 @@ class PostFragment : BaseFragment<PostViewModel, FragmentPostBinding>() {
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(true)
+        showBottomMenu()
     }
 
     companion object {

@@ -32,8 +32,8 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
             postRepository.getPost()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeWith(object : DisposableSingleObserver<List<Post>>() {
                     override fun onSuccess(t: List<Post>) {
                         postList.value = t
@@ -50,13 +50,13 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
     private fun getPostKtor() {
         viewModelScope.launch {
             runCatching {
-                loadingLiveData.postValue(true)
-                ktorPostRepository.getPost()
+                showLoading()
+                ktorPostRepository.getPostList()
             }.onSuccess {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 postList.value = it
             }.onFailure {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 MyLog.e("postList",it.message)
             }
         }

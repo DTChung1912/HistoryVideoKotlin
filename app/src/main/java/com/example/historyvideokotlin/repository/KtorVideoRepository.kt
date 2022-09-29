@@ -7,11 +7,22 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 class KtorVideoRepository(val apiService: KtorAPIService) {
-    suspend fun getVideo(): List<Video> = coroutineScope {
+    suspend fun getVideoList(): List<Video> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getVideo()
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getVideoList()
+            if (response.isSuccessful) {
+                response.body().orEmpty()
+            } else {
+                listOf()
+            }
+        }
+    }
+
+    suspend fun getVideoDetail(videoId: Int): List<Video> = coroutineScope {
+        withContext(Dispatchers.IO) {
+            val response = apiService.getVideoDetail(videoId)
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -20,9 +31,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun getSearchVideo(keyword: String): List<Video> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getSearchVideo(keyword)
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getSearchVideo(keyword)
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -31,9 +42,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun getComment(videoId: Int): List<Comment> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getComment(videoId)
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getComment(videoId)
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -42,9 +53,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun getReply(commentId: Int): List<Reply> = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.getReply(commentId)
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
+            val response = apiService.getReply(commentId)
+            if (response.isSuccessful) {
+                response.body().orEmpty()
             } else {
                 listOf()
             }
@@ -53,9 +64,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun postComment(comment: Comment): Comment = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.postComment(comment)
-            if (reponse.isSuccessful) {
-                reponse.body()!!
+            val response = apiService.postComment(comment)
+            if (response.isSuccessful) {
+                response.body()!!
             } else {
                 Comment(0, 0, "", "", "", "", "", "", "", "")
             }
@@ -64,22 +75,11 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun postReply(reply: Reply): Reply = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.postReply(reply)
-            if (reponse.isSuccessful) {
-                reponse.body()!!
+            val response = apiService.postReply(reply)
+            if (response.isSuccessful) {
+                response.body()!!
             } else {
                 Reply(0, 0, "", "", "", "", "", "", "", "")
-            }
-        }
-    }
-
-    suspend fun getMyVideo(userId: String, videoId: Int): List<MyVideo> = coroutineScope {
-        withContext(Dispatchers.IO) {
-            val reponse = apiService.getMyVideo(userId, videoId)
-            if (reponse.isSuccessful) {
-                reponse.body().orEmpty()
-            } else {
-                listOf()
             }
         }
     }
@@ -88,9 +88,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateVideoLike(videoId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateVideoLike(videoId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateVideoLike(videoId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -100,9 +100,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateVideoLikeCancel(videoId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateVideoLikeCancel(videoId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateVideoLikeCancel(videoId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -112,9 +112,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateVideoDislike(videoId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateVideoDislike(videoId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateVideoDislike(videoId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -124,9 +124,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateVideoDislikeCancel(videoId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateVideoDislikeCancel(videoId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateVideoDislikeCancel(videoId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -136,9 +136,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateVideoDownload(videoId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateVideoDownload(videoId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateVideoDownload(videoId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -148,9 +148,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateVideoView(videoId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateVideoView(videoId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateVideoView(videoId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -160,9 +160,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateVideoComment(videoId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateVideoComment(videoId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateVideoComment(videoId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -174,9 +174,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateCommentLike(commentId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateCommentLike(commentId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateCommentLike(commentId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -186,9 +186,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateCommentLikeCancel(commentId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateCommentLikeCancel(commentId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateCommentLikeCancel(commentId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -198,9 +198,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateCommentDislike(commentId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateCommentDislike(commentId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateCommentDislike(commentId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -210,9 +210,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateCommentDislikeCancel(commentId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateCommentDislikeCancel(commentId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateCommentDislikeCancel(commentId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -222,9 +222,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateCommentReply(commentId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateCommentReply(commentId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateCommentReply(commentId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -236,9 +236,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateReplyLike(replyId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateReplyLike(replyId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateReplyLike(replyId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -248,9 +248,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateReplyLikeCancel(replyId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateReplyLikeCancel(replyId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateReplyLikeCancel(replyId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -260,9 +260,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateReplyDislike(replyId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateReplyDislike(replyId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateReplyDislike(replyId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -272,9 +272,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun updateReplyDislikeCancel(replyId: Int): UpdateResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.updateReplyDislikeCancel(replyId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.updateReplyDislikeCancel(replyId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 UpdateResponse(body.isSuccess, body.data)
             } else {
                 UpdateResponse(false, "")
@@ -286,9 +286,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun deleteComment(replyId: Int): DeleteResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.deleteComment(replyId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.deleteComment(replyId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 DeleteResponse(body.isSuccess, body.data)
             } else {
                 DeleteResponse(false, "")
@@ -298,9 +298,9 @@ class KtorVideoRepository(val apiService: KtorAPIService) {
 
     suspend fun deleteReply(replyId: Int): DeleteResponse = coroutineScope {
         withContext(Dispatchers.IO) {
-            val reponse = apiService.deleteReply(replyId)
-            val body = reponse.body()!!
-            if (reponse.isSuccessful) {
+            val response = apiService.deleteReply(replyId)
+            val body = response.body()!!
+            if (response.isSuccessful) {
                 DeleteResponse(body.isSuccess, body.data)
             } else {
                 DeleteResponse(false, "")

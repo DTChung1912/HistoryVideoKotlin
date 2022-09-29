@@ -2,11 +2,60 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".fragments.MyPostFragment">
 
+        <FrameLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app2">
 
-    </FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginHorizontal="@dimen/ndp_5"
+                android:layout_marginVertical="@dimen/ndp_5"
+                android:background="@drawable/background_quiz_toolbar"
+                android:gravity="top"
+                android:paddingHorizontal="@dimen/ndp_5">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_back_white" />
+
+                <TextView
+                    android:id="@+id/tvTitleToolBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:layout_marginBottom="@dimen/ndp_10"
+                    android:background="@drawable/background_quiz_time"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/ndp_10"
+                    android:text="Danh sách bài viết đã đọc"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </layout>

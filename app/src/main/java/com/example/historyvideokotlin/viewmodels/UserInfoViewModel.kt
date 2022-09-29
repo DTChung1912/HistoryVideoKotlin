@@ -28,10 +28,8 @@ class UserInfoViewModel(application: Application) : BaseViewModel(application) {
     var userList = MutableLiveData<List<User>>()
     var userInfo = MutableLiveData<User>()
 
-    var userId = HistoryUserManager.FUid()
+    var userId = HistoryUserManager.instance.UserId()
     val ktorUserRepository = application.repositoryProvider.ktorUserRepository
-
-
 
     fun getMyVideoData() {
         getMyVideoList( )
@@ -45,8 +43,8 @@ class UserInfoViewModel(application: Application) : BaseViewModel(application) {
             userRepository.getMyVideoList(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { data ->
                         data.let {
@@ -63,8 +61,8 @@ class UserInfoViewModel(application: Application) : BaseViewModel(application) {
             userRepository.getMyPostList(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { data ->
                         data.let {
@@ -81,8 +79,8 @@ class UserInfoViewModel(application: Application) : BaseViewModel(application) {
             userRepository.getUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { data ->
                         data.let {
@@ -96,13 +94,13 @@ class UserInfoViewModel(application: Application) : BaseViewModel(application) {
     fun getUserInfo(userId: String) {
         viewModelScope.launch {
             runCatching {
-                loadingLiveData.postValue(true)
+                showLoading()
                 ktorUserRepository.getUser(userId)
             }.onSuccess {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 userInfo.value = it
             }.onFailure {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 MyLog.e("postList",it.message)
             }
         }

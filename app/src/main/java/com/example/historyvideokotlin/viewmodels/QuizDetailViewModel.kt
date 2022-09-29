@@ -52,8 +52,8 @@ class QuizDetailViewModel(application: Application) : BaseViewModel(application)
 //            quizRepository.getQuiz()
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe { loadingLiveData.postValue(true) }
-//                .doAfterTerminate { loadingLiveData.postValue(false) }
+//                .doOnSubscribe { showLoading() }
+//                .doAfterTerminate { hideLoading() }
 //                .subscribeWith(object : DisposableSingleObserver<List<Quiz>>() {
 //                    override fun onSuccess(t: List<Quiz>) {
 //                        quizList.value = t
@@ -74,8 +74,8 @@ class QuizDetailViewModel(application: Application) : BaseViewModel(application)
             quizRepository.getQuiz()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeWith(object : DisposableSingleObserver<List<Quiz>>() {
                     override fun onSuccess(t: List<Quiz>) {
                         quizList.value = t

@@ -24,5 +24,7 @@ data class MyVideo(
     val isDownload: Int,
     val isView: Int,
     val isShare: Int,
-    val isDontCare: Int
+    val isDontCare: Int,
+    val view_time: Int,
+    val duration: Int
 ) : Serializable

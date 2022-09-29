@@ -36,7 +36,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     protected open fun handleError(throwable: Throwable?) {
-        loadingLiveData.postValue(false)
+        hideLoading()
         if (throwable == null || TextUtils.isEmpty(throwable.localizedMessage)) {
             return
         }
@@ -70,5 +70,13 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
         throwable.printStackTrace()
+    }
+
+    fun showLoading() {
+        loadingLiveData.postValue(true)
+    }
+
+    fun hideLoading() {
+        loadingLiveData.postValue(false)
     }
 }

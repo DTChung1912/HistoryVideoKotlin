@@ -12,7 +12,7 @@ class APIServiceBuilder() {
         val okHttpClientProvider = OkHttpClientProvider()
         var okHttpClient: OkHttpClient = buildOkHttp(okHttpClientProvider)
         okHttpClientProvider.okHttpClient = okHttpClient
-        return Retrofit.Builder().baseUrl(RESTClient().T3_KTOR_URL)
+        return Retrofit.Builder().baseUrl(RESTClient().T2_KTOR_URL)
             .client(buildOkHttp(okHttpClientProvider).also { okHttpClient = it })
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()

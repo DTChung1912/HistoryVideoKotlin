@@ -31,13 +31,13 @@ class QuizViewModel(application: Application) : BaseViewModel(application) {
     private fun getTheme() {
         viewModelScope.launch {
             runCatching {
-                loadingLiveData.postValue(true)
+                showLoading()
                 ktorQuizRepository.getTheme()
             }.onSuccess {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 themeList.value = it
             }.onFailure {
-                loadingLiveData.postValue(false)
+                hideLoading()
             }
         }
     }
@@ -47,8 +47,8 @@ class QuizViewModel(application: Application) : BaseViewModel(application) {
 //            quizRepository.getTheme()
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe { loadingLiveData.postValue(true) }
-//                .doAfterTerminate { loadingLiveData.postValue(false) }
+//                .doOnSubscribe { showLoading() }
+//                .doAfterTerminate { hideLoading() }
 //                .subscribeWith(object : DisposableSingleObserver<List<Theme>>() {
 //                    override fun onSuccess(t: List<Theme>) {
 //                        themeList.value = t

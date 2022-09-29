@@ -21,7 +21,7 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
     private var userRepository = UserRepository()
     private var disposable: Disposable? = null
     private var disposable2 = CompositeDisposable()
-    var userId = HistoryUserManager.FUid()
+    var userId = HistoryUserManager.instance.UserId()
 
     fun getVideoData() {
         getVideo()
@@ -32,8 +32,8 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
             videoRepository.getVideo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeWith(object : DisposableSingleObserver<List<Video>>() {
                     override fun onSuccess(t: List<Video>) {
                         videoList.value = t
@@ -54,8 +54,8 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
                 .updateLikeMyVideo(userId, videoId, isLike)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -67,8 +67,8 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateViewedMyVideo(userId, videoId, isView)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -82,8 +82,8 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateLaterMyVideo(userId, videoId, isLater)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -96,8 +96,8 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateDownloadMyVideo(userId, videoId, isDownload)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -110,8 +110,8 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateShareMyVideo(userId, videoId, isShare)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -124,8 +124,8 @@ class NextVideoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateDontCareMyVideo(userId, videoId, isDontCared)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

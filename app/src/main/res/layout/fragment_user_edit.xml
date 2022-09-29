@@ -28,7 +28,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:text="Thông tin cá nhân"
-                android:textSize="@dimen/ndp_25"
+                android:textSize="@dimen/nsp_25"
                 android:textStyle="bold" />
         </RelativeLayout>
 

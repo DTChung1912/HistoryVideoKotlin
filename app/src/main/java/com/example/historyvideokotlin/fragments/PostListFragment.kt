@@ -30,7 +30,7 @@ class PostListFragment(val postList: List<Post>) :
     override fun getViewModel(): PostViewModel =
         ViewModelProvider(requireActivity()).get(PostViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         postType = arguments?.getInt(KEY_POST_LIST_TYPE)!!
@@ -54,8 +54,7 @@ class PostListFragment(val postList: List<Post>) :
         binding.recyclerViewPost.adapter = adapter
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     companion object {
 

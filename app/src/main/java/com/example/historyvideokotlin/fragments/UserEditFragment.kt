@@ -45,7 +45,7 @@ class UserEditFragment : BaseFragment<UserEditViewModel, FragmentUserEditBinding
     override fun getViewModel(): UserEditViewModel =
         ViewModelProvider(requireActivity()).get(UserEditViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         storageReference = FirebaseStorage.getInstance().getReference("Avatar")
@@ -77,7 +77,7 @@ class UserEditFragment : BaseFragment<UserEditViewModel, FragmentUserEditBinding
         storage.putFile(imageUri!!)
             .addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot> {
                 override fun onSuccess(snapshot: UploadTask.TaskSnapshot?) {
-                    viewModel.loadingLiveData.postValue(false)
+
                     storage.downloadUrl.addOnSuccessListener {
                         MyLog.e("imageUrl",it.toString())
                         binding.run {
@@ -102,15 +102,16 @@ class UserEditFragment : BaseFragment<UserEditViewModel, FragmentUserEditBinding
                             )
                         }
                     }
-                    Toast.makeText(requireContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                    showToast("Cập nhật thành công")
                 }
             }).addOnFailureListener(object : OnFailureListener {
                 override fun onFailure(e: Exception) {
-                    viewModel.loadingLiveData.postValue(false)
-                    Toast.makeText(requireContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                    showToast("Cập nhật thất bại")
                 }
             }).addOnProgressListener {
-                viewModel.loadingLiveData.postValue(true)
+                showLoading()
             }
 
     }
@@ -142,22 +143,18 @@ class UserEditFragment : BaseFragment<UserEditViewModel, FragmentUserEditBinding
             edtAddress.setText(user.address)
             edtPhoneNumber.setText(user.phone_number)
             edtBirthday.setText(user.birthday)
+            binding.run {
+                ivBack.setOnClickListener {
+                    popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
+                }
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
-
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-        binding.run {
-            ivBack.setOnClickListener {
-                popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
-            }
-        }
-    }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

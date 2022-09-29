@@ -17,13 +17,13 @@ class SearchVideoResultViewModel(application: Application) : BaseViewModel(appli
     fun getSeacrhVideo(keyword: String) {
         viewModelScope.launch {
             runCatching {
-                loadingLiveData.postValue(true)
+                showLoading()
                 ktorVideoRepository.getSearchVideo(keyword)
             }.onSuccess {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 videoList.value = it
             }.onFailure {
-                loadingLiveData.postValue(false)
+                hideLoading()
             }
         }
     }

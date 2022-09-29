@@ -5,7 +5,6 @@ import com.example.historyvideokotlin.model.*
 import io.reactivex.Completable
 import io.reactivex.Observable
 
-
 class UserRepository : BaseRepository() {
 
 //    fun getUser(): Observable<List<User>> {
@@ -81,5 +80,4 @@ class UserRepository : BaseRepository() {
     fun deleteLaterMyVideo(myVideoId: Int, isLatered: Int): Observable<MyVideo> {
         return apiService?.deleteLaterMyVideo(myVideoId, isLatered)!!
     }
-
 }

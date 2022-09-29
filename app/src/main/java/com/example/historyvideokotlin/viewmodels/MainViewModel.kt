@@ -58,8 +58,8 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         disposable2 = userRepository.postUser2(userId,name, email)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { loadingLiveData.postValue(true) }
-            .doAfterTerminate { loadingLiveData.postValue(false) }
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
             .subscribe(
                 { result -> MyLog.e("chung", result.toString()) },
                 { error -> MyLog.e("this", error.message.toString()) },

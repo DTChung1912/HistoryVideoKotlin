@@ -36,8 +36,8 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/SplashScreen"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,6 +74,17 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProviderYOUR_FACEBOOK_APP_ID"
             android:exported="true" />
+
+        <service
+            android:name=".MyDownloadService"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="com.google.android.exoplayer.downloadService.action.RESTART" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
     </application>
+
 
 </manifest>

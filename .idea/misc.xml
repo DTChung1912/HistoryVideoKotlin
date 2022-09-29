@@ -12,7 +12,9 @@
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_button_post.xml" value="0.2025" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_button_theme.xml" value="0.313" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_item_post_person.xml" value="0.2025" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_menu.xml" value="0.1915" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_quiz_time.xml" value="0.2025" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_quiz_toolbar.xml" value="0.1555" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_search.xml" value="0.175" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/background_tab_post.xml" value="0.2025" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/border_stroke_only_right.xml" value="0.175" />
@@ -24,6 +26,8 @@
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/elip_button_with_opacity.xml" value="0.162" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/ic_arrow_back_black_24dp.xml" value="0.2025" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/ic_baseline_comment_24.xml" value="0.162" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/ic_checkmark.xml" value="0.17" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/ic_clear_black_24dp.xml" value="0.1755" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.161" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/activity_account.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/activity_kotlin_main.xml" value="0.264" />
@@ -36,28 +40,44 @@
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/dialog_progress_bar.xml" value="0.19635416666666666" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_commet.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_delete_my_video_bottom_sheet_dialog.xml" value="0.20599409033347404" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_download_list.xml" value="0.18784297171802447" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_download_video.xml" value="0.1288888888888889" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_download_video_detail.xml" value="0.264" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_feed.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_first.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_login.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_login_dialog.xml" value="0.1" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_my_page.xml" value="0.2359375" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_my_page_login.xml" value="0.264" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_my_post.xml" value="0.264" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_my_video.xml" value="0.264" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_next_video.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_post.xml" value="0.19581017528858485" />
-        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_post_detail.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_post_detail.xml" value="0.264" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_quiz.xml" value="0.264" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_register.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_result_statistic.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_test_exams.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_user_edit.xml" value="0.264" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_user_info.xml" value="0.20599409033347404" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_video.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_video_detail.xml" value="0.264" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/fragment_video_info.xml" value="0.264" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/get_url_layout.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_comment.xml" value="0.19581017528858485" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_feed.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_next_video.xml" value="0.19581017528858485" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_post_children.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_post_list.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_post_person.xml" value="0.264" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_question.xml" value="0.264" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_quiz.xml" value="0.4" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_theme_list.xml" value="0.3317657118426678" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_video.xml" value="0.264" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/item_video_children.xml" value="0.536" />
+        <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/layout/video_playback_control_view.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/menu/bottom_navigation.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.3317657118426678" />
         <entry key="..\:/Users/TT/AndroidStudioProjects/HistoryVideoKotlin/app/src/main/res/menu/menu_main.xml" value="0.23854166666666668" />

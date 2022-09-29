@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/gray"
     android:orientation="vertical"
-    android:paddingStart="@dimen/ndp_15"
-    android:paddingTop="@dimen/ndp_10">
+    android:paddingStart="@dimen/ndp_15">
 
     <TextView
         android:id="@+id/tvDelete"
@@ -14,8 +13,7 @@
         android:layout_marginVertical="@dimen/ndp_10"
         android:drawableLeft="@drawable/ic_delete"
         android:drawablePadding="@dimen/ndp_20"
-        android:text="Lưu vào danh sách xem sau"
+        android:text="Xóa"
         android:textSize="@dimen/nsp_20"
         android:textStyle="bold" />
-
 </LinearLayout>

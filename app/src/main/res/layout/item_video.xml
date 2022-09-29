@@ -26,6 +26,18 @@
             android:layout_height="@dimen/ndp_60"
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_play_circle_outline" />
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/ndp_10"
+            android:layout_marginBottom="@dimen/ndp_10"
+            android:text="00:00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/nsp_15" />
     </FrameLayout>
 
     <RelativeLayout
@@ -86,11 +98,11 @@
             android:textSize="@dimen/nsp_10" />
 
         <ImageView
-            android:layout_marginTop="@dimen/ndp_5"
             android:id="@+id/ivMore"
             android:layout_width="@dimen/ndp_15"
             android:layout_height="@dimen/ndp_15"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/ndp_5"
             android:scaleType="fitXY"
             android:src="@drawable/threedots" />
 

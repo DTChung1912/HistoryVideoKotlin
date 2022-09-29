@@ -28,14 +28,14 @@ class SearchVideoResultFragment :
     override fun getViewModel(): SearchVideoResultViewModel =
         ViewModelProvider(requireActivity()).get(SearchVideoResultViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         val keyword = arguments?.getString(KEYWORD_KEY).toString()
         viewModel.getSeacrhVideo(keyword)
         viewModel.videoList.observe(this, { data ->
             data.let {
-                setRecyclerView(it)
+//                setRecyclerView(it)
             }
         })
 
@@ -46,16 +46,15 @@ class SearchVideoResultFragment :
         }
     }
 
-    private fun setRecyclerView(videoList: List<Video>) {
-        val linearLayoutManager = LinearLayoutManager(view?.context)
-        adapter = VideoAdapter(videoList, requireContext(), this)
-        binding.recyclerSearchVideo.setHasFixedSize(true)
-        binding.recyclerSearchVideo.layoutManager = linearLayoutManager
-        binding.recyclerSearchVideo.adapter = adapter
-    }
+//    private fun setRecyclerView(videoList: List<Video>) {
+//        val linearLayoutManager = LinearLayoutManager(view?.context)
+//        adapter = VideoAdapter(videoList, requireContext(), this)
+//        binding.recyclerSearchVideo.setHasFixedSize(true)
+//        binding.recyclerSearchVideo.layoutManager = linearLayoutManager
+//        binding.recyclerSearchVideo.adapter = adapter
+//    }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     companion object {
 

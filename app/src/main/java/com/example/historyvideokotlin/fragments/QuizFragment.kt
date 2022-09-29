@@ -28,7 +28,7 @@ class QuizFragment : BaseFragment<QuizViewModel, FragmentQuizBinding>(),
         ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
 
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         viewModel.getThemeData()
@@ -60,12 +60,11 @@ class QuizFragment : BaseFragment<QuizViewModel, FragmentQuizBinding>(),
         binding.myRecyclerView.adapter = adapter
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(true)
+        showBottomMenu()
     }
 
     companion object {

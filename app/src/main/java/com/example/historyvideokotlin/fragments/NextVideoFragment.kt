@@ -38,7 +38,7 @@ class NextVideoFragment : BaseFragment<NextVideoViewModel, FragmentNextVideoBind
     override fun getViewModel(): NextVideoViewModel =
         ViewModelProvider(requireActivity()).get(NextVideoViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         val theme_id = arguments?.getInt(THEME_ID_KEY)
@@ -60,12 +60,11 @@ class NextVideoFragment : BaseFragment<NextVideoViewModel, FragmentNextVideoBind
         binding.myRecyclerView.adapter = adapter
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     override fun onPlay(video: Video) {

@@ -1,5 +1,6 @@
 package com.example.historyvideokotlin.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -21,9 +23,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseActivity
+import com.example.historyvideokotlin.data.VideoDatabase
 import com.example.historyvideokotlin.databinding.ActivityMainBinding
 import com.example.historyvideokotlin.fragments.*
 import com.example.historyvideokotlin.listener.OnToolBarListener
@@ -54,19 +57,21 @@ import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.FragNavTransactionOptions.Builder
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
-import org.json.JSONObject
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
-    FragNavController.TransactionListener, FragmentNavigation, OnToolBarListener,
+class MainActivity :
+    BaseActivity<MainViewModel, ActivityMainBinding>(),
+    FragNavController.TransactionListener,
+    FragmentNavigation,
+    OnToolBarListener,
     View.OnClickListener {
 
-    val callbackManager = CallbackManager.Factory.create()
-    val RC_SIGN_IN = 123
-    var mGoogleSignInClient: GoogleSignInClient? = null
+    private val callbackManager = CallbackManager.Factory.create()
+    private val RC_SIGN_IN = 123
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     val TAB_POST = FragNavController.TAB1
     val TAB_VIDEO = FragNavController.TAB2
@@ -89,10 +94,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+//    var database: VideoDatabase? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
 //        setTheme(R.style.Theme_HistoryVideoKotlin)
         super.onCreate(savedInstanceState)
         initData()
+//        database =
+//            Room.databaseBuilder(applicationContext, VideoDatabase::class.java, "database_name")
+//                .build()
         progressBarDialog = ProgressBarDialog(this)
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
@@ -119,15 +129,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         auth = Firebase.auth
         initFacebook()
         initGoogle()
-
-
-//        var accessToken = AccessToken.getCurrentAccessToken()
-//        var request: GraphRequest = GraphRequest.newMeRequest(accessToken, object :
-//            GraphRequest.GraphJSONObjectCallback {
-//            override fun onCompleted(obj: JSONObject?, response: GraphResponse?) {
-//
-//            }
-//        })
     }
 
     private fun setupBottomNavigationWithNavigationComponent() {
@@ -166,8 +167,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         ).build()
         controller.initialize(TAB_POST, null)
 
-
-        getBinding()!!.bottomNavigationView.visibility = VISIBLE;
+        getBinding()!!.bottomNavigationView.visibility = VISIBLE
         getBinding()!!.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             val tabIndex = getTabIndex(item.itemId)
             controller.switchTab(tabIndex, Builder().build())
@@ -177,10 +177,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     private fun openDrawer() {
-
         getBinding()!!.run {
             drawer.openDrawer(Gravity.RIGHT)
-            if (HistoryUserManager.checkUserLogined()) {
+            if (HistoryUserManager.instance.checkUserLogined()) {
                 navigationview.menu.findItem(R.id.login).title = "Đăng xuất"
             } else {
                 navigationview.menu.findItem(R.id.login).title = "Đăng Nhập"
@@ -194,14 +193,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 //                    }
 
                     R.id.login -> {
-                        if (HistoryUserManager.checkUserLogined()) {
-                            MyLog.e("FUid", HistoryUserManager.FUid())
+                        if (HistoryUserManager.instance.checkUserLogined()) {
+                            MyLog.e("FUid", HistoryUserManager.instance.UserId())
                             Firebase.auth.signOut()
                             LoginManager.getInstance().logOut()
                             drawer.closeDrawer(Gravity.RIGHT)
                         } else {
                             drawer.closeDrawer(Gravity.RIGHT)
-                            MyLog.e("FUid", HistoryUserManager.FUid())
+                            MyLog.e("FUid", HistoryUserManager.instance.UserId())
                             pushFragment(
                                 HistoryLoginFragment.newInstance(),
                                 HistoryUtils.getSlideTransitionAnimationOptions()
@@ -209,7 +208,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                         }
 //                        it.isVisible = false
 //                        navigationview.menu.findItem(R.id.logout).isVisible = true
-
                     }
                 }
                 true
@@ -219,7 +217,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
         }
         return false
     }
@@ -289,14 +286,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
-
     override fun onFragmentTransaction(
         fragment: Fragment?,
         transactionType: FragNavController.TransactionType
     ) {
-
     }
 
     override fun onTabTransaction(fragment: Fragment?, index: Int) {
@@ -347,7 +340,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     fun printHashKey() {
-
         try {
             val info: PackageInfo = this.getPackageManager().getPackageInfo(
                 "com.android.facebookloginsample",
@@ -391,16 +383,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                     MyLog.e("UID", user?.uid)
 
                     getViewModel()!!.postUser(
-                        user!!.uid, user.displayName.toString(),
+                        user!!.uid,
+                        user.displayName.toString(),
                         user?.email.toString()
                     )
 
                     popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
                 } else {
-                    Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast("Authentication failed.")
                 }
             }
     }
@@ -425,7 +415,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         }
 
         override fun onVerificationFailed(e: FirebaseException) {
-            Toast.makeText(this@MainActivity, "fail", Toast.LENGTH_SHORT).show()
+            showToast(e.toString())
         }
 
         override fun onCodeSent(
@@ -433,7 +423,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             token: PhoneAuthProvider.ForceResendingToken
         ) {
             super.onCodeSent(s, token)
-
             verificationId = s
             showLoading(false)
         }
@@ -441,27 +430,30 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     fun loginWithFacebook() {
         LoginManager.getInstance().logInWithReadPermissions(
-            this, Arrays.asList(
+            this,
+            Arrays.asList(
                 "email",
                 "public_profile",
                 "user_birthday"
             )
         )
-        LoginManager.getInstance().registerCallback(callbackManager, object :
-            FacebookCallback<LoginResult> {
-            override fun onCancel() {
-                MyLog.e("loginFacebook", "cancel")
-            }
+        LoginManager.getInstance().registerCallback(
+            callbackManager,
+            object :
+                FacebookCallback<LoginResult> {
+                override fun onCancel() {
+                    MyLog.e("loginFacebook", "cancel")
+                }
 
-            override fun onError(error: FacebookException) {
-                MyLog.e("loginFacebook", error.message.toString())
-            }
+                override fun onError(error: FacebookException) {
+                    MyLog.e("loginFacebook", error.message.toString())
+                }
 
-            override fun onSuccess(result: LoginResult) {
-                handleFacebookAccessToken(result.accessToken)
+                override fun onSuccess(result: LoginResult) {
+                    handleFacebookAccessToken(result.accessToken)
+                }
             }
-
-        })
+        )
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
@@ -487,36 +479,33 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("TAG", "signInWithCredential:failure", task.exception)
-                    Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast("Authentication failed.")
                 }
             }
     }
 
     private fun initGoogle() {
-
-        var gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        val googleSignInOptions = GoogleSignInOptions.Builder(
+            GoogleSignInOptions.DEFAULT_SIGN_IN
+        )
+            .requestIdToken("890848716998-ghem83n0iofkar96s99smdrvddh5iifq.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
 //        var account: GoogleSignInAccount? =
 //            GoogleSignIn.getLastSignedInAccount(this)
 //        loginAppWithGoogleAccount(account)
     }
 
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         try {
-            val account = completedTask.getResult(ApiException::class.java)
+            val account = task.result
             if (account != null) {
                 loginAppWithGoogleAccount(account)
             }
         } catch (e: ApiException) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+            showToast(e.toString())
         }
     }
 
@@ -534,33 +523,36 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                         popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
                     } else {
                         Log.w("TAG", "signInWithCredential:failure", task.exception)
-                        Toast.makeText(
-                            baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showToast("Authentication failed.")
                     }
                 }
             popFragment(1, HistoryUtils.getSlideTransitionAnimationOptions())
         }
-
     }
 
     fun loginWithGoogle() {
-        val intent = mGoogleSignInClient!!.signInIntent
+        val intent = mGoogleSignInClient.signInIntent
         startActivityForResult(intent, RC_SIGN_IN)
+//        launcher.launch(intent)
     }
 
-    fun onLoginError(code: Int, message: String) {
-        Toast.makeText(this, "[$code] $message", Toast.LENGTH_LONG).show()
-    }
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                handleSignInResult(task)
+            }
+        }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === RC_SIGN_IN) {
-
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+        if (requestCode == RC_SIGN_IN) {
+            if (data != null && data.data != null) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                handleSignInResult(task)
+            }
         }
     }
 
@@ -573,5 +565,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
 
     override fun onSettingClick() {
         openDrawer()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

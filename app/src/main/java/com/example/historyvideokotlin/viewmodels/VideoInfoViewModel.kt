@@ -3,17 +3,22 @@ package com.example.historyvideokotlin.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.repository.UserRepository
 import com.example.historyvideokotlin.repository.VideoRepository
 import com.example.historyvideokotlin.base.BaseViewModel
+import com.example.historyvideokotlin.data.VideoDatabase
+import com.example.historyvideokotlin.model.DownloadVideo
 import com.example.historyvideokotlin.model.MyVideo
 import com.example.historyvideokotlin.utils.MyLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class VideoInfoViewModel(application: Application) : BaseViewModel(application) {
 
@@ -23,7 +28,13 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
     private var videoRepository = VideoRepository()
     private var userRepository = UserRepository()
     var myVideoList = MutableLiveData<List<MyVideo>>()
-    var userId = HistoryUserManager.FUid()
+    var userId = HistoryUserManager.instance.UserId()
+
+    fun downloadVideo(database: VideoDatabase, downloadVideo: DownloadVideo) {
+        viewModelScope.launch(Dispatchers.IO) {
+            database.videoDao().insertVideo(downloadVideo)
+        }
+    }
 
     fun setLiked(isliked: Boolean) {
         isLiked.value = isliked
@@ -43,8 +54,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
             userRepository.getMyVideo(userId, videoId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { data ->
                         data.let {
@@ -60,8 +71,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateLikeMyVideo(userId, videoId, 1)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -75,8 +86,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateViewedMyVideo(userId, videoId, 1)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -90,8 +101,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateLaterMyVideo(userId, videoId, 1)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -104,8 +115,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateDownloadMyVideo(userId, videoId, 1)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -118,8 +129,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateShareMyVideo(userId, videoId, 1)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -132,8 +143,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
         disposable =
             userRepository
                 .updateDontCareMyVideo(userId, videoId, 1)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -147,8 +158,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
             videoRepository.updateViewCountVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -161,8 +172,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
             videoRepository.updateLikeCountVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -175,8 +186,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
             videoRepository.updateDislikeCountVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -189,8 +200,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
             videoRepository.updateLikeCancelVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -203,8 +214,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
             videoRepository.updateDislikeCancelVideo(videoId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -217,8 +228,8 @@ class VideoInfoViewModel(application: Application) : BaseViewModel(application) 
             userRepository.deleteLikeMyVideo(myVideoId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },

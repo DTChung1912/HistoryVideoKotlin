@@ -55,8 +55,6 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
     override fun getViewModel(): CameraViewModel =
         ViewModelProvider(requireActivity()).get(CameraViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
-
     override fun initData() {
 
     }
@@ -128,10 +126,7 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
     }
 
     private fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -267,8 +262,7 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+
 
     companion object {
 

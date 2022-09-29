@@ -32,7 +32,6 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
     override fun getViewModel(): CommentViewModel =
         ViewModelProvider(requireActivity()).get(CommentViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
         val videoId = arguments?.getInt(VIDEO_ID_KEY)!!
@@ -57,7 +56,7 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
             }
 
             edtComment.setOnClickListener {
-                if (!HistoryUserManager.checkUserLogined()) {
+                if (!HistoryUserManager.instance.checkUserLogined()) {
                     LoginDialogFragment.newInstance(object : OnLoginItemClickListener{
                         override fun onLogin() {
                             pushFragment(
@@ -77,7 +76,7 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
                         .show(parentFragmentManager, null)
                 } else {
                     viewModel.updateCommentCountVideo(videoId)
-                    viewModel.postComment(HistoryUserManager.FUid(), videoId, content)
+                    viewModel.postComment(HistoryUserManager.instance.UserId(), videoId, content)
                 }
             }
 
@@ -95,13 +94,11 @@ class CommentFragment : BaseFragment<CommentViewModel, FragmentCommentBinding>()
         binding.recyclerViewComment.adapter = adapter
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
 
-    }
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     companion object {

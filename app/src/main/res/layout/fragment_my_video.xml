@@ -1,15 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".fragments.MyVideoFragment">
+
+        <FrameLayout
+            android:id="@+id/flToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginHorizontal="@dimen/ndp_5"
+                android:layout_marginVertical="@dimen/ndp_5"
+                android:background="@drawable/background_quiz_toolbar"
+                android:gravity="top"
+                android:paddingHorizontal="@dimen/ndp_5">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_back_white" />
+
+                <TextView
+                    android:id="@+id/tvTitleToolBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:layout_marginBottom="@dimen/ndp_10"
+                    android:background="@drawable/background_quiz_time"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/ndp_10"
+                    android:text="Danh sách video đã xem"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylerMyVideo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flToolbar" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tvNotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_50"
+            android:text="Danh sách trống"
+            android:textColor="@color/red"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flToolbar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

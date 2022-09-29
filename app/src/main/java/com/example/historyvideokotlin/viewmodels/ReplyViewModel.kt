@@ -90,8 +90,8 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
 //        disposable = videoRepository.getReply(commentId)
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
-//            .doOnSubscribe { loadingLiveData.postValue(true) }
-//            .doAfterTerminate { loadingLiveData.postValue(false) }
+//            .doOnSubscribe { showLoading() }
+//            .doAfterTerminate { hideLoading() }
 //            .subscribe(
 //                { data ->
 //                    data.let {
@@ -107,8 +107,8 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
             videoRepository.updateLikeCountComment(commentId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -121,8 +121,8 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
             videoRepository.updateDisikeCountComment(commentId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -135,8 +135,8 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
             videoRepository.updateReplyCountComment(commentId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -149,8 +149,8 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
             videoRepository.updateLikeCountReply(replyId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -163,8 +163,8 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
             videoRepository.updateDislikeCountReply(replyId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -177,8 +177,8 @@ class ReplyViewModel(application: Application) : BaseViewModel(application) {
         disposable = videoRepository.postReply(userId, partnerName, commentId, content)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { loadingLiveData.postValue(true) }
-            .doAfterTerminate { loadingLiveData.postValue(false) }
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
             .subscribe(
                 { result -> MyLog.e("chung", result.toString()) },
                 { error -> MyLog.e("this", error.message.toString()) },

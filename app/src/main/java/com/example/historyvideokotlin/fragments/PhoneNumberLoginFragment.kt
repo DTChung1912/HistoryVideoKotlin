@@ -21,13 +21,13 @@ class PhoneNumberLoginFragment :
     override fun getViewModel(): PhoneNumberLoginViewModel =
         ViewModelProvider(requireActivity()).get(PhoneNumberLoginViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         binding.run {
             btnGenerate.setOnClickListener {
                 if (TextUtils.isEmpty(edtPhoneNumber.text.toString())) {
-                    Toast.makeText(requireContext(),"Bạn chưa nhập số điện thoại",Toast.LENGTH_SHORT).show()
+                    showToast("Bạn chưa nhập số điện thoại")
                 } else {
                     (activity as MainActivity).phoneSendVerifyCode(edtPhoneNumber.text.toString())
                     showLoading(true)
@@ -35,7 +35,7 @@ class PhoneNumberLoginFragment :
             }
             btnVerify.setOnClickListener {
                 if (TextUtils.isEmpty(edtPhoneNumber.text.toString())) {
-                    Toast.makeText(requireContext(),"Bạn chưa nhập số điện thoại",Toast.LENGTH_SHORT).show()
+                    showToast("Bạn chưa nhập số điện thoại")
                 } else {
                     (activity as MainActivity).phoneSendVerifyCode(edtOTP.text.toString())
                 }
@@ -43,8 +43,7 @@ class PhoneNumberLoginFragment :
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     companion object {
         @JvmStatic

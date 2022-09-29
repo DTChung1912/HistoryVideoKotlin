@@ -18,7 +18,7 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_post_detail
@@ -26,7 +26,7 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
     override fun getViewModel(): PostDetailViewModel =
         ViewModelProvider(requireActivity()).get(PostDetailViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         val post = arguments?.getSerializable(POST_DATA_KEY) as Post
@@ -43,11 +43,6 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
 
             ratingBar.setOnRatingBarChangeListener(OnRatingBarChangeListener { ratingBar, rating, fromUser ->
                 viewModel.updatePostRate(post.post_id)
-                Toast.makeText(
-                    requireContext(),
-                    rating.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
             })
 
             ivBack.setOnClickListener {
@@ -56,8 +51,7 @@ class PostDetailFragment : BaseFragment<PostDetailViewModel, FragmentPostDetailB
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
     
     companion object {
 

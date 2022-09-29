@@ -23,13 +23,11 @@ class WatchAnswerFragment(val quizList: List<Quiz>) : BaseFragment<WatchAnswerVi
     override fun getViewModel(): WatchAnswerViewModel =
         ViewModelProvider(requireActivity()).get(WatchAnswerViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
 
     override fun initData() {
 
         val choosedAnswerList = arguments?.getStringArrayList(CHOOSED_ANSWER_LIST_KEY)
         setRecyclerView(quizList,choosedAnswerList!!)
-
     }
 
     private fun setRecyclerView(quizList: List<Quiz>, choosedAnswerList: List<String>) {
@@ -40,12 +38,9 @@ class WatchAnswerFragment(val quizList: List<Quiz>) : BaseFragment<WatchAnswerVi
         binding.recyclerWatchAnswer.adapter = adapter
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
-
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     companion object {

@@ -27,7 +27,7 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     override fun getViewModel(): RegisterViewModel =
         ViewModelProvider(requireActivity()).get(RegisterViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         binding.run {
@@ -65,17 +65,16 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
                     startActivity(intent)
                     requireActivity().finish()
                 } else {
-                    Toast.makeText(requireContext(), "Đăng Ký Thất Bại", Toast.LENGTH_LONG).show()
+                    showToast("Đăng Ký Thất Bại")
                 }
             }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     companion object {

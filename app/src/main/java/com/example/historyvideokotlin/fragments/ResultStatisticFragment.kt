@@ -29,7 +29,7 @@ class ResultStatisticFragment(val onItemClickListener: OnItemClickListener) :
     override fun getViewModel(): ResultStatisticViewModel =
         ViewModelProvider(requireActivity()).get(ResultStatisticViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         val choosedAnswerList = arguments?.getStringArrayList(CHOOSED_ANSWER_LIST_KEY) as List<String>
@@ -164,12 +164,11 @@ class ResultStatisticFragment(val onItemClickListener: OnItemClickListener) :
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     companion object {

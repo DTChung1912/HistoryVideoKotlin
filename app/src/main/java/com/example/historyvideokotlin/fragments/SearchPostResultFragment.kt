@@ -28,7 +28,7 @@ class SearchPostResultFragment :
     override fun getViewModel(): SearchPostResultViewModel =
         ViewModelProvider(requireActivity()).get(SearchPostResultViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         val keyword = arguments?.getString(KEYWORD_KEY).toString()
@@ -53,8 +53,7 @@ class SearchPostResultFragment :
         binding.recyclerSearchPost.adapter = adapter
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     companion object {
 

@@ -1,5 +1,6 @@
 package com.example.historyvideokotlin.dialogfragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
@@ -19,12 +20,12 @@ class DeleteMyVideoBottomSheetDialogFragment(val onItemClickListener: OnItemClic
 
     private lateinit var binding: FragmentDeleteMyVideoBottomSheetDialogBinding
 
+    @SuppressLint("UseGetLayoutInflater")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding = FragmentDeleteMyVideoBottomSheetDialogBinding.inflate(
             LayoutInflater.from(context),
             container,
@@ -83,6 +84,6 @@ class DeleteMyVideoBottomSheetDialogFragment(val onItemClickListener: OnItemClic
     }
 
     interface OnItemClickListener {
-        fun onDelete(myVideoId: Int,myVideoType: Int)
+        fun onDelete(myVideoId: Int, myVideoType: Int)
     }
 }

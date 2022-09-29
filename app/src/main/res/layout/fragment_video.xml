@@ -4,15 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:background="@color/gray1"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray1"
+        android:orientation="vertical"
         tools:context=".fragments.VideoFragment">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/app_bar" />
+
+        <Button
+            android:id="@+id/btnTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="@dimen/nsp_10"
+            android:text="testvideo"
+            android:textSize="@dimen/nsp_20" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_recycler_view"

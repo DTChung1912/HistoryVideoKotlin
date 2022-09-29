@@ -4,10 +4,12 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.base.BaseViewModel
+import com.example.historyvideokotlin.data.VideoDatabase
 import com.example.historyvideokotlin.di.repositoryProvider
 import com.example.historyvideokotlin.model.Comment
-import com.example.historyvideokotlin.model.MyVideo
+import com.example.historyvideokotlin.model.DownloadVideo
 import com.example.historyvideokotlin.model.Video
 import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.repository.UserRepository
@@ -18,56 +20,64 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class VideoViewModel(application: Application) : BaseViewModel(application) {
     var videoList = MutableLiveData<List<Video>>()
+    var durationList = MutableLiveData<List<String>>()
     private var videoRepository = VideoRepository()
     private var userRepository = UserRepository()
     private var disposable: Disposable? = null
     private var disposable2 = CompositeDisposable()
-    var userId = HistoryUserManager.FUid()
+    var userId = HistoryUserManager.instance.UserId()
 
     val ktorVideoRepository = application.repositoryProvider.ktorVideoRepository
 
     fun getVideoData() {
 //        getVideo()
-        getVideo2()
+        getVideoList()
         getComment()
-        getMyVideo()
+//        getMyVideo()
     }
 
-    private fun getVideo() {
-        disposable2.add(
-            videoRepository.getVideo()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
-                .subscribeWith(object : DisposableSingleObserver<List<Video>>() {
-                    override fun onSuccess(t: List<Video>) {
-                        videoList.value = t
-                        MyLog.e("chung", "Ok")
-                    }
+//    private fun getVideo() {
+//        disposable2.add(
+//            videoRepository.getVideo()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSubscribe { showLoading() }
+//                .doAfterTerminate { hideLoading() }
+//                .subscribeWith(object : DisposableSingleObserver<List<Video>>() {
+//                    override fun onSuccess(t: List<Video>) {
+//                        videoList.value = t
+//                        MyLog.e("chung", "Ok")
+//                    }
+//
+//                    override fun onError(e: Throwable) {
+//                        MyLog.e("chung", e.message.toString())
+//                    }
+//                })
+//        )
+//    }
 
-                    override fun onError(e: Throwable) {
-                        MyLog.e("chung", e.message.toString())
-                    }
-                })
-        )
-    }
+//    fun getTest(database: VideoDatabase) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val a = database.videoDao().getListVideo()
+//            MyLog.e("getDownloadVideo-------------",a.toString())
+//        }
+//    }
 
-    private fun getVideo2() {
-//        videoList = mutableListOf<Video>()
+    private fun getVideoList() {
         viewModelScope.launch {
             runCatching {
-                loadingLiveData.postValue(true)
-                ktorVideoRepository.getVideo()
+                showLoading()
+                ktorVideoRepository.getVideoList()
             }.onSuccess {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 videoList.value = it
             }.onFailure {
-                loadingLiveData.postValue(false)
+                hideLoading()
             }
         }
     }
@@ -80,19 +90,6 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
             }.onSuccess {
                 commentList.addAll(it)
                 MyLog.e("ktorVideoRepositoryCommnent", "" + commentList.size + " ")
-            }.onFailure {
-            }
-        }
-    }
-
-    private fun getMyVideo() {
-        var myVideoList = mutableListOf<MyVideo>()
-        viewModelScope.launch {
-            runCatching {
-                ktorVideoRepository.getMyVideo("EL6HKxq15Oey5F9wmrnMn2CNd032", 1)
-            }.onSuccess {
-                myVideoList.addAll(it)
-                MyLog.e("ktorVideoRepositoryMyVIdeo", "" + myVideoList.size + " ")
             }.onFailure {
             }
         }
@@ -213,8 +210,8 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
                 .updateLikeMyVideo(userId, videoId, isLike)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe(
                     { result -> MyLog.e("chung", result.toString()) },
                     { error -> MyLog.e("this", error.message.toString()) },
@@ -226,8 +223,8 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
         disposable =
             userRepository
                 .updateViewedMyVideo(userId, videoId, isView)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -241,8 +238,8 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
         disposable =
             userRepository
                 .updateLaterMyVideo(userId, videoId, isLater)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -255,8 +252,8 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
         disposable =
             userRepository
                 .updateDownloadMyVideo(userId, videoId, isDownload)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -269,8 +266,8 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
         disposable =
             userRepository
                 .updateShareMyVideo(userId, videoId, isShare)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -283,8 +280,8 @@ class VideoViewModel(application: Application) : BaseViewModel(application) {
         disposable =
             userRepository
                 .updateDontCareMyVideo(userId, videoId, isDontCared)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

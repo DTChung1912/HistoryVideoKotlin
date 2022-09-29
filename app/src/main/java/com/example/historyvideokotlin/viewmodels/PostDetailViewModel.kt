@@ -50,8 +50,8 @@ class PostDetailViewModel(application: Application) : BaseViewModel(application)
     fun updateDownloadCountPost(postId: String, downloaded: Int) {
         disposable =
             postRepository.updateDownloadCountPost(postId, downloaded)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -64,8 +64,8 @@ class PostDetailViewModel(application: Application) : BaseViewModel(application)
     fun updateRateCountPost(postId: String, rated: Int) {
         disposable =
             postRepository.updateRateCountPost(postId, rated)
-                .doOnSubscribe { loadingLiveData.postValue(true) }
-                .doAfterTerminate { loadingLiveData.postValue(false) }
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -78,8 +78,8 @@ class PostDetailViewModel(application: Application) : BaseViewModel(application)
 //    fun updateReadCountPost(postId: String, read: Int) {
 //        disposable =
 //            postRepository.updateReadCountPost(postId, read)
-//                .doOnSubscribe { loadingLiveData.postValue(true) }
-//                .doAfterTerminate { loadingLiveData.postValue(false) }
+//                .doOnSubscribe { showLoading() }
+//                .doAfterTerminate { hideLoading() }
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(
@@ -92,8 +92,8 @@ class PostDetailViewModel(application: Application) : BaseViewModel(application)
 //    fun updateDownloadCountPost(postId: String, downloaded: Int) {
 //        disposable =
 //            postRepository.updateDownloadCountPost(postId, downloaded)
-//                .doOnSubscribe { loadingLiveData.postValue(true) }
-//                .doAfterTerminate { loadingLiveData.postValue(false) }
+//                .doOnSubscribe { showLoading() }
+//                .doAfterTerminate { hideLoading() }
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(
@@ -106,8 +106,8 @@ class PostDetailViewModel(application: Application) : BaseViewModel(application)
 //    fun updateRateCountPost(postId: String, rated: Int) {
 //        disposable =
 //            postRepository.updateRateCountPost(postId, rated)
-//                .doOnSubscribe { loadingLiveData.postValue(true) }
-//                .doAfterTerminate { loadingLiveData.postValue(false) }
+//                .doOnSubscribe { showLoading() }
+//                .doAfterTerminate { hideLoading() }
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(

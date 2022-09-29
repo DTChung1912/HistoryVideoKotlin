@@ -16,13 +16,13 @@ class SearchPostResultViewModel(application: Application) : BaseViewModel(applic
     fun getSeacrhPost(keyword: String) {
         viewModelScope.launch {
             runCatching {
-                loadingLiveData.postValue(true)
+                showLoading()
                 ktorPostRepository.getSearchPost(keyword)
             }.onSuccess {
-                loadingLiveData.postValue(false)
+                hideLoading()
                 postList.value = it
             }.onFailure {
-                loadingLiveData.postValue(false)
+                hideLoading()
             }
         }
     }

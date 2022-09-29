@@ -1,12 +1,18 @@
 package com.example.historyvideokotlin.adapters
 
 import android.content.Context
+import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.databinding.ItemVideoBinding
 import com.example.historyvideokotlin.model.Video
+import com.example.historyvideokotlin.utils.HistoryUtils
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 
 class VideoAdapter(
     val videoList: List<Video>,
@@ -15,7 +21,7 @@ class VideoAdapter(
 ) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemVideoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(video: Video, context: Context, onItemClickListener: OnItemClickListener) =
+        fun bind(video: Video,context: Context, onItemClickListener: OnItemClickListener) =
             with(binding) {
                 binding.run {
                     tvTitle.text = video.title
@@ -36,7 +42,6 @@ class VideoAdapter(
                         onItemClickListener.onItemClick(video)
                     }
                 }
-
             }
     }
 

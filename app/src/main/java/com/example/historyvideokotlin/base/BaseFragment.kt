@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -17,7 +18,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
@@ -49,11 +49,7 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         return binding
     }
 
-    protected abstract fun getAnalyticsScreenName(): String?
-
     protected abstract fun initData()
-
-    protected abstract fun onAppEvent(event: AppEvent<String, Objects>)
 
     protected open fun getMainViewModel(): MainViewModel? {
         if (activity !is MainActivity) {
@@ -62,8 +58,8 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         return mainViewModel
     }
 
-    fun checkUserLogined() : Boolean {
-        if(user != null) {
+    fun checkUserLogined(): Boolean {
+        if (user != null) {
             return true
         } else {
             return false
@@ -89,7 +85,6 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,16 +96,23 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
 //            mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 //        }
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        viewModel.getViewEventLiveData().observe(viewLifecycleOwner) { event ->
-            if (event == null) {
-                return@observe
-            }
-            onAppEvent(event)
-        }
+//        viewModel.getViewEventLiveData().observe(viewLifecycleOwner) { event ->
+//            if (event == null) {
+//                return@observe
+//            }
+//        }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { loading ->
             showLoading(loading != null && loading)
         }
         initData()
+    }
+
+    fun showLoading() {
+        viewModel.showLoading()
+    }
+
+    fun hideLoading() {
+        viewModel.hideLoading()
     }
 
     override fun onStop() {
@@ -130,7 +132,6 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
             dialogs.remove(key)
         }
     }
-
 
     protected fun showLoading(isLoading: Boolean) {
         if (isLoading) {
@@ -205,10 +206,15 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         }
     }
 
-
-    protected open fun showBottomMenu(isShow: Boolean) {
+    protected open fun showBottomMenu() {
         if (mainViewModel != null) {
-            mainViewModel.getIsShowBottomMenu().postValue(isShow)
+            mainViewModel.getIsShowBottomMenu().postValue(true)
+        }
+    }
+
+    protected open fun hideBottomMenu() {
+        if (mainViewModel != null) {
+            mainViewModel.getIsShowBottomMenu().postValue(false)
         }
     }
 
@@ -246,4 +252,7 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         findNavController().navigate(fragment!!.id)
     }
 
+    protected open fun showToast(message: String) {
+        Toast.makeText(requireContext(),message ?: "", Toast.LENGTH_SHORT).show()
+    }
 }

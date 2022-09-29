@@ -23,7 +23,7 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
 
     protected abstract fun getViewModelClass(): Class<V>
 
-    protected abstract fun onAppEvent(event: AppEvent<String, Objects>)
+//    protected abstract fun onAppEvent(event: AppEvent<String, Objects>)
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -41,7 +41,7 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
             if (event == null) {
                 return@observe
             }
-            onAppEvent(event)
+//            onAppEvent(event)
         }
         viewModel!!.loadingLiveData.observe(this) { loading ->
             showLoading(loading != null && loading)

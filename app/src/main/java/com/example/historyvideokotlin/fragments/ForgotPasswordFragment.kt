@@ -17,27 +17,26 @@ class ForgotPasswordFragment : BaseFragment<ForgotPasswordViewModel,FragmentForg
     override fun getViewModel(): ForgotPasswordViewModel =
         ViewModelProvider(requireActivity()).get(ForgotPasswordViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
     override fun initData() {
         var isReset = false
         binding.btnReset.setOnClickListener{
             isReset = viewModel.resetPassword(binding.edtEmail.text.toString())
             if (isReset) {
-                Toast.makeText(requireContext(),"Xin kiểm tra lại Email của bạn", Toast.LENGTH_SHORT).show()
+                showToast("Xin kiểm tra lại Email của bạn")
                 replaceFragment(R.id.fragmentContainer,HistoryLoginFragment.newInstance(),true,null)
             } else {
-                Toast.makeText(requireContext(),"fail", Toast.LENGTH_SHORT).show()
+                showToast("fail")
             }
         }
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     companion object {

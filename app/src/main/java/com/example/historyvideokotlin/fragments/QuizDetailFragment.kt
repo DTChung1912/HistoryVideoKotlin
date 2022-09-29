@@ -53,7 +53,7 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
     override fun getViewModel(): QuizDetailViewModel =
         ViewModelProvider(requireActivity()).get(QuizDetailViewModel::class.java)
 
-    override fun getAnalyticsScreenName(): String? = null
+    
 
 
     override fun initData() {
@@ -116,7 +116,7 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
 
     override fun onResume() {
         super.onResume()
-        showBottomMenu(false)
+        hideBottomMenu()
     }
 
     private fun setTextTimer() {
@@ -264,8 +264,7 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
         currentFragmentPosition = position
     }
 
-    override fun onAppEvent(event: AppEvent<String, Objects>) {
-    }
+    
 
     companion object {
         const val THEME_KEY = "THEME_KEY"

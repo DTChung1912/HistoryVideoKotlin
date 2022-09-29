@@ -21,49 +21,42 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:visibility="visible"
             tools:openDrawer="right">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentContainer"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="0dp"
+                    app:defaultNavHost="true"
+                    app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navGraph="@navigation/nav_graph"
+                    tools:ignore="NotSibling" />
 
-                    <androidx.fragment.app.FragmentContainerView
-                        android:id="@+id/fragmentContainer"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:defaultNavHost="true"
-                        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:navGraph="@navigation/nav_graph"
-                        tools:ignore="NotSibling" />
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ndp_60"
+                    android:background="@color/gray_dark"
+                    android:theme="@style/BottomNavigationView"
+                    app:itemIconTint="@color/color_bottom_menu_item"
+                    app:itemTextAppearanceActive="@style/BottomMenuTextItemActive"
+                    app:itemTextAppearanceInactive="@style/BottomMenuTextItemInActive"
+                    app:itemTextColor="@color/color_bottom_menu_item"
+                    app:labelVisibilityMode="labeled"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:menu="@menu/menu_bottom_navigation" />
 
-                    <com.google.android.material.bottomnavigation.BottomNavigationView
-                        android:id="@+id/bottomNavigationView"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/ndp_60"
-                        android:background="@color/gray_dark"
-                        android:theme="@style/BottomNavigationView"
-                        app:itemIconTint="@color/color_bottom_menu_item"
-                        app:itemTextAppearanceActive="@style/BottomMenuTextItemActive"
-                        app:itemTextAppearanceInactive="@style/BottomMenuTextItemInActive"
-                        app:itemTextColor="@color/color_bottom_menu_item"
-                        app:labelVisibilityMode="labeled"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:menu="@menu/menu_bottom_navigation" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navigationview"
