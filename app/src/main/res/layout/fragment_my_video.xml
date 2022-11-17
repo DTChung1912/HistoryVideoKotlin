@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.MyVideoViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -58,23 +65,29 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylerMyVideo"
+            isVisible="@{!viewModel.isEmpty}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/flToolbar" />
+            app:layout_constraintTop_toBottomOf="@id/flToolbar"
+            tools:listitem="@layout/item_video_children"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/tvNotify"
+            isVisible="@{viewModel.isEmpty}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ndp_50"
             android:text="Danh sách trống"
             android:textColor="@color/red"
             android:textSize="@dimen/nsp_20"
             android:textStyle="bold"
-            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/flToolbar" />
+            app:layout_constraintTop_toBottomOf="@id/flToolbar"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

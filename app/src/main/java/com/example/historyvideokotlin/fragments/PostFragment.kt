@@ -2,60 +2,60 @@ package com.example.historyvideokotlin.fragments
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.activities.MainActivity
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentPostBinding
 import com.example.historyvideokotlin.model.Post
-import com.example.historyvideokotlin.utils.MyLog
+import com.example.historyvideokotlin.model.PostType
 import com.example.historyvideokotlin.viewmodels.PostViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import java.util.*
 
-class PostFragment : BaseFragment<PostViewModel, FragmentPostBinding>() {
+class PostFragment :
+    BaseFragment<PostViewModel, FragmentPostBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
 
     override fun getLayoutId(): Int = R.layout.fragment_post
 
     override fun getViewModel(): PostViewModel =
         ViewModelProvider(requireActivity()).get(PostViewModel::class.java)
 
-    
-
     override fun initData() {
+        binding.viewModel = viewModel
+
         viewModel.getPostData()
+
         val titleIds = viewModel.getTabTitleIds()
         viewModel.postList.observe(this) {
             binding.viewPager.adapter = PagerAdapter(this@PostFragment, it)
             TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
                 tab.text = getString(titleIds[position])
             }.attach()
-//            MyLog.e("postList", it.toString())
         }
-        binding.run {
-            toolbar.tvTitle.text = "Trang chủ"
-            toolbar.ivSearch.setOnClickListener {
+
+        binding.toolbar.run {
+            tvTitle.text = "Trang chủ"
+            ivSearch.setOnClickListener {
                 (activity as? MainActivity)?.onSearchClick(0)
             }
-            toolbar.ivMenu.setOnClickListener {
+            ivMenu.setOnClickListener {
                 (activity as? MainActivity)?.onSettingClick()
             }
         }
-    }
 
-    
+        binding.tvRefresh.setOnClickListener {
+            viewModel.getPostData()
+        }
+
+        binding.refreshLayout.setOnRefreshListener(this@PostFragment)
+    }
 
     override fun onResume() {
         super.onResume()
         showBottomMenu()
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance() =
-            PostFragment()
     }
 
     private class PagerAdapter(fragment: Fragment, val postList: List<Post>) :
@@ -65,27 +65,30 @@ class PostFragment : BaseFragment<PostViewModel, FragmentPostBinding>() {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                Post_Tab.POST_PERSON.id -> PostListFragment.newInstance(
-                    Post_Tab.POST_PERSON.id,
+                PostType.PERSON.ordinal -> PostListFragment.newInstance(
+                    PostType.PERSON.ordinal,
                     postList
                 )
-                Post_Tab.POST_EVENT.id -> PostListFragment.newInstance(
-                    Post_Tab.POST_EVENT.id,
+                PostType.EVENT.ordinal -> PostListFragment.newInstance(
+                    PostType.EVENT.ordinal,
                     postList
                 )
-                Post_Tab.POST_PLACE.id -> PostListFragment.newInstance(
-                    Post_Tab.POST_PLACE.id,
+                PostType.PLACE.ordinal -> PostListFragment.newInstance(
+                    PostType.PLACE.ordinal,
                     postList
                 )
-                else -> PostListFragment.newInstance(Post_Tab.POST_TIMELINE.id, postList)
+                else -> PostListFragment.newInstance(PostType.TIMELINE.ordinal, postList)
             }
         }
     }
 
-    enum class Post_Tab(val id: Int) {
-        POST_PERSON(0),
-        POST_EVENT(1),
-        POST_PLACE(2),
-        POST_TIMELINE(3)
+    override fun onRefresh() {
+        binding.refreshLayout.isRefreshing = false
+        viewModel.getPostData()
+    }
+
+    companion object {
+        fun newInstance() =
+            PostFragment()
     }
 }

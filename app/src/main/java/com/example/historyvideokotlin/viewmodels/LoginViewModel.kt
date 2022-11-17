@@ -2,59 +2,48 @@ package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.example.historyvideokotlin.repository.UserRepository
+import androidx.lifecycle.viewModelScope
 import com.example.historyvideokotlin.base.BaseViewModel
+import com.example.historyvideokotlin.di.repositoryProvider
 import com.example.historyvideokotlin.model.User
 import com.example.historyvideokotlin.utils.MyLog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : BaseViewModel(application) {
-    val auth = Firebase.auth
-    var disposable: Disposable? = null
-    var userRepository = UserRepository()
-    var userList = MutableLiveData<List<User>>()
-
+    private val auth = Firebase.auth
+    private val user = MutableLiveData<User>()
+    private val ktorUserRepository = application.repositoryProvider.ktorUserRepository
 
     fun loginWithEmail(email: String, password: String): Boolean {
-
         var isUserLogin = false
-
         if (email.isEmpty() || password.isEmpty()) {
-            isUserLogin = true
+            isUserLogin = false
         } else {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        MyLog.e("uid", task.result.user?.uid ?: "null")
+                        MyLog.e("UserId", task.result.user?.uid ?: "null")
                         getUser(task.result.user?.uid ?: "null")
-                        isUserLogin = false
+                        isUserLogin = true
                     }
                 }.addOnFailureListener { e ->
-                    isUserLogin = true
+                    isUserLogin = false
                 }
         }
-
         return isUserLogin
     }
 
     fun getUser(userId: String) {
-        disposable =
-            userRepository.getUser(userId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .subscribe(
-                    { data ->
-                        data.let {
-                            userList.value = it
-                        }
-                    },
-                    { error -> MyLog.e("this", error.message.toString()) }
-                )
+        viewModelScope.launch {
+            runCatching {
+                ktorUserRepository.getUser(userId)
+            }.onSuccess {
+                user.value = it
+            }.onFailure {
+                MyLog.e("getUser", it.message)
+            }
+        }
     }
 }

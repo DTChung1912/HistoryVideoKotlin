@@ -42,7 +42,7 @@
             android:layout_height="@dimen/ndp_40"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_avatar" />
 
         <EditText
             android:id="@+id/edtComment"
@@ -58,11 +58,11 @@
 
         <ImageView
             android:id="@+id/ivSendReply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/ndp_40"
+            android:layout_height="@dimen/ndp_40"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:src="@drawable/send" />
+            android:src="@drawable/ic_send_comment" />
     </LinearLayout>
 
 

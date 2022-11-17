@@ -1,50 +1,40 @@
 package com.example.historyvideokotlin.fragments
 
-import android.app.Activity
-import android.content.Context
-import android.graphics.Rect
 import android.os.CountDownTimer
-import android.view.View
-import androidx.annotation.DimenRes
+import android.view.Gravity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.base.AppEvent
+import com.example.historyvideokotlin.adapters.AnswerListAdapter
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentQuizDetailBinding
+import com.example.historyvideokotlin.dialogfragments.QuizCloseDialogFragment
 import com.example.historyvideokotlin.dialogfragments.QuizResultDialogFragment
-import com.example.historyvideokotlin.model.Quiz
-import com.example.historyvideokotlin.model.QuizResult
-import com.example.historyvideokotlin.ui.FragmentNavigation
-import com.example.historyvideokotlin.utils.HistoryUtils
+import com.example.historyvideokotlin.model.*
 import com.example.historyvideokotlin.viewmodels.QuizDetailViewModel
 import com.ncapdevi.fragnav.FragNavTransactionOptions
-import java.util.*
 
-class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailBinding>(),
-    QuestionFragment.OnClickListener, QuizResultDialogFragment.OnItemClickListener,
-    ResultStatisticFragment.OnItemClickListener {
+class QuizDetailFragment :
+    BaseFragment<QuizDetailViewModel, FragmentQuizDetailBinding>(),
+    QuestionFragment.OnClickListener,
+    AnswerListAdapter.ItemClickListener,
+    QuizResultDialogFragment.ItemListener {
 
     private var theme_id = 1
     private var currentFragmentPosition = 0
-    private lateinit var quizResutl : QuizResult
-
-    private var titleAnswerList = mutableListOf<String>()
-    private var choosedAnswerList = mutableListOf<String>()
-    private var correctAnswerList = mutableListOf<String>()
-
-    private lateinit var fragmentNavigation: FragmentNavigation
+    private lateinit var quizResutl: QuizResult
 
     private lateinit var countDownTimer: CountDownTimer
     val start = 60_000L
     var timer = start
     private lateinit var pagerAdapter: PagerAdapter
+    private lateinit var answerAdapter: AnswerListAdapter
+    private var answerList = mutableListOf<AnswerModel>()
 
     private var quizList = mutableListOf<Quiz>()
+    private var selectList = mutableListOf<SelectAnswer>()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_quiz_detail
@@ -52,9 +42,6 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
 
     override fun getViewModel(): QuizDetailViewModel =
         ViewModelProvider(requireActivity()).get(QuizDetailViewModel::class.java)
-
-    
-
 
     override fun initData() {
         theme_id = arguments?.getInt(THEME_KEY)!!
@@ -65,52 +52,53 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
         startTimer()
         viewModel.quizList.observe(this, { data ->
             data.let {
-//                setRecyclerView(data)
-//                adapter = QuizDetailAdapter(data, requireContext())
-//                binding.viewPager.adapter = adapter
-//                setUpViewPager(binding.viewPager,data)
+                quizList.clear()
                 quizList.addAll(it)
-
-                titleAnswerList.clear()
-                choosedAnswerList.clear()
-                correctAnswerList.clear()
-
-                for (i in 0 until it.size) {
-
-                    titleAnswerList.add("")
-                    choosedAnswerList.add("")
-                    correctAnswerList.add(it[i].correct)
-
-                }
-                pagerAdapter = PagerAdapter(this, data, this)
+                viewModel.setCorrectList(quizList)
+                pagerAdapter = PagerAdapter(this, quizList, this)
                 binding.viewPager.adapter = pagerAdapter
-
             }
         })
 
         binding.ivBack.setOnClickListener {
-
-            popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
-//            requireActivity().finish()
+            QuizCloseDialogFragment.newInstance(object :
+                    QuizCloseDialogFragment.OnItemClickListener {
+                    override fun onClose() {
+                        back()
+                    }
+                }).show(parentFragmentManager, null)
         }
 
         binding.btn5050.setOnClickListener {
-            (pagerAdapter.getCurrentFragment(currentFragmentPosition) as QuestionFragment).set5050AnswerColor(
-                0
-            )
+//            (pagerAdapter.getCurrentFragment(currentFragmentPosition) as QuestionFragment).set5050AnswerColor(
+//                0
+//            )
         }
 
         binding.btnComplete.setOnClickListener {
-            QuizResultDialogFragment.newInstance(titleAnswerList, this)
-                .show(parentFragmentManager, null)
+            viewModel.titleAnswerList.observe(viewLifecycleOwner) {
+                QuizResultDialogFragment.newInstance(it, this).show(parentFragmentManager, null)
+            }
+
+            countDownTimer.cancel()
         }
 
+        binding.ivMenu.setOnClickListener {
+            openDrawer()
+        }
+        binding.btnNext.setOnClickListener {
+            goToNext()
+        }
+        binding.btnPrev.setOnClickListener {
+            goToPrevious()
+        }
     }
 
-    override fun onAttach(activity: Activity) {
-        super.onAttach(activity)
-        if (context is FragmentNavigation) {
-            fragmentNavigation = context as FragmentNavigation
+    private fun openDrawer() {
+        binding.drawer.openDrawer(Gravity.RIGHT)
+        viewModel.selecAnswerList.observe(viewLifecycleOwner) {
+            answerAdapter = AnswerListAdapter(it, this)
+            binding.fragmentAnswer.recyclerAnswer.adapter = answerAdapter
         }
     }
 
@@ -122,7 +110,6 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
     private fun setTextTimer() {
         var m = (timer / 1000) / 60
         var s = (timer / 1000) % 60
-
         var format = String.format("%02d:%02d", m, s)
 
         binding.tvQuizTime.setText(format)
@@ -148,27 +135,6 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
         }.start()
     }
 
-    private fun setUpViewPager(viewPager: ViewPager2, quizList: List<Quiz>) {
-        val centerItem = Integer.MAX_VALUE / 2
-        viewPager.apply {
-            setCurrentItem(centerItem - centerItem % quizList.size, false)
-            //if item is set up to display, we don't need set up again
-            if (viewPager.itemDecorationCount > 0) {
-                return
-            }
-            viewPager.offscreenPageLimit = 1
-            //width of next and previous item will visible
-            val widthOtherVisible = resources.getDimension(R.dimen.ndp_8)
-            val currentItemHorizontalMargin = resources.getDimension(R.dimen.ndp_16)
-            val pageTranslationX = widthOtherVisible + currentItemHorizontalMargin
-            val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
-                page.translationX = -pageTranslationX * position
-            }
-            setPageTransformer(pageTransformer)
-            addItemDecoration(HorizontalMarginItemDecoration(context, R.dimen.ndp_16))
-        }
-    }
-
     private fun goToNext() {
         binding.viewPager.apply {
             adapter?.let { it ->
@@ -178,41 +144,21 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
                 }
                 currentItem = 0
             }
-
         }
     }
 
     private fun goToPrevious() {
         binding.viewPager.apply {
-            if (currentItem == 0) {
-                currentItem++
+//            if (currentItem == 0) {
+//                currentItem++
+//                return
+//            }
+            if (currentItem < 1) {
+//                currentItem++
                 return
             }
             currentItem--
         }
-    }
-
-//    private fun setRecyclerView(quizList: List<Quiz>) {
-//        val linearLayoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-//        adapter = QuizDetailAdapter(quizList, requireContext())
-//        binding.myRecyclerView.setHasFixedSize(true)
-//        binding.myRecyclerView.layoutManager = linearLayoutManager
-//        binding.myRecyclerView.adapter = adapter
-//    }
-
-    class HorizontalMarginItemDecoration(context: Context, @DimenRes horizontalMarginInDp: Int) :
-        RecyclerView.ItemDecoration() {
-
-        private val horizontalMarginInPx: Int =
-            context.resources.getDimension(horizontalMarginInDp).toInt()
-
-        override fun getItemOffsets(
-            outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
-        ) {
-            outRect.right = horizontalMarginInPx
-            outRect.left = horizontalMarginInPx
-        }
-
     }
 
     private class PagerAdapter(
@@ -232,20 +178,8 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
         override fun createFragment(position: Int): Fragment {
             mapFragments = HashMap()
 
-            val quiz = quizList[position]
-            val answerList =
-                listOf(quiz.correct, quiz.incorrect_1, quiz.incorrect_2, quiz.incorrect_3)
-            val ramdomAnswerList = mutableListOf<String>()
-            while (ramdomAnswerList.size < 4) {
-                val i = answerList.random()
-                if (!ramdomAnswerList.contains(i)) {
-                    ramdomAnswerList.add(i)
-                }
-            }
-
             val fragment = QuestionFragment.newInstance(
                 quizList[position],
-                ramdomAnswerList,
                 onClickListener,
                 position
             )
@@ -255,61 +189,58 @@ class QuizDetailFragment : BaseFragment<QuizDetailViewModel, FragmentQuizDetailB
         }
     }
 
-    override fun updateAnswer(titleAnswer: String, choosedAnswer: String, position: Int) {
-        titleAnswerList.set(position, titleAnswer)
-        choosedAnswerList.set(position, choosedAnswer)
+    override fun updateAnswer(
+        titleAnswer: String,
+        choosedAnswer: String,
+        position: Int,
+        isCorrect: Boolean
+    ) {
+        val selectAnswer = SelectAnswer(position + 1, titleAnswer, choosedAnswer)
+        viewModel.setSelectAnswer(selectAnswer)
+        viewModel.checkAnswer(isCorrect, position)
+        viewModel.setTitleAnswer(titleAnswer, position)
+        if (!isCorrect) {
+            viewModel.setAnswerModelList(titleAnswer, position)
+        }
     }
 
-    override fun updatePosition(position: Int) {
-        currentFragmentPosition = position
+    override fun onClick(position: Int) {
+        binding.drawer.closeDrawer(Gravity.RIGHT)
+        binding.viewPager.currentItem = position
     }
 
-    
+    override fun onContinue() {
+        startTimer()
+    }
+
+    override fun onComplete() {
+        var resultCount = ResultCount(0, 0, 0)
+        viewModel.setResult()
+        viewModel.result.observe(viewLifecycleOwner) {
+            resultCount = it
+        }
+        viewModel.selecAnswerList.observe(viewLifecycleOwner) {
+            selectList.clear()
+            selectList.addAll(it)
+        }
+        viewModel.answerModelList.observe(viewLifecycleOwner) {
+            answerList.clear()
+            answerList.addAll(it)
+        }
+        pushFragment(
+            ResultStatisticFragment.newInstance(resultCount, quizList, selectList, answerList),
+            FragNavTransactionOptions.Builder().allowReordering(true).build()
+        )
+    }
 
     companion object {
         const val THEME_KEY = "THEME_KEY"
 
-        @JvmStatic
         fun newInstance(theme_id: Int) =
             QuizDetailFragment().apply {
                 arguments = bundleOf(
-                    THEME_KEY to theme_id,
+                    THEME_KEY to theme_id
                 )
             }
-    }
-
-    override fun onReturn() {
-        popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
-        titleAnswerList.clear()
-        choosedAnswerList.clear()
-    }
-
-    override fun onWatchAnswer() {
-        pushFragment(
-            WatchAnswerFragment.newInstance(quizList, choosedAnswerList),
-            HistoryUtils.getSlideTransitionAnimationOptions()
-        )
-    }
-
-
-    override fun onBack() {
-        titleAnswerList.clear()
-        choosedAnswerList.clear()
-        popFragments(2, HistoryUtils.getSlideTransitionAnimationOptions())
-    }
-
-    override fun onContinue() {
-        titleAnswerList.clear()
-        choosedAnswerList.clear()
-    }
-
-    override fun onComplete() {
-        pushFragment(
-            ResultStatisticFragment.newInstance(
-                choosedAnswerList,
-                correctAnswerList,
-                this
-            ), FragNavTransactionOptions.Builder().allowReordering(true).build()
-        )
     }
 }

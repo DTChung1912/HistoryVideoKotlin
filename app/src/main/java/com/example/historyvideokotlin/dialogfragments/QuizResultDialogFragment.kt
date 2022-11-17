@@ -10,32 +10,29 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.historyvideokotlin.adapters.QuizResultAdapter
 import com.example.historyvideokotlin.databinding.FragmentQuizResultDialogBinding
 
-class QuizResultDialogFragment(val onItemClickListener: OnItemClickListener) : DialogFragment() {
+class QuizResultDialogFragment(val onItemClickListener: ItemListener) : DialogFragment() {
 
     private lateinit var binding: FragmentQuizResultDialogBinding
-    private lateinit var adapter: QuizResultAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding =
             FragmentQuizResultDialogBinding.inflate(LayoutInflater.from(context), container, false)
 
-        val layoutManager = GridLayoutManager(requireContext(), 5)
         val anwserList = arguments?.getStringArrayList(ANSWER_LIST_KEY) as List<String>
-        adapter = QuizResultAdapter(anwserList, requireContext())
-
-        binding.recyclerQuizResult.layoutManager = layoutManager
-        binding.recyclerQuizResult.adapter = adapter
+        binding.recyclerQuizResult.adapter = QuizResultAdapter(anwserList, requireContext())
 
         binding.btnContinue.setOnClickListener {
             onItemClickListener.onContinue()
+            dismiss()
+        }
+
+        binding.ivBack.setOnClickListener {
             dismiss()
         }
 
@@ -67,7 +64,7 @@ class QuizResultDialogFragment(val onItemClickListener: OnItemClickListener) : D
         const val ANSWER_LIST_KEY = "ANSWER_LIST_KEY"
 
         @JvmStatic
-        fun newInstance(anwserList: List<String>, onItemClickListener: OnItemClickListener) =
+        fun newInstance(anwserList: List<String>, onItemClickListener: ItemListener) =
             QuizResultDialogFragment(onItemClickListener).apply {
                 arguments = bundleOf(
                     ANSWER_LIST_KEY to anwserList
@@ -75,7 +72,7 @@ class QuizResultDialogFragment(val onItemClickListener: OnItemClickListener) : D
             }
     }
 
-    interface OnItemClickListener {
+    interface ItemListener {
         fun onContinue()
         fun onComplete()
     }

@@ -15,7 +15,7 @@
 
     <item
         android:id="@+id/quizFragment"
-        android:icon="@drawable/ic_bottom_menu_feed"
+        android:icon="@drawable/ic_bottom_menu_quiz"
         android:title="Kiểm tra"
         app:showAsAction="ifRoom" />
 

@@ -63,6 +63,7 @@
                 android:textSize="@dimen/nsp_18" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvDownloadVideoList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,6 +71,19 @@
                 android:layout_marginTop="@dimen/ndp_10"
                 android:layout_marginBottom="@dimen/ndp_20"
                 android:text="Danh sách video đã tải xuống trên thiết bị"
+                android:textColor="@color/com_facebook_blue"
+                android:textSize="@dimen/nsp_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvDownloadPostList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_marginBottom="@dimen/ndp_20"
+                android:text="Danh sách bài viết đã tải xuống trên thiết bị"
                 android:textColor="@color/com_facebook_blue"
                 android:textSize="@dimen/nsp_14"
                 android:textStyle="bold" />

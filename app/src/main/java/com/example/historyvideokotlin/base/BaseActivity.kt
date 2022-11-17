@@ -29,7 +29,6 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         super.onCreate(savedInstanceState, persistentState)
 
         initData()
-
     }
 
     protected fun initData() {
@@ -77,9 +76,27 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         }
     }
 
+    fun replaceUpFragment(id: Int, fragment: Fragment, addToBackStack: Boolean) {
+        handler.post {
+            val transaction =
+                supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.slide_up,
+                R.anim.slide_down,
+                R.anim.slide_down,
+                R.anim.no_animation
+            )
+            transaction.replace(id, fragment, fragment.tag)
+            if (addToBackStack) {
+                transaction.addToBackStack(fragment.tag)
+            }
+            transaction.commitAllowingStateLoss()
+        }
+    }
+
     open fun replaceFragment(
         id: Int,
-        fragment: Fragment?,
+        fragment: Fragment,
         addToBackStack: Boolean,
         tag: String?
     ) {
@@ -92,6 +109,23 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
                 R.anim.slide_in_from_left,
                 R.anim.slide_out_to_right
             )
+            transaction.replace(id, fragment, tag)
+            if (addToBackStack) {
+                transaction.addToBackStack(tag)
+            }
+            transaction.commitAllowingStateLoss()
+        }
+    }
+
+    open fun replaceFragmentWithoutAnimation(
+        id: Int,
+        fragment: Fragment?,
+        addToBackStack: Boolean,
+        tag: String?
+    ) {
+        handler.post {
+            val transaction =
+                supportFragmentManager.beginTransaction()
             transaction.replace(id, fragment!!, tag)
             if (addToBackStack) {
                 transaction.addToBackStack(tag)
@@ -119,6 +153,63 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
             if (addToBackStack) {
                 transaction.addToBackStack(tag)
             }
+            transaction.commitAllowingStateLoss()
+        }
+    }
+
+    open fun showUpFragment(
+        id: Int,
+        fragment: Fragment?,
+        addToBackStack: Boolean,
+        tag: String?
+    ) {
+        handler.post {
+            val transaction =
+                supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.slide_up,
+                R.anim.slide_down,
+                R.anim.slide_down,
+                R.anim.no_animation
+            )
+            transaction.add(id, fragment!!, tag)
+            if (addToBackStack) {
+                transaction.addToBackStack(tag)
+            }
+            transaction.commitAllowingStateLoss()
+        }
+    }
+
+    open fun backFragment(
+        fragment: Fragment?
+    ) {
+        handler.post {
+            val transaction =
+                supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.slide_in_from_right,
+                R.anim.slide_out_to_left,
+                R.anim.slide_in_from_left,
+                R.anim.slide_out_to_right
+            )
+            transaction.remove(fragment!!)
+            transaction.commitAllowingStateLoss()
+        }
+    }
+
+    open fun backDownFragment(
+        fragment: Fragment?
+    ) {
+        handler.post {
+            val transaction =
+                supportFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.slide_up,
+                R.anim.slide_down,
+                R.anim.slide_down,
+                R.anim.no_animation
+            )
+            transaction.remove(fragment!!)
             transaction.commitAllowingStateLoss()
         }
     }
@@ -157,4 +248,3 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         win.attributes = winParams
     }
 }
-

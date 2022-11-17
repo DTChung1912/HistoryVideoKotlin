@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="number"
+            type="Integer" />
+
+        <variable
+            name="answer"
+            type="String" />
+
+        <variable
+            name="content"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/itemAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/ndp_2"
+        android:background="@drawable/background_answer_item"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/ndp_5">
+
+        <TextView
+            android:id="@+id/tvNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_answer_number"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/ndp_8"
+            android:text="@{@string/quiz_number(number)}"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            tools:text="Cau 1:" />
+
+        <TextView
+            android:id="@+id/tvAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/ndp_5"
+            android:text="@{@string/quiz_answer(answer)}"
+            android:textColor="@color/green3"
+            android:textStyle="bold"
+            tools:text="A:" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ndp_5"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:text="@{content}"
+            android:textColor="@color/green"
+            android:textStyle="bold"
+            tools:text="Chungaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+    </LinearLayout>
+</layout>

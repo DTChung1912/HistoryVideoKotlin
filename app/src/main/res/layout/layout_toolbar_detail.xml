@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="@dimen/ndp_5"
+            android:layout_marginVertical="@dimen/ndp_5"
+            android:background="@drawable/background_quiz_toolbar"
+            android:gravity="top"
+            android:paddingHorizontal="@dimen/ndp_5">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_back_white" />
+
+            <TextView
+                android:id="@+id/tvTitleToolBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:layout_marginBottom="@dimen/ndp_10"
+                android:background="@drawable/background_quiz_time"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/ndp_10"
+                android:text="@{title}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/nsp_25"
+                android:textStyle="bold"
+                tools:text="HO CHI MINH" />
+
+            <ImageView
+                android:id="@+id/ivFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/ndp_5"
+                android:src="@drawable/ic_filter" />
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

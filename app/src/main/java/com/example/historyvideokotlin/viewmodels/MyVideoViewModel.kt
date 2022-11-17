@@ -2,22 +2,20 @@ package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.historyvideokotlin.base.BaseViewModel
-import com.example.historyvideokotlin.data.VideoDatabase
 import com.example.historyvideokotlin.di.repositoryProvider
 import com.example.historyvideokotlin.model.DownloadVideo
-import com.example.historyvideokotlin.model.MyVideoRespone
+import com.example.historyvideokotlin.model.MyVideoModel
 import com.example.historyvideokotlin.model.Video
 import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.repository.UserRepository
 import com.example.historyvideokotlin.utils.MyLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MyVideoViewModel(application: Application) : BaseViewModel(application) {
@@ -26,9 +24,8 @@ class MyVideoViewModel(application: Application) : BaseViewModel(application) {
     private var userRepository = UserRepository()
 
     val video = MutableLiveData<Video>()
-    val videoList = MutableLiveData<List<Video>>()
-    val myVideoResponse = MutableLiveData<MyVideoRespone>()
-    val isEmpty = MutableLiveData<Boolean>()
+    val videoList = MutableLiveData<List<MyVideoModel>>()
+    val myVideoResponse = MutableLiveData<List<MyVideoModel>>()
 
     val ktorVideoRepository = application.repositoryProvider.ktorVideoRepository
     val ktorUserRepository = application.repositoryProvider.ktorUserRepository
@@ -36,24 +33,18 @@ class MyVideoViewModel(application: Application) : BaseViewModel(application) {
     val userId = HistoryUserManager.instance.UserId()
     val downloadVideoList = MutableLiveData<List<DownloadVideo>>()
 
-    fun getDownloadVideo(database: VideoDatabase) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            kotlin.runCatching {
-//                database.videoDao().getListVideo()
-//            }.onSuccess {
-//                downloadVideoList.value = it
-//            }.onFailure {
-//                MyLog.e("getListVideo","error")
-//            }
-//        }
-    }
+    private val _isEmpty = MutableLiveData(false)
+    val isEmpty: LiveData<Boolean> get() = _isEmpty
+
+    private val _isLoadFail = MutableLiveData(false)
+    val isLoadFail: LiveData<Boolean> get() = _isLoadFail
 
     fun getMyVideoList(userId: String) {
         viewModelScope.launch {
             runCatching {
                 ktorUserRepository.getMyVideoList(userId)
             }.onSuccess {
-                videoList.value = it.videoList
+                videoList.value = it
             }.onFailure {
                 MyLog.e("getMyVideoList ", it.message)
             }
@@ -65,6 +56,11 @@ class MyVideoViewModel(application: Application) : BaseViewModel(application) {
             runCatching {
                 ktorUserRepository.getMyVideoList(userId, type)
             }.onSuccess {
+                if (it.isEmpty()) {
+                    _isEmpty.value = true
+                } else {
+                    _isEmpty.value = false
+                }
                 myVideoResponse.value = it
             }.onFailure {
                 MyLog.e("getMyVideoList ", it.message)

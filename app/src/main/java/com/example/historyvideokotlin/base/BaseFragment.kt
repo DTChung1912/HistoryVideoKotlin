@@ -17,10 +17,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.historyvideokotlin.activities.MainActivity
+import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
+import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.MainViewModel
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -115,6 +116,10 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         viewModel.hideLoading()
     }
 
+    fun isLogged(): Boolean {
+        return HistoryUserManager.instance.checkUserLogined()
+    }
+
     override fun onStop() {
         super.onStop()
         if (progressBarDialog != null && progressBarDialog.isShowing) {
@@ -175,6 +180,13 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         }
     }
 
+    protected open fun replaceUpFragment(id: Int, fragment: Fragment?, addToBackStack: Boolean) {
+        val activity: Activity? = activity
+        if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
+            activity.replaceUpFragment(id, fragment!!, addToBackStack)
+        }
+    }
+
     protected open fun replaceFragment(id: Int, fragment: Fragment?, addToBackStack: Boolean) {
         val activity: Activity? = activity
         if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
@@ -184,13 +196,25 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
 
     protected open fun replaceFragment(
         id: Int,
-        fragment: Fragment?,
+        fragment: Fragment,
         addToBackStack: Boolean,
         tag: String?
     ) {
         val activity: Activity? = activity
         if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
             activity.replaceFragment(id, fragment, addToBackStack, tag)
+        }
+    }
+
+    protected open fun replaceFragmentWithoutAnimation(
+        id: Int,
+        fragment: Fragment,
+        addToBackStack: Boolean,
+        tag: String?
+    ) {
+        val activity: Activity? = activity
+        if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
+            activity.replaceFragmentWithoutAnimation(id, fragment, addToBackStack, tag)
         }
     }
 
@@ -203,6 +227,36 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         val activity: Activity? = activity
         if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
             activity.showFragment(id, fragment, addToBackStack, tag)
+        }
+    }
+
+    protected open fun showUpFragment(
+        id: Int,
+        fragment: Fragment?,
+        addToBackStack: Boolean,
+        tag: String?
+    ) {
+        val activity: Activity? = activity
+        if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
+            activity.showUpFragment(id, fragment, addToBackStack, tag)
+        }
+    }
+
+    protected open fun backFragment(
+        fragment: Fragment?
+    ) {
+        val activity: Activity? = activity
+        if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
+            activity.backFragment(fragment)
+        }
+    }
+
+    protected open fun backDownFragment(
+        fragment: Fragment?
+    ) {
+        val activity: Activity? = activity
+        if (activity is BaseActivity<*, *> && !activity.isFinishing()) {
+            activity.backDownFragment(fragment)
         }
     }
 
@@ -248,11 +302,11 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
         }
     }
 
-    protected open fun nextFragment(fragment: Fragment) {
-        findNavController().navigate(fragment!!.id)
+    protected open fun showToast(message: String) {
+        Toast.makeText(requireContext(), message ?: "", Toast.LENGTH_SHORT).show()
     }
 
-    protected open fun showToast(message: String) {
-        Toast.makeText(requireContext(),message ?: "", Toast.LENGTH_SHORT).show()
+    protected open fun back() {
+        popFragment(HistoryUtils.getSlideNoAnimationOptions())
     }
 }

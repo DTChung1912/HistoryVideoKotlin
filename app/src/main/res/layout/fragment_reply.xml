@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="comment"
+            type="com.example.historyvideokotlin.model.Comment" />
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.ReplyViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
         tools:context=".fragments.ReplyFragment">
 
@@ -19,7 +32,7 @@
                 android:layout_height="@dimen/ndp_40"
                 android:layout_marginStart="@dimen/ndp_10"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/ic_avatar" />
 
             <TextView
                 android:id="@+id/tvUserName"
@@ -27,9 +40,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ndp_10"
                 android:layout_toRightOf="@id/civUserAvatar"
-                android:text="Chung"
+                android:text="@{viewModel.comment.user_name}"
                 android:textSize="@dimen/nsp_15"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Chung" />
 
             <TextView
                 android:id="@+id/tvContent"
@@ -39,85 +53,105 @@
                 android:layout_marginStart="@dimen/ndp_10"
                 android:layout_marginTop="@dimen/ndp_5"
                 android:layout_toRightOf="@id/civUserAvatar"
-                android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                android:textSize="@dimen/nsp_10" />
+                android:text="@{viewModel.comment.content}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/nsp_12"
+                tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
             <TextView
                 android:id="@+id/tvDateSubmitted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ndp_20"
-                android:layout_marginTop="@dimen/ndp_5"
                 android:layout_toRightOf="@id/tvUserName"
-                android:text="1 ngay truoc"
-                android:textSize="@dimen/nsp_10" />
+                android:text="@{viewModel.comment.date_submitted}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/nsp_10"
+                tools:text="1 ngay truoc" />
 
-            <ImageView
-                android:id="@+id/ivLike"
-                android:layout_width="@dimen/ndp_20"
-                android:layout_height="@dimen/ndp_20"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/tvContent"
-                android:layout_marginStart="@dimen/ndp_10"
-                android:layout_marginTop="@dimen/ndp_10"
                 android:layout_toRightOf="@id/civUserAvatar"
-                android:scaleType="fitXY"
-                android:src="@drawable/like_video" />
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/ndp_10">
 
-            <TextView
-                android:id="@+id/tvLikeCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvContent"
-                android:layout_marginStart="@dimen/ndp_5"
-                android:layout_marginTop="@dimen/ndp_10"
-                android:layout_toRightOf="@id/ivLike"
-                android:gravity="center"
-                android:text="10" />
+                <ImageView
+                    android:id="@+id/ivLike"
+                    isVisible="@{!viewModel.isLiked}"
+                    android:layout_width="@dimen/ndp_20"
+                    android:layout_height="@dimen/ndp_20"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_like"
+                    tools:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/ivDislike"
-                android:layout_width="@dimen/ndp_20"
-                android:layout_height="@dimen/ndp_20"
-                android:layout_below="@id/tvContent"
-                android:layout_marginStart="@dimen/ndp_30"
-                android:layout_marginTop="@dimen/ndp_10"
-                android:layout_toRightOf="@id/tvLikeCount"
-                android:scaleType="fitXY"
-                android:src="@drawable/dislike_video" />
+                <ImageView
+                    android:id="@+id/ivLiked"
+                    isVisible="@{viewModel.isLiked}"
+                    android:layout_width="@dimen/ndp_20"
+                    android:layout_height="@dimen/ndp_20"
+                    android:layout_marginStart="@dimen/ndp_10"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_liked"
+                    tools:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tvDislikeCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvContent"
-                android:layout_marginStart="@dimen/ndp_5"
-                android:layout_marginTop="@dimen/ndp_10"
-                android:layout_toRightOf="@id/ivDislike"
-                android:gravity="center"
-                android:text="10" />
+                <TextView
+                    android:id="@+id/tvLikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ndp_5"
+                    android:gravity="center"
+                    android:text="@{@string/count(viewModel.likeCount)}"
+                    tools:text="10" />
 
-            <ImageView
-                android:id="@+id/ivReply"
-                android:layout_width="@dimen/ndp_20"
-                android:layout_height="@dimen/ndp_20"
-                android:layout_below="@id/tvContent"
-                android:layout_marginStart="@dimen/ndp_30"
-                android:layout_marginTop="@dimen/ndp_10"
-                android:layout_toRightOf="@id/tvDislikeCount"
-                android:scaleType="fitXY"
-                android:src="@drawable/comment_video" />
+                <ImageView
+                    android:id="@+id/ivDislike"
+                    isVisible="@{!viewModel.isDisliked}"
+                    android:layout_width="@dimen/ndp_20"
+                    android:layout_height="@dimen/ndp_20"
+                    android:layout_marginStart="@dimen/ndp_30"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_dislike"
+                    tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tvReplyCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvContent"
-                android:layout_marginStart="@dimen/ndp_5"
-                android:layout_marginTop="@dimen/ndp_10"
-                android:layout_toRightOf="@id/ivReply"
-                android:gravity="center"
-                android:text="10" />
+                <ImageView
+                    android:id="@+id/ivDisliked"
+                    isVisible="@{viewModel.isDisliked}"
+                    android:layout_width="@dimen/ndp_20"
+                    android:layout_height="@dimen/ndp_20"
+                    android:layout_marginStart="@dimen/ndp_30"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_disliked"
+                    tools:visibility="gone" />
 
+                <TextView
+                    android:id="@+id/tvDislikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ndp_5"
+                    android:gravity="center"
+                    android:text="@{@string/count(viewModel.dislikeCount)}"
+                    tools:text="10" />
+
+                <ImageView
+                    android:id="@+id/ivReply"
+                    android:layout_width="@dimen/ndp_20"
+                    android:layout_height="@dimen/ndp_20"
+                    android:layout_marginStart="@dimen/ndp_30"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/comment_video" />
+
+                <TextView
+                    android:id="@+id/tvReplyCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ndp_5"
+                    android:gravity="center"
+                    android:text="@{@string/count(viewModel.comment.reply_count)}"
+                    tools:text="10" />
+            </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
@@ -130,13 +164,13 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civAvatar"
-                android:layout_width="@dimen/ndp_30"
-                android:layout_height="@dimen/ndp_30"
+                android:layout_width="@dimen/ndp_40"
+                android:layout_height="@dimen/ndp_40"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/user_avatar" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edtReply"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ndp_40"
@@ -145,16 +179,17 @@
                 android:layout_marginHorizontal="@dimen/ndp_10"
                 android:layout_weight="8"
                 android:background="@drawable/background_edittext_comment"
-                android:hint="Phản hồi bình luận"
-                android:paddingStart="@dimen/ndp_10" />
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="Phản hồi bình luận" />
 
             <ImageView
                 android:id="@+id/ivSend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ndp_40"
+                android:layout_height="@dimen/ndp_40"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:src="@drawable/send" />
+                android:src="@drawable/ic_send_comment" />
         </LinearLayout>
 
         <LinearLayout
@@ -166,9 +201,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recylerViewReply"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_reply" />
         </LinearLayout>
-
     </LinearLayout>
-
 </layout>

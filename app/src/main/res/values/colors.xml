@@ -35,6 +35,8 @@
     <color name="login">#66E6E3E3</color>
     <color name="yellow">#FFEB3B</color>
     <color name="green">#29F631</color>
+    <color name="green2">#B3D38D</color>
+    <color name="green3">#216024</color>
     <color name="quiz_detail">#751F04</color>
     <color name="quiz_result_dialog">#C8C5C4</color>
 

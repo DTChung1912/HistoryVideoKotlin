@@ -4,22 +4,22 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
+import com.example.historyvideokotlin.component.SelectLayout
 import com.example.historyvideokotlin.databinding.FragmentQuestionBinding
+import com.example.historyvideokotlin.model.AnswerTitle
 import com.example.historyvideokotlin.model.Quiz
 import com.example.historyvideokotlin.viewmodels.QuestionViewModel
 import java.util.*
 
-class QuestionFragment(val onClickListener: OnClickListener) :
+class QuestionFragment :
     BaseFragment<QuestionViewModel, FragmentQuestionBinding>() {
 
+    private var isCorrect = false
     private var quiz: Quiz? = null
 
-    //    private var ramdomAnswerList = mutableListOf<String>()
-    private var myClickListener: OnClickListener? = null
+    private lateinit var onClickListener: OnClickListener
     private var position: Int = 0
     private var cancelAnswer = -1
 
@@ -30,61 +30,47 @@ class QuestionFragment(val onClickListener: OnClickListener) :
     override fun getViewModel(): QuestionViewModel =
         ViewModelProvider(requireActivity()).get(QuestionViewModel::class.java)
 
-    
-
     override fun initData() {
+        binding.viewModel = viewModel
         quiz = arguments?.getSerializable(QUIZ_DATA_KEY) as Quiz
-        val ramdomAnswerList = arguments?.getStringArrayList(RANDOM_ANSWER_LIST_KEY) as List<String>
-        myClickListener = onClickListener
+        viewModel.setQuiz(quiz!!)
         position = arguments?.getInt(POSITION_KEY)!!
 
-        myClickListener!!.updatePosition(position)
-
-        binding.run {
-            val number: Int = position + 1
-            tvNumber.text = "Câu " + number + ":"
-            if (!quiz!!.image.isNullOrEmpty()) {
-                Glide.with(requireContext()).load(quiz!!.image).into(ivImageQuiz)
+        binding.number = position + 1
+        binding.tvAnswerA.setOnClickListener {
+            (it.parent as SelectLayout).onClick(it)
+            viewModel.ansA.observe(viewLifecycleOwner) {
+                updateAnswer(it, AnswerTitle.A.title)
             }
-            tvQuiz.text = quiz!!.question
-            tvAnswerA.text = "A: " + ramdomAnswerList[0]
-            tvAnswerB.text = "B: " + ramdomAnswerList[1]
-            tvAnswerC.text = "C: " + ramdomAnswerList[2]
-            tvAnswerD.text = "D: " + ramdomAnswerList[3]
+        }
 
-            tvAnswerA.setOnClickListener {
-                setAnswerColor(it as TextView)
-                myClickListener!!.updateAnswer("A", ramdomAnswerList[0], position)
+        binding.tvAnswerB.setOnClickListener {
+            (it.parent as SelectLayout).onClick(it)
+            viewModel.ansB.observe(viewLifecycleOwner) {
+                updateAnswer(it, AnswerTitle.B.title)
             }
+        }
 
-            tvAnswerB.setOnClickListener {
-                setAnswerColor(it as TextView)
-                myClickListener!!.updateAnswer("B", ramdomAnswerList[1], position)
+        binding.tvAnswerC.setOnClickListener {
+            (it.parent as SelectLayout).onClick(it)
+            viewModel.ansC.observe(viewLifecycleOwner) {
+                updateAnswer(it, AnswerTitle.C.title)
             }
+        }
 
-            tvAnswerC.setOnClickListener {
-                setAnswerColor(it as TextView)
-
-                myClickListener!!.updateAnswer("C", ramdomAnswerList[2], position)
+        binding.tvAnswerD.setOnClickListener {
+            (it.parent as SelectLayout).onClick(it)
+            viewModel.ansD.observe(viewLifecycleOwner) {
+                updateAnswer(it, AnswerTitle.D.title)
             }
-
-            tvAnswerD.setOnClickListener {
-                setAnswerColor(it as TextView)
-                myClickListener!!.updateAnswer("D", ramdomAnswerList[3], position)
-            }
-
-
         }
     }
 
-    private fun setChoosedAnswer(textView: TextView) {
-        textView.setBackgroundResource(R.drawable.background_answer_choosed)
-        textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-    }
-
-    private fun setAnswerColorDefault(textView: TextView) {
-        textView.setBackgroundResource(R.drawable.background_answer)
-        textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+    private fun updateAnswer(select: String, title: String) {
+        if (quiz!!.correct.equals(select)) {
+            isCorrect = true
+        }
+        onClickListener.updateAnswer(title, select, position, isCorrect)
     }
 
     fun set5050AnswerColor(position: Int) {
@@ -111,49 +97,6 @@ class QuestionFragment(val onClickListener: OnClickListener) :
         textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_5050))
     }
 
-    private fun setAnswerClick(isClick: Boolean) {
-        if (isClick) {
-            binding.run {
-                tvAnswerA.isClickable = true
-                tvAnswerB.isClickable = true
-                tvAnswerC.isClickable = true
-                tvAnswerD.isClickable = true
-            }
-        } else {
-            binding.run {
-                tvAnswerA.isClickable = false
-                tvAnswerB.isClickable = false
-                tvAnswerC.isClickable = false
-                tvAnswerD.isClickable = false
-            }
-        }
-    }
-
-    private fun setAnswerColor(textView: TextView) {
-        val anwserList = arrayListOf<TextView>(
-            binding.tvAnswerA,
-            binding.tvAnswerB,
-            binding.tvAnswerC,
-            binding.tvAnswerD
-        )
-
-        for (i in 0 until anwserList.size) {
-            if (cancelAnswer.equals(i)) {
-                anwserList.removeAt(i)
-            }
-        }
-
-        for (i in 0 until anwserList.size) {
-            if (anwserList[i].equals(textView)) {
-                setChoosedAnswer(textView)
-            } else {
-                setAnswerColorDefault(anwserList[i])
-            }
-        }
-    }
-
-    
-
     override fun onResume() {
         super.onResume()
         hideBottomMenu()
@@ -162,28 +105,28 @@ class QuestionFragment(val onClickListener: OnClickListener) :
     companion object {
 
         const val QUIZ_DATA_KEY = "QUIZ_DATA_KEY"
-        const val RANDOM_ANSWER_LIST_KEY = "RANDOM_ANSWER_LIST_KEY"
         const val POSITION_KEY = "POSITION_KEY"
 
-        @JvmStatic
         fun newInstance(
             quiz: Quiz,
-            ramdomAnswerList: MutableList<String>,
             onClickListener: OnClickListener,
             position: Int
         ) =
-            QuestionFragment(onClickListener).apply {
+            QuestionFragment().apply {
                 arguments = bundleOf(
                     QUIZ_DATA_KEY to quiz,
-                    RANDOM_ANSWER_LIST_KEY to ramdomAnswerList,
                     POSITION_KEY to position
                 )
+                this.onClickListener = onClickListener
             }
     }
 
     interface OnClickListener {
-        fun updateAnswer(titleAnswer: String, choosedAnswer: String, position: Int)
-
-        fun updatePosition(position: Int)
+        fun updateAnswer(
+            titleAnswer: String,
+            choosedAnswer: String,
+            position: Int,
+            isCorrect: Boolean
+        )
     }
 }

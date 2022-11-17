@@ -1,11 +1,9 @@
 package com.example.historyvideokotlin.fragments
 
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.activities.MainActivity
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentPhoneNumberLoginBinding
 import com.example.historyvideokotlin.viewmodels.PhoneNumberLoginViewModel
@@ -20,8 +18,6 @@ class PhoneNumberLoginFragment :
 
     override fun getViewModel(): PhoneNumberLoginViewModel =
         ViewModelProvider(requireActivity()).get(PhoneNumberLoginViewModel::class.java)
-
-    
 
     override fun initData() {
         binding.run {
@@ -42,8 +38,6 @@ class PhoneNumberLoginFragment :
             }
         }
     }
-
-    
 
     companion object {
         @JvmStatic

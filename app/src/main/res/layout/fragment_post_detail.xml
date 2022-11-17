@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="post"
+            type="com.example.historyvideokotlin.model.Post" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,10 +52,11 @@
                     android:background="@drawable/background_quiz_time"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/ndp_10"
-                    android:text="HO CHI MINH"
+                    android:text="@{post.title}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/nsp_25"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="HO CHI MINH" />
 
             </RelativeLayout>
 
@@ -74,9 +82,10 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="@dimen/ndp_10"
                     android:layout_toRightOf="@id/ivPost"
-                    android:text="HO CHI MINH"
+                    android:text="@{post.title}"
                     android:textSize="@dimen/nsp_25"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="HO CHI MINH" />
 
                 <TextView
                     android:id="@+id/tvTimeline"
@@ -84,19 +93,21 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvTitle"
                     android:layout_toRightOf="@id/ivPost"
-                    android:text="(1000-2000)" />
+                    android:text="@{post.timeline}"
+                    tools:text="(1000-2000)" />
 
                 <ImageView
                     android:id="@+id/ivPost"
+                    url="@{post.image}"
                     android:layout_width="@dimen/ndp_70"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/ndp_70"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_gravity="left"
                     android:layout_marginTop="@dimen/ndp_10"
                     android:layout_marginEnd="@dimen/ndp_15"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher" />
+                    tools:src="@drawable/ic_avatar" />
 
                 <!--            <RatingBar-->
                 <!--                android:id="@+id/rate"-->
@@ -112,7 +123,6 @@
                 <!--                android:stepSize="1" />-->
 
                 <RatingBar
-
                     android:id="@+id/ratingBar"
                     style="?android:attr/ratingBarStyleIndicator"
                     android:layout_width="wrap_content"
@@ -129,7 +139,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ratingBar"
-                    android:layout_marginTop="@dimen/ndp_10" />
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:text="@{post.content}" />
+
+
+<!--                <com.github.barteksc.pdfviewer.PDFView-->
+<!--                    android:id="@+id/pvContent"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_below="@+id/ratingBar"-->
+<!--                    android:layout_marginTop="@dimen/ndp_10" />-->
             </RelativeLayout>
 
         </ScrollView>

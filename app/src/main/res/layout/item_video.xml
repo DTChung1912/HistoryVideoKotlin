@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/ndp_5"
-    android:layout_marginVertical="@dimen/ndp_2"
+    android:layout_marginVertical="@dimen/ndp_5"
     android:background="@drawable/background_video_list"
     android:orientation="vertical">
 
@@ -28,7 +28,7 @@
             android:src="@drawable/ic_baseline_play_circle_outline" />
 
         <TextView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/tvDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:layout_height="@dimen/ndp_60"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_avatar" />
 
         <TextView
             android:id="@+id/tvTitle"

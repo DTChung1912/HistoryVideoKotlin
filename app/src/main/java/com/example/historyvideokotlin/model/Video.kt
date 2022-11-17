@@ -3,19 +3,19 @@ package com.example.historyvideokotlin.model
 import java.io.Serializable
 
 data class Video(
-    val video_id: Int,
-    val title: String,
-    val theme_id: Int,
-    val creater_image: String,
-    val creater: String,
-    val platform: String,
-    val like_count: Int,
-    val view_count: Int,
-    val dislike_count: Int,
-    val comment_count: Int,
-    val share_count: Int,
-    val video_url: String,
-    val poster_image: String,
-    val duration: Int,
-    val date_submitted: String
+    var video_id: Int = 0,
+    var title: String = "",
+    var theme_id: Int = 0,
+    var creater_image: String = "",
+    var creater: String = "",
+    var platform: String = "",
+    var like_count: Int = 0,
+    var view_count: Int = 0,
+    var dislike_count: Int = 0,
+    var comment_count: Int = 0,
+    var download_count: Int = 0,
+    var video_url: String = "",
+    var poster_image: String = "",
+    var duration: Int = 0,
+    var date_submitted: String = ""
 ) : Serializable

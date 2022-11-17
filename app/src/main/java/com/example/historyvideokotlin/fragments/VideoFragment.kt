@@ -1,28 +1,21 @@
 package com.example.historyvideokotlin.fragments
 
-import android.os.Environment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.activities.MainActivity
 import com.example.historyvideokotlin.adapters.VideoAdapter
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentVideoBinding
 import com.example.historyvideokotlin.dialogfragments.VideoMoreDialogFragment
 import com.example.historyvideokotlin.model.Video
 import com.example.historyvideokotlin.utils.HistoryUtils
-import com.example.historyvideokotlin.utils.MyLog
 import com.example.historyvideokotlin.viewmodels.VideoViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.File
-import java.util.*
 
 class VideoFragment :
     BaseFragment<VideoViewModel, FragmentVideoBinding>(),
-    VideoAdapter.OnItemClickListener,
+    SwipeRefreshLayout.OnRefreshListener,
+    VideoAdapter.ItemListener,
     VideoMoreDialogFragment.OnItemClickListener {
 
     private var adapter: VideoAdapter? = null
@@ -32,33 +25,42 @@ class VideoFragment :
     override fun getViewModel(): VideoViewModel =
         ViewModelProvider(requireActivity()).get(VideoViewModel::class.java)
 
-    
-
     override fun initData() {
+        binding.viewModel = viewModel
         viewModel.getVideoData()
+
         viewModel.videoList.observe(this, { data ->
             data.let {
-                setRecyclerView(it)
+                adapter = VideoAdapter(it, requireContext(), this)
+                binding.myRecyclerView.adapter = adapter
             }
         })
-        binding.run {
-            toolbar.tvTitle.text = "Video"
-            toolbar.ivSearch.setOnClickListener {
+
+        binding.toolbar.run {
+            tvTitle.text = "Video"
+            ivSearch.setOnClickListener {
                 (activity as? MainActivity)?.onSearchClick(1)
             }
-            toolbar.ivMenu.setOnClickListener {
+            ivMenu.setOnClickListener {
                 (activity as? MainActivity)?.onSettingClick()
             }
-            btnTest.setOnClickListener {
-//                lifecycleScope.launch(Dispatchers.IO) {
+        }
+
+        binding.tvRefresh.setOnClickListener {
+            viewModel.getVideoData()
+        }
+
+        binding.refreshLayout.setOnRefreshListener(this@VideoFragment)
+//            btnTest.setOnClickListener {
+//                lifecycleScope.launch(IO) {
 //                    val a = (activity as MainActivity).database!!.videoDao().getListVideo()
 //                    MyLog.e("getDownloadVideo-------------",a.toString())
 //                }
 //                viewModel.getTest((activity as MainActivity).database!!)
-                val direct = File(
-                    Environment.getExternalStorageDirectory()
-                        .toString() + "/HistoryVideo"
-                )
+//                val direct = File(
+//                    Environment.getExternalStorageDirectory()
+//                        .toString() + "/HistoryVideo"
+//                )
 //                if (!direct.exists()) {
 //                    direct.mkdirs()
 //                }
@@ -71,8 +73,7 @@ class VideoFragment :
 //                    fileNames[index] = item?.name
 //                    MyLog.e("a" + index, fileNames[index])
 //                }
-            }
-        }
+//            }
     }
 
 //    private fun setVideoDuration(urlList: List<String>) {
@@ -106,16 +107,6 @@ class VideoFragment :
 //        }
 //    }
 
-    private fun setRecyclerView(videoList: List<Video>) {
-        adapter = VideoAdapter(videoList, requireContext(), this)
-        val linearLayoutManager = LinearLayoutManager(view?.context)
-        binding.myRecyclerView.setHasFixedSize(true)
-        binding.myRecyclerView.layoutManager = linearLayoutManager
-        binding.myRecyclerView.adapter = adapter
-    }
-
-    
-
     override fun onResume() {
         super.onResume()
         showBottomMenu()
@@ -148,6 +139,11 @@ class VideoFragment :
 
     override fun onDontCare(videoId: Int) {
 //        viewModel.updateDontCareVideo(videoId, 1)
+    }
+
+    override fun onRefresh() {
+        binding.refreshLayout.isRefreshing = false
+        viewModel.getVideoData()
     }
 
     companion object {

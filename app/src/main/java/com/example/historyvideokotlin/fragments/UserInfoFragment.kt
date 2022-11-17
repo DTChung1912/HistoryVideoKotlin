@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentUserInfoBinding
-import com.example.historyvideokotlin.model.MyVideoListData
 import com.example.historyvideokotlin.model.MyVideoType
 import com.example.historyvideokotlin.model.User
 import com.example.historyvideokotlin.utils.HistoryUtils
@@ -13,7 +12,6 @@ import com.example.historyvideokotlin.viewmodels.UserInfoViewModel
 
 class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding>() {
 
-    private lateinit var myVideoListData: MyVideoListData
     private var userInfo: User? = null
 
     override fun getLayoutId(): Int {
@@ -23,34 +21,13 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
     override fun getViewModel(): UserInfoViewModel =
         ViewModelProvider(requireActivity()).get(UserInfoViewModel::class.java)
 
-    
-
     override fun initData() {
-        viewModel.getMyVideoData()
-
-//        viewModel.userList.observe(this, { data ->
-//            data.let {
-//                var user = it[0]
-//                if (!user.user_image.isNullOrEmpty()) {
-//                    Glide.with(requireContext()).load(user.user_image).into(binding.civUserAvatar)
-//                }
-//
-//                binding.tvEmail.text = user.email
-//            }
-//        })
-        viewModel.userInfo.observe(this, { data ->
-            data.let {
-                userInfo = it
-            }
-        })
+        binding.viewModel = viewModel
+        viewModel.getUserInfo()
+        viewModel.user.observe(viewLifecycleOwner) {
+            userInfo = it
+        }
         setItemClick()
-
-//        viewModel.myVideoList.observe(this, { data ->
-//            data.let {
-//                myVideoListData = MyVideoListData(it)
-//                setItemClick(myVideoListData)
-//            }
-//        })
     }
 
     private fun setItemClick() {
@@ -63,35 +40,44 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             }
             tvLike.setOnClickListener {
                 pushFragment(
-                    MyVideoFragment.newInstance(MyVideoType.LIKE.id),
+                    MyVideoFragment.newInstance(MyVideoType.LIKE.ordinal),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
             tvLater.setOnClickListener {
                 pushFragment(
-                    MyVideoFragment.newInstance(MyVideoType.LATER.id),
+                    MyVideoFragment.newInstance(MyVideoType.LATER.ordinal),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
             tvDownload.setOnClickListener {
                 pushFragment(
-                    DownloadListFragment.newInstance(MyVideoType.DOWNLOAD.id),
+                    DownloadListFragment.newInstance(MyVideoType.DOWNLOAD.ordinal),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
             tvViewed.setOnClickListener {
                 pushFragment(
-                    MyVideoFragment.newInstance(MyVideoType.VIEW.id),
+                    MyVideoFragment.newInstance(MyVideoType.VIEW.ordinal),
+                    HistoryUtils.getSlideTransitionAnimationOptions()
+                )
+            }
+            tvViewedPost.setOnClickListener {
+                pushFragment(
+                    MyPostFragment.newInstance(),
+                    HistoryUtils.getSlideTransitionAnimationOptions()
+                )
+            }
+            tvDownloadPost.setOnClickListener {
+                pushFragment(
+                    DownloadPostFragment.newInstance(),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
         }
     }
 
-    
-
     companion object {
-        @JvmStatic
         fun newInstance() =
             UserInfoFragment().apply {
                 arguments = bundleOf()

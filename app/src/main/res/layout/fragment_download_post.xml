@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isList"
+            type="Boolean" />
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.DownloadListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginHorizontal="@dimen/ndp_5"
+                android:layout_marginVertical="@dimen/ndp_5"
+                android:background="@drawable/background_quiz_toolbar"
+                android:gravity="top"
+                android:paddingHorizontal="@dimen/ndp_2">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_back_white" />
+
+                <TextView
+                    android:id="@+id/tvTitleToolBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/ndp_10"
+                    android:layout_marginBottom="@dimen/ndp_10"
+                    android:background="@drawable/background_quiz_time"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/ndp_10"
+                    android:text="Danh sách bài viết đã tải xuống"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            isVisible="@{!viewModel.isEmpty}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rlToolbar"
+            tools:listitem="@layout/item_post_children"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvEmptyList"
+            isVisible="@{viewModel.isEmpty}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ndp_50"
+            android:gravity="center_horizontal"
+            android:text="Danh sách trống"
+            android:textColor="@color/red"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -20,7 +20,7 @@ class QuizAdapter(
             onItemClickListener: OnItemClickListener
         ) = with(binding) {
 
-            binding.tvTheme.text = theme.theme_name
+            binding.theme = theme
             binding.itemQuiz.setOnClickListener {
                 onItemClickListener.onItemClick(theme)
             }

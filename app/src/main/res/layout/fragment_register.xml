@@ -38,7 +38,7 @@
             android:layout_width="@dimen/ndp_150"
             android:layout_height="@dimen/ndp_150"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_avatar" />
 
         <EditText
             android:id="@+id/edtName"

@@ -3,6 +3,7 @@ package com.example.historyvideokotlin.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.historyvideokotlin.HistoryApplication
+import com.example.historyvideokotlin.utils.MyLog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
@@ -27,7 +28,7 @@ class HistoryUserManager {
         if (id == null) {
             return ""
         }
-
+        MyLog.e("Firebase.auth.currentUser?.uid", id)
         return id
     }
 

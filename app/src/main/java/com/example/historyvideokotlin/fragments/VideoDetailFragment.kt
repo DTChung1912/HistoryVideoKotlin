@@ -3,11 +3,9 @@ package com.example.historyvideokotlin.fragments
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentVideoDetailBinding
 import com.example.historyvideokotlin.model.Video
-import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.utils.HistoryUtils.convertMillieToHMmSs
 import com.example.historyvideokotlin.utils.MyLog
 import com.example.historyvideokotlin.viewmodels.VideoDetailViewModel
@@ -31,12 +29,10 @@ class VideoDetailFragment :
     override fun getViewModel(): VideoDetailViewModel =
         ViewModelProvider(requireActivity()).get(VideoDetailViewModel::class.java)
 
-    
-
     override fun initData() {
         player = ExoPlayer.Builder(requireContext()).build()
         video = arguments?.getSerializable(VIDEO_KEY) as Video
-        viewModel.getMyVideo(video.video_id)
+//        viewModel.getMyVideo(video.video_id)
 
         showFragment(
             R.id.fragmentContainerVideoDetail,
@@ -49,7 +45,7 @@ class VideoDetailFragment :
             video.video_url.let { setUpPlayer(it) }
         }
         binding.ivBack.setOnClickListener {
-            popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
+            back()
         }
     }
 
@@ -74,7 +70,6 @@ class VideoDetailFragment :
         })
     }
 
-
     override fun onPause() {
         super.onPause()
         if (player != null) {
@@ -86,8 +81,6 @@ class VideoDetailFragment :
         super.onResume()
         hideBottomMenu()
     }
-
-    
 
     override fun setDrmSessionManagerProvider(drmSessionManagerProvider: DrmSessionManagerProvider?): MediaSource.Factory {
         TODO("Not yet implemented")

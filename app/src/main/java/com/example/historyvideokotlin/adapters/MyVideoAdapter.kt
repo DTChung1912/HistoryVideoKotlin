@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.databinding.ItemVideoChildrenBinding
+import com.example.historyvideokotlin.model.MyVideoModel
 import com.example.historyvideokotlin.model.MyVideoRespone
 import com.example.historyvideokotlin.model.MyVideoStatus
 import com.example.historyvideokotlin.model.Video
 
 class MyVideoAdapter(
-    val myVideoRespone: MyVideoRespone,
+    val list: List<MyVideoModel>,
     val myVideoType: Int,
     val context: Context,
     val onItemClickListener: OnItemClickListener
@@ -21,14 +22,14 @@ class MyVideoAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             video: Video,
-            myVideoStatus: MyVideoStatus,
+            status: MyVideoStatus,
             myVideoType: Int,
             context: Context,
             onItemClickListener: OnItemClickListener
         ) =
             with(binding) {
                 binding.run {
-                    val seconds = myVideoStatus.duration / 1000
+                    val seconds = status.duration!! / 1000
                     val second = seconds % 60
                     val minute = seconds / 60 % 60
                     val hour = seconds / (60 * 60) % 24
@@ -52,7 +53,7 @@ class MyVideoAdapter(
                         onItemClickListener.onMyVideoPlay(video)
                     }
                     ivMore.setOnClickListener {
-                        onItemClickListener.onMyVideoMore(myVideoStatus.my_video_id, myVideoType)
+                        onItemClickListener.onMyVideoMore(status.my_video_id!!, myVideoType)
                     }
                 }
             }
@@ -64,15 +65,15 @@ class MyVideoAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(
-            myVideoRespone.videoList[position],
-            myVideoRespone.myVideoStatusList[position],
+            list[position].video,
+            list[position].status,
             myVideoType,
             context,
             onItemClickListener
         )
     }
 
-    override fun getItemCount(): Int = myVideoRespone.size
+    override fun getItemCount(): Int = list.size
 
     interface OnItemClickListener {
         fun onMyVideoPlay(video: Video)

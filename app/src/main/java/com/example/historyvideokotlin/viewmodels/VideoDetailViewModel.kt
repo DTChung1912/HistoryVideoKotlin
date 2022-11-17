@@ -14,19 +14,7 @@ class VideoDetailViewModel(application: Application) : BaseViewModel(application
 
     val ktorUserRepository = application.repositoryProvider.ktorUserRepository
     val userId = HistoryUserManager.instance.UserId()
-    val myVideoStatus = MediatorLiveData<MyVideoStatus>()
 
-    fun getMyVideo(videoId: Int) {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                ktorUserRepository.getMyVideo(userId,videoId)
-            }.onSuccess {
-                myVideoStatus.value = it[0]
-            }.onFailure {
-
-            }
-        }
-    }
 
     fun updateView(videoId: Int, duration: Int) {
         if (userId.isNotEmpty()) {

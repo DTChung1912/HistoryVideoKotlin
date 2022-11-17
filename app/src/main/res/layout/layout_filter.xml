@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/ndp_10">
+
+        <TextView
+            style="@style/AppTextView"
+            android:text="Bộ lọc"
+            android:textSize="@dimen/nsp_30"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/AppTextView"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:text="Thời gian: "
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/ndp_10">
+
+            <RadioButton
+                android:id="@+id/rbOld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Cũ nhất" />
+
+            <RadioButton
+                android:id="@+id/rbNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ndp_20"
+                android:text="Mới nhất" />
+        </RadioGroup>
+
+        <TextView
+            style="@style/AppTextView"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:text="Ngày tải lên: "
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/ndp_10"
+            android:paddingTop="@dimen/ndp_10">
+
+            <RadioButton
+                android:id="@+id/rbEveryTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:clickable="true"
+                android:text="Mọi thời điểm" />
+
+            <RadioButton
+                android:id="@+id/rbToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hôm may" />
+
+            <RadioButton
+                android:id="@+id/rbWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuần này" />
+
+            <RadioButton
+                android:id="@+id/rbMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tháng này" />
+
+            <RadioButton
+                android:id="@+id/rbYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Năm nay" />
+        </RadioGroup>
+
+        <TextView
+            style="@style/AppTextView"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:text="Thời lượng: "
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/ndp_10"
+            android:paddingTop="@dimen/ndp_10">
+
+            <RadioButton
+                android:id="@+id/rbShort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngắn" />
+
+            <RadioButton
+                android:id="@+id/rbMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trung bình" />
+
+            <RadioButton
+                android:id="@+id/rbLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dài" />
+
+            <RadioButton
+                android:id="@+id/rbRegardless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bất kể thời lượng" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:gravity="center_vertical">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem nhiều"
+                android:textColor="@color/black"
+                android:textSize="@dimen/nsp_15"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/ndp_20"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            style="@style/AppButton"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_weight="1"
+            android:text="Bỏ qua" />
+
+        <Button
+            style="@style/AppButton"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_weight="1"
+            android:text="Áp dụng" />
+    </LinearLayout>
+</RelativeLayout>

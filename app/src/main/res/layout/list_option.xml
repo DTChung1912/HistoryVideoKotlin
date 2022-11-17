@@ -1,0 +1,14 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/ndp_10"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:padding="@dimen/ndp_3"
+    android:textAppearance="?attr/textAppearanceSubtitle1"
+    android:textColor="@color/black"
+    android:textSize="@dimen/nsp_12"
+    android:textStyle="bold"
+    tools:text="aaaaaaaaaaaa" />
+

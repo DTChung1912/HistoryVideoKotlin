@@ -1,20 +1,20 @@
 package com.example.historyvideokotlin.fragments
 
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.adapters.QuizAnswerAdapter
-import com.example.historyvideokotlin.base.AppEvent
+import com.example.historyvideokotlin.adapters.WatchAnswerAdapter
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentWatchAnswerBinding
+import com.example.historyvideokotlin.model.AnswerModel
 import com.example.historyvideokotlin.model.Quiz
+import com.example.historyvideokotlin.model.SelectAnswer
+import com.example.historyvideokotlin.utils.MyLog
 import com.example.historyvideokotlin.viewmodels.WatchAnswerViewModel
-import java.util.*
 
-class WatchAnswerFragment(val quizList: List<Quiz>) : BaseFragment<WatchAnswerViewModel,FragmentWatchAnswerBinding>() {
-
-    private lateinit var adapter: QuizAnswerAdapter
+class WatchAnswerFragment : BaseFragment<WatchAnswerViewModel, FragmentWatchAnswerBinding>() {
+    private lateinit var quizList: List<Quiz>
+    private lateinit var selectList: List<SelectAnswer>
+    private lateinit var answerList: List<AnswerModel>
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_watch_answer
@@ -23,19 +23,15 @@ class WatchAnswerFragment(val quizList: List<Quiz>) : BaseFragment<WatchAnswerVi
     override fun getViewModel(): WatchAnswerViewModel =
         ViewModelProvider(requireActivity()).get(WatchAnswerViewModel::class.java)
 
-
     override fun initData() {
+        MyLog.e("selectList", selectList.toString())
+        MyLog.e("quizList", quizList.toString())
 
-        val choosedAnswerList = arguments?.getStringArrayList(CHOOSED_ANSWER_LIST_KEY)
-        setRecyclerView(quizList,choosedAnswerList!!)
-    }
-
-    private fun setRecyclerView(quizList: List<Quiz>, choosedAnswerList: List<String>) {
-        val linearLayoutManager = LinearLayoutManager(view?.context)
-        adapter = QuizAnswerAdapter(quizList, requireContext(),choosedAnswerList )
-        binding.recyclerWatchAnswer.setHasFixedSize(true)
-        binding.recyclerWatchAnswer.layoutManager = linearLayoutManager
-        binding.recyclerWatchAnswer.adapter = adapter
+        binding.recyclerWatchAnswer.adapter =
+            WatchAnswerAdapter(quizList, requireContext(), selectList, answerList)
+        binding.ivBack.setOnClickListener {
+            back()
+        }
     }
 
     override fun onResume() {
@@ -44,13 +40,15 @@ class WatchAnswerFragment(val quizList: List<Quiz>) : BaseFragment<WatchAnswerVi
     }
 
     companion object {
-        private const val CHOOSED_ANSWER_LIST_KEY = "CHOOSED_ANSWER_LIST_KEY"
-        @JvmStatic
-        fun newInstance(quizList : List<Quiz>,choosedAnswerList: List<String>) =
-            WatchAnswerFragment(quizList).apply {
-                arguments = bundleOf(
-                    CHOOSED_ANSWER_LIST_KEY to choosedAnswerList
-                )
+        fun newInstance(
+            quizList: List<Quiz>,
+            selectList: List<SelectAnswer>,
+            answerlist: List<AnswerModel>
+        ) =
+            WatchAnswerFragment().apply {
+                this.quizList = quizList
+                this.selectList = selectList
+                this.answerList = answerlist
             }
     }
 }

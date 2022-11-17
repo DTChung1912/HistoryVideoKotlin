@@ -6,7 +6,6 @@ import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentDownloadDetailBinding
 import com.example.historyvideokotlin.model.DownloadVideo
-import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.DownloadDetailViewModel
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -34,7 +33,7 @@ class DownloadDetailFragment :
         }
 
         binding.ivBack.setOnClickListener {
-            popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
+            back()
         }
     }
 
@@ -47,7 +46,6 @@ class DownloadDetailFragment :
         player!!.play()
     }
 
-
     override fun onPause() {
         super.onPause()
         if (player != null) {
@@ -59,7 +57,6 @@ class DownloadDetailFragment :
         super.onResume()
         hideBottomMenu()
     }
-
 
     override fun setDrmSessionManagerProvider(drmSessionManagerProvider: DrmSessionManagerProvider?): MediaSource.Factory {
         TODO("Not yet implemented")

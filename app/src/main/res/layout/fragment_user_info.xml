@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.UserInfoViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/gray1"
-        android:paddingTop="@dimen/ndp_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray1"
+        android:paddingTop="@dimen/ndp_10"
         tools:context=".fragments.UserInfoFragment">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civUserAvatar"
-            android:scaleType="centerCrop"
+            imageUrl="@{viewModel.user.user_image}"
             android:layout_width="@dimen/ndp_60"
             android:layout_height="@dimen/ndp_60"
             android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,25 +38,27 @@
             app:layout_constraintEnd_toEndOf="@id/civUserAvatar" />
 
         <TextView
-            android:id="@+id/tvEmail"
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dtchung2k@gmail.com"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:text="Đặng Thành Chung"
+            android:textSize="@dimen/nsp_15"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/civUserAvatar" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tvName"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="@dimen/ndp_50"-->
-        <!--            android:text="Đặng Thành Chung"-->
-        <!--            android:textSize="@dimen/nsp_15"-->
-        <!--            android:textStyle="bold"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@id/toolbar"-->
-        <!--            app:layout_constraintEnd_toEndOf="@id/toolbar"-->
-        <!--            app:layout_constraintTop_toTopOf="@id/toolbar" />-->
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:text="@{viewModel.user.email}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            tools:text="dtchung2k@gmail.com" />
 
         <TextView
             android:id="@+id/tvVideoTitle"
@@ -68,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/ndp_10"
             android:layout_marginStart="@dimen/ndp_15"
-            android:drawableLeft="@drawable/time"
+            android:drawableLeft="@drawable/ic_paste"
             android:drawablePadding="@dimen/ndp_20"
             android:text="Danh sách video đã xem"
             android:textSize="@dimen/nsp_20"
@@ -96,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/ndp_20"
             android:layout_marginStart="@dimen/ndp_15"
-            android:drawableLeft="@drawable/like_video"
+            android:drawableLeft="@drawable/ic_like"
             android:drawablePadding="@dimen/ndp_20"
             android:text="Danh sách video đã thích"
             android:textSize="@dimen/nsp_20"
@@ -110,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/ndp_20"
             android:layout_marginStart="@dimen/ndp_15"
-            android:drawableLeft="@drawable/download"
+            android:drawableLeft="@drawable/ic_download"
             android:drawablePadding="@dimen/ndp_20"
             android:text="Danh sách video tải xuống"
             android:textSize="@dimen/nsp_20"
@@ -136,13 +146,27 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/ndp_20"
             android:layout_marginStart="@dimen/ndp_15"
-            android:drawableLeft="@drawable/view"
+            android:drawableLeft="@drawable/ic_view"
             android:drawablePadding="@dimen/ndp_20"
             android:text="Danh sách bài viết đã đọc"
             android:textSize="@dimen/nsp_20"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvPostTitle" />
+
+        <TextView
+            android:id="@+id/tvDownloadPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/ndp_20"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:drawableLeft="@drawable/ic_download"
+            android:drawablePadding="@dimen/ndp_20"
+            android:text="Danh sách bài viết tải xuống"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvViewedPost" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,15 +2,14 @@ package com.example.historyvideokotlin.model
 
 import java.io.Serializable
 
-data class Reply (
-    val reply_id : Int,
-    val comment_id : Int,
-    val user_id: String,
-    val user_name : String,
-    val user_image : String,
-    val partner_name : String,
-    val content : String,
-    val date_submitted : String,
-    val like_count : String,
-    val dislike_count : String
+data class Reply(
+    var reply_id: Int? = 0,
+    var comment_id: Int = 0,
+    var user_id: String = "",
+    var user_name: String = "",
+    var user_image: String = "",
+    var content: String = "",
+    var date_submitted: String = "",
+    var like_count: Int = 0,
+    var dislike_count: Int = 0
 ) : Serializable

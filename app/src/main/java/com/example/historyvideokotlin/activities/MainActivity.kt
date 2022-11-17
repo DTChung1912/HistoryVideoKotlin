@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.PersistableBundle
 import android.util.Base64
 import android.util.Log
@@ -23,13 +25,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.base.BaseActivity
-import com.example.historyvideokotlin.data.VideoDatabase
 import com.example.historyvideokotlin.databinding.ActivityMainBinding
+import com.example.historyvideokotlin.dialogfragments.QuizCloseDialogFragment
 import com.example.historyvideokotlin.fragments.*
 import com.example.historyvideokotlin.listener.OnToolBarListener
+import com.example.historyvideokotlin.model.SearchType
 import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.ui.FragmentNavigation
 import com.example.historyvideokotlin.ui.ProgressBarDialog
@@ -85,8 +87,6 @@ class MainActivity :
     private lateinit var progressBarDialog: ProgressBarDialog
     private lateinit var loginViewModel: LoginViewModel
 
-    private var userId = ""
-
     private lateinit var auth: FirebaseAuth
 
     private var verificationId = ""
@@ -94,15 +94,12 @@ class MainActivity :
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-//    var database: VideoDatabase? = null
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 //        setTheme(R.style.Theme_HistoryVideoKotlin)
         super.onCreate(savedInstanceState)
         initData()
-//        database =
-//            Room.databaseBuilder(applicationContext, VideoDatabase::class.java, "database_name")
-//                .build()
         progressBarDialog = ProgressBarDialog(this)
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
@@ -114,11 +111,6 @@ class MainActivity :
             }
         }
 
-        loginViewModel.userList.observe(this, { data ->
-            data.let {
-                userId = it[0].user_id
-            }
-        })
         getViewModel()!!.getIsShowBottomMenu().observe(this) { show ->
             getBinding()!!.bottomNavigationView.visibility =
                 if (show != null && show) VISIBLE else GONE
@@ -198,6 +190,10 @@ class MainActivity :
                             Firebase.auth.signOut()
                             LoginManager.getInstance().logOut()
                             drawer.closeDrawer(Gravity.RIGHT)
+                            val fragment = controller.currentFrag
+                            if (fragment is MyPageFragment) {
+                                fragment.setScreen()
+                            }
                         } else {
                             drawer.closeDrawer(Gravity.RIGHT)
                             MyLog.e("FUid", HistoryUserManager.instance.UserId())
@@ -257,20 +253,51 @@ class MainActivity :
         if (controller == null) {
             return
         }
+        for (f in supportFragmentManager.fragments) {
+            if (f is ReplyFragment && f.isResumed) {
+                f.backToVideo()
+                return
+            }
+        }
         val fragment = controller.currentFrag
-        if (fragment != null) {
-            val options = Builder()
-                .allowReordering(true)
-                .customAnimations(
-                    R.anim.slide_up,
-                    R.anim.no_animation,
-                    R.anim.no_animation,
-                    R.anim.slide_down
-                )
-                .build()
-            controller.popFragments(1, options)
+        if (fragment is PostFragment || fragment is VideoFragment || fragment is QuizFragment || fragment is MyPageFragment) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+
+            this.doubleBackToExitPressedOnce = true
+            Toast.makeText(this, "Nhấn phím back lần nữa để thoát", Toast.LENGTH_SHORT).show()
+
+            Handler(Looper.getMainLooper()).postDelayed(
+                Runnable {
+                    doubleBackToExitPressedOnce = false
+                },
+                2000
+            )
+            return
+        } else if (fragment is QuizDetailFragment) {
+            QuizCloseDialogFragment.newInstance(object :
+                    QuizCloseDialogFragment.OnItemClickListener {
+                    override fun onClose() {
+                        popFragment(1, HistoryUtils.getSlideNoAnimationOptions())
+                    }
+                }).show(this.supportFragmentManager, null)
             return
         }
+//        if (fragment != null) {
+//            val options = Builder()
+//                .allowReordering(true)
+//                .customAnimations(
+//                    R.anim.slide_up,
+//                    R.anim.slide_down,
+//                    R.anim.slide_down,
+//                    R.anim.no_animation
+//                )
+//                .build()
+//            controller.popFragments(1, options)
+//            return
+//        }
 
         if (!controller.popFragment()) {
             super.onBackPressed()
@@ -284,7 +311,6 @@ class MainActivity :
     override fun getViewModelClass(): Class<MainViewModel> {
         return MainViewModel::class.java
     }
-
 
     override fun onFragmentTransaction(
         fragment: Fragment?,
@@ -557,10 +583,24 @@ class MainActivity :
     }
 
     override fun onSearchClick(searchType: Int) {
-        pushFragment(
-            SearchFragment.newInstance(searchType),
-            HistoryUtils.getSlideTransitionAnimationOptions()
-        )
+        when (searchType) {
+            SearchType.POST.ordinal -> {
+                pushFragment(
+                    SearchPostFragment.newInstance(),
+                    HistoryUtils.getSlideTransitionAnimationOptions()
+                )
+            }
+            SearchType.VIDEO.ordinal -> {
+                pushFragment(
+                    SearchVideoFragment.newInstance(),
+                    HistoryUtils.getSlideTransitionAnimationOptions()
+                )
+            }
+        }
+//        pushFragment(
+//            SearchFragment.newInstance(searchType),
+//            HistoryUtils.getSlideTransitionAnimationOptions()
+//        )
     }
 
     override fun onSettingClick() {

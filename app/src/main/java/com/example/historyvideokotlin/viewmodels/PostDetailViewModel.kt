@@ -19,9 +19,9 @@ class PostDetailViewModel(application: Application) : BaseViewModel(application)
     private var disposable: Disposable? = null
     private var disposable2 = CompositeDisposable()
     private var postRepository = PostRepository()
-    private var userRepository = UserRepository()
 
     val ktorPostRepository = application.repositoryProvider.ktorPostRepository
+    val ktorUserRepository = application.repositoryProvider.ktorUserRepository
 
     fun updatePostRead(postId: Int) {
         viewModelScope.launch {

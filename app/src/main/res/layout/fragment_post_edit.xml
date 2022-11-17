@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.PostEditViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_toolbar_detail" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/ndp_10"
+                android:paddingVertical="@dimen/ndp_10">
+
+                <TextView
+                    style="@style/PostTextView"
+                    android:text="Tiêu đề:" />
+
+                <EditText
+                    android:id="@+id/edtTitle"
+                    style="@style/PostEdittext"
+                    android:hint="Nhập tiêu đề"
+                    android:text="@{viewModel.post.title}" />
+
+                <TextView
+                    style="@style/PostTextView"
+                    android:text="Thể loại:" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_admin_edittext"
+                    android:paddingStart="@dimen/ndp_10">
+
+                    <Spinner
+                        android:id="@+id/spinnerPostType"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ndp_50"
+                        android:popupBackground="@drawable/background_spinner"
+                        android:spinnerMode="dropdown" />
+                </FrameLayout>
+
+                <TextView
+                    style="@style/PostTextView"
+                    android:text="Mô tả:" />
+
+                <EditText
+                    android:id="@+id/edtDescription"
+                    style="@style/PostEdittext"
+                    android:hint="Nhập mô tả"
+                    android:text="@{viewModel.post.description}" />
+
+                <TextView
+                    style="@style/PostTextView"
+                    android:text="Mốc thời gian:" />
+
+                <EditText
+                    android:id="@+id/edtTimeline"
+                    style="@style/PostEdittext"
+                    android:hint="Nhập mô tả"
+                    android:text="@{viewModel.post.timeline}" />
+
+                <TextView
+                    style="@style/PostTextView"
+                    android:text="Ảnh:" />
+
+                <ImageView
+                    android:id="@+id/ivImage"
+                    url="@{viewModel.post.image}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ndp_5"
+                    android:maxWidth="@dimen/ndp_100"
+                    android:maxHeight="@dimen/ndp_50"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <Button
+                    android:id="@+id/btnImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ndp_5"
+                    android:maxHeight="@dimen/ndp_50"
+                    android:text="Chọn ảnh" />
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    isVisible="@{viewModel.isUpdate}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/ndp_20"
+                    android:background="@drawable/background_button_edit"
+                    android:paddingHorizontal="@dimen/ndp_10"
+                    android:text="Cập nhật"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    isVisible="@{!viewModel.isUpdate}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/ndp_20"
+                    android:background="@drawable/background_button_edit"
+                    android:paddingHorizontal="@dimen/ndp_10"
+                    android:text="Thêm mới"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold"
+                    tools:visibility="gone" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</layout>

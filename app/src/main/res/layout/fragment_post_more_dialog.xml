@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/ndp_10"
-        android:drawableLeft="@drawable/download"
+        android:drawableLeft="@drawable/ic_download"
         android:drawablePadding="@dimen/ndp_20"
         android:text="Tải xuống"
         android:textSize="@dimen/nsp_20"

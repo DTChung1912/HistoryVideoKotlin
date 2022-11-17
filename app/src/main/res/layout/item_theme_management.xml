@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="theme"
+            type="com.example.historyvideokotlin.model.Theme" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item_quiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/ndp_10"
+        android:layout_marginVertical="@dimen/ndp_5"
+        android:background="@drawable/background_quiz_theme"
+        android:paddingVertical="@dimen/ndp_10">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivQuiz"
+            imageUrl="@{theme.theme_image}"
+            android:layout_width="@dimen/ndp_50"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginStart="@dimen/ndp_10"
+            tools:src="@drawable/ic_avatar" />
+
+        <TextView
+            android:id="@+id/tvTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/ndp_5"
+            android:layout_toRightOf="@id/ivQuiz"
+            android:gravity="center_vertical"
+            android:text="@{theme.theme_name}"
+            android:textSize="@dimen/nsp_15"
+            android:textStyle="bold"
+            tools:text="Chiến tranh Việt Nam" />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="@dimen/ndp_30"
+            android:layout_height="@dimen/ndp_30"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ndp_10"
+            android:layout_toLeftOf="@id/ivDelete"
+            android:background="@drawable/background_edit_item"
+            android:padding="@dimen/ndp_5"
+            android:src="@drawable/ic_edit" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="@dimen/ndp_30"
+            android:layout_height="@dimen/ndp_30"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ndp_10"
+            android:background="@drawable/background_delete_item"
+            android:padding="@dimen/ndp_5"
+            android:src="@drawable/ic_delete" />
+    </RelativeLayout>
+</layout>

@@ -11,11 +11,11 @@ import android.os.Environment
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.activities.MainActivity
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentVideoInfoBinding
 import com.example.historyvideokotlin.dialogfragments.LoginDialogFragment
@@ -28,7 +28,6 @@ import com.example.historyvideokotlin.utils.MyLog
 import com.example.historyvideokotlin.viewmodels.VideoInfoViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import java.io.File
-import java.util.*
 
 class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBinding>() {
 //    private var video: Video? = null
@@ -38,9 +37,6 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
     private lateinit var video: Video
     private var myDownloaded: Long = 0
     private lateinit var downloadManager: DownloadManager
-
-    private var isLikeCheck = false
-    private var isDislikeCheck = false
 
     private var permission = 0
     private val requestPermissionLauncher =
@@ -59,95 +55,81 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
     override fun getViewModel(): VideoInfoViewModel =
         ViewModelProvider(requireActivity()).get(VideoInfoViewModel::class.java)
 
-    
-
     override fun initData() {
+        binding.viewModel = viewModel
         downloadManager =
             requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         video = arguments?.getSerializable(VIDEO_KEY) as Video
+        viewModel.setVideo(video)
         val titleIds = viewModel.getTabTitleIds()
 
-        var myVideoId = 0
-
-        viewModel.updateViewedMyVideo(video.video_id)
-        viewModel.updateViewCountVideo(video.video_id)
-        viewModel.getMyVideo(video.video_id)
-        viewModel.myVideoList.observe(this, { data ->
-            data.let {
-
-                if (it[0].isLike != null) {
-                    var isLike = it[0].isLike
-                    myVideoId = it[0].my_video_id
-                    if (isLike == 1) {
-                        isLikeCheck = true
-                        binding.ivLike.setImageResource(R.drawable.liked)
-                    } else {
-                        isDislikeCheck = true
-                        binding.ivDislike.setImageResource(R.drawable.disliked)
-                    }
-                } else {
-                    binding.ivLike.setImageResource(R.drawable.like_video)
-                    binding.ivDislike.setImageResource(R.drawable.dislike_video)
-                }
-            }
-        })
-
-        binding.run {
-
-            tvVideoTitle.text = video.title
-            tvViewCount.text = video.view_count.toString() + " lượt xem"
-            tvCreaterName.text = video.creater
-            tvDateSubmitted.text = video.date_submitted
-
-            viewPager.adapter =
-                PagerAdapter(
-                    this@VideoInfoFragment,
-                    video.video_id,
-                    video.theme_id
-                )
-
-            if (!HistoryUserManager.instance.checkUserLogined()) {
-                ivLike.setOnClickListener {
-                    showLoginDialog()
-                }
-
-                ivDislike.setOnClickListener {
-                    showLoginDialog()
-                }
-
-                ivSave.setOnClickListener {
-                    showLoginDialog()
-                }
+        binding.ivLike.setOnClickListener {
+            if (!isLogged()) {
+                showLoginDialog()
             } else {
-                ivLike.setOnClickListener {
-                    isLikeCheck = true
-                    isDislikeCheck = false
-                    ivDislike.setImageResource(R.drawable.dislike_video)
-                }
-
-                ivDislike.setOnClickListener {
-                    isLikeCheck = false
-                    isDislikeCheck = true
-
-                    ivLike.setImageResource(R.drawable.like_video)
-                    viewModel.deleteLikeMyVideo(myVideoId)
-                }
-
-                ivSave.setOnClickListener {
-                }
-            }
-
-            ivDownload.setOnClickListener {
-                requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                if (permission == 1) {
-                    showToast("Bắt đầu download " + video.title)
-                    downloadVideo(video.video_url, video.title)
-                }
+                viewModel.setLiked(video.video_id)
             }
         }
 
+        binding.ivDislike.setOnClickListener {
+            if (!isLogged()) {
+                showLoginDialog()
+            } else {
+                viewModel.setDisliked(video.video_id)
+            }
+        }
+
+        binding.ivLater.setOnClickListener {
+            if (!isLogged()) {
+                showLoginDialog()
+            } else {
+                viewModel.setLatered(true)
+            }
+        }
+
+        binding.ivLiked.setOnClickListener {
+            if (!isLogged()) {
+                showLoginDialog()
+            } else {
+                viewModel.cancelLike(video.video_id)
+            }
+        }
+
+        binding.ivDisliked.setOnClickListener {
+            if (!isLogged()) {
+                showLoginDialog()
+            } else {
+                viewModel.cancelDislike(video.video_id)
+            }
+        }
+
+        binding.ivLatered.setOnClickListener {
+            if (!isLogged()) {
+                showLoginDialog()
+            } else {
+                viewModel.setLatered(false)
+            }
+        }
+
+        binding.ivDownload.setOnClickListener {
+            requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (permission == 1) {
+                showToast("Bắt đầu download " + video.title)
+                downloadVideo(video.video_url, video.title)
+            }
+        }
+
+        binding.viewPager.adapter =
+            PagerAdapter(
+                requireActivity().supportFragmentManager,
+                lifecycle,
+                this@VideoInfoFragment,
+                video
+            )
+
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = getString(titleIds[position])
+            binding.viewPager.setCurrentItem(tab.position, true)
         }.attach()
 
         val br = object : BroadcastReceiver() {
@@ -155,7 +137,9 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
                 val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
 
                 if (id == myDownloaded) {
+                    viewModel.setDownload(true)
                     showToast(video.title + " download thành công")
+                    viewModel.setDownload(true)
                     val url = downloadManager.getUriForDownloadedFile(id).toString()
                     val downloadVideo = DownloadVideo(
                         video_id = null,
@@ -168,12 +152,12 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
                         view_count = video.view_count,
                         dislike_count = video.dislike_count,
                         comment_count = video.comment_count,
-                        share_count = video.share_count,
+                        download_count = video.download_count,
                         video_url = url,
                         duration = video.duration,
                         date_submitted = video.date_submitted
-                        )
-//                    viewModel.downloadVideo((activity as MainActivity).database!!, downloadVideo)
+                    )
+                    viewModel.downloadVideo(downloadVideo)
                     MyLog.e("filename", url)
                 } else {
                     showToast(video.title + " download thất bại")
@@ -198,7 +182,7 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
             }
             val request = DownloadManager.Request(Uri.parse(url))
                 .setTitle(title + ".mp4")
-                .setDescription("${title} is downloading....")
+                .setDescription("$title is downloading....")
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
                 .setAllowedOverMetered(true)
                 .setVisibleInDownloadsUi(false)
@@ -237,7 +221,6 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
             }
-
         }).show(parentFragmentManager, null)
     }
 
@@ -247,22 +230,21 @@ class VideoInfoFragment : BaseFragment<VideoInfoViewModel, FragmentVideoInfoBind
     }
 
     private class PagerAdapter(
+        fragmentManager: FragmentManager,
+        lifecycle: Lifecycle,
         fragment: Fragment,
-        val video_id: Int,
-        val theme_id: Int
+        val video: Video
     ) :
-        FragmentStateAdapter(fragment) {
+        FragmentStateAdapter(fragmentManager, lifecycle) {
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> NextVideoFragment.newInstance(theme_id)
-                else -> CommentFragment.newInstance(video_id)
+                0 -> NextVideoFragment.newInstance(video.video_id, video.theme_id)
+                else -> CommentFragment.newInstance(video)
             }
         }
     }
-
-    
 
     companion object {
         const val VIDEO_KEY = "VIDEO_KEY"

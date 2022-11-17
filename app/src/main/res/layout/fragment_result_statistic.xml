@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="count"
+            type="com.example.historyvideokotlin.model.ResultCount" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,6 +42,7 @@
             android:layout_width="@dimen/ndp_300"
             android:layout_height="@dimen/ndp_300"
             android:layout_marginTop="@dimen/ndp_20"
+            android:text="Chung"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvResuletTitle" />
@@ -135,21 +143,23 @@
                     style="@style/TextResult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10 Câu" />
+                    android:text="@{@string/quiz_count(count.correctCount)}"
+                    tools:text="10 Câu" />
 
                 <TextView
                     android:id="@+id/tvIncorrectAnswer"
                     style="@style/TextResult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10 Câu" />
-
+                    android:text="@{@string/quiz_count(count.wrongCount)}"
+                    tools:text="10 Câu" />
                 <TextView
                     android:id="@+id/tvNotAnsweredCount"
                     style="@style/TextResult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10 Câu" />
+                    android:text="@{@string/quiz_count(count.notCount)}"
+                    tools:text="10 Câu" />
             </LinearLayout>
 
         </LinearLayout>

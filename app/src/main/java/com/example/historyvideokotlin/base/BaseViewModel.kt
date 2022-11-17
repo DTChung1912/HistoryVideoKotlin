@@ -6,14 +6,15 @@ import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.historyvideokotlin.network.RetrofitException
+import com.example.historyvideokotlin.repository.HistoryUserManager
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.util.*
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
     private val disposables = CompositeDisposable()
-    private val viewEventLiveData : MutableLiveData<AppEvent<String, Objects>> = MutableLiveData()
-    val loadingLiveData : MutableLiveData<Boolean> = MutableLiveData()
+    private val viewEventLiveData: MutableLiveData<AppEvent<String, Objects>> = MutableLiveData()
+    val loadingLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getViewEventLiveData(): MutableLiveData<AppEvent<String, Objects>> {
         return viewEventLiveData
@@ -78,5 +79,9 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun hideLoading() {
         loadingLiveData.postValue(false)
+    }
+
+    fun isLogged(): Boolean {
+        return HistoryUserManager.instance.checkUserLogined()
     }
 }

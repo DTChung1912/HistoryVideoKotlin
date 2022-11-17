@@ -5,10 +5,13 @@ import android.graphics.Typeface
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentResultStatisticBinding
-import com.example.historyvideokotlin.utils.MyLog
+import com.example.historyvideokotlin.model.AnswerModel
+import com.example.historyvideokotlin.model.Quiz
+import com.example.historyvideokotlin.model.ResultCount
+import com.example.historyvideokotlin.model.SelectAnswer
+import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.ResultStatisticViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
@@ -16,11 +19,14 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.MPPointF
-import java.util.*
 import kotlin.collections.ArrayList
 
-class ResultStatisticFragment(val onItemClickListener: OnItemClickListener) :
+class ResultStatisticFragment :
     BaseFragment<ResultStatisticViewModel, FragmentResultStatisticBinding>() {
+
+    private lateinit var quizList: List<Quiz>
+    private lateinit var selectList: List<SelectAnswer>
+    private lateinit var answerList: List<AnswerModel>
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_result_statistic
@@ -29,53 +35,42 @@ class ResultStatisticFragment(val onItemClickListener: OnItemClickListener) :
     override fun getViewModel(): ResultStatisticViewModel =
         ViewModelProvider(requireActivity()).get(ResultStatisticViewModel::class.java)
 
-    
-
     override fun initData() {
-        val choosedAnswerList = arguments?.getStringArrayList(CHOOSED_ANSWER_LIST_KEY) as List<String>
-        val correctList = arguments?.getStringArrayList(CORRECT_ANSWER_LIST_KEY) as List<String>
+        val resultCount =
+            arguments?.getSerializable(KEY_RESULT) as ResultCount
+        binding.count = resultCount
 
-        setPieChart(checkAnswer(correctList, choosedAnswerList))
+        setPieChart(checkAnswer(resultCount))
 
         binding.btnReturn.setOnClickListener {
-            onItemClickListener.onReturn()
+//            onItemClickListener.onReturn()
         }
 
         binding.btnWatchAnswer.setOnClickListener {
-            onItemClickListener.onWatchAnswer()
+//            onItemClickListener.onWatchAnswer()
+            pushFragment(
+                WatchAnswerFragment.newInstance(
+                    quizList,
+                    selectList,
+                    answerList
+                ),
+                HistoryUtils.getSlideTransitionAnimationOptions()
+            )
         }
 
         binding.ivBack.setOnClickListener {
-            onItemClickListener.onBack()
+//            onItemClickListener.onBack()
+            popFragments(2, HistoryUtils.getSlideNoAnimationOptions())
         }
     }
 
     private fun checkAnswer(
-        correctList: List<String>,
-        choosedAnswerList: List<String>
+        resultCount: ResultCount
     ): ArrayList<Float> {
         val arrayList = ArrayList<Float>()
-        var correctAnswerCount = 0
-        var inCorrectAnswerCount = 0
-        var notAnsweredCount = 0
-        MyLog.e("choosedAnswerList",choosedAnswerList.toString())
-
-
-        for (i in 0 until correctList.size) {
-            val correct = correctList[i]
-            if (choosedAnswerList[i].equals("")) {
-                notAnsweredCount++
-                continue
-            }
-            if (choosedAnswerList[i].equals(correct)) {
-                correctAnswerCount++
-            } else {
-                inCorrectAnswerCount++
-            }
-        }
-        arrayList.add(correctAnswerCount / choosedAnswerList.size * 100f)
-        arrayList.add(inCorrectAnswerCount / choosedAnswerList.size * 100f)
-        arrayList.add(notAnsweredCount / choosedAnswerList.size * 100f)
+        arrayList.add((resultCount.correctCount * 100 / 40).toFloat())
+        arrayList.add((resultCount.wrongCount * 100 / 40).toFloat())
+        arrayList.add((resultCount.notCount * 100 / 40).toFloat())
 
         return arrayList
     }
@@ -92,7 +87,7 @@ class ResultStatisticFragment(val onItemClickListener: OnItemClickListener) :
             // on below line we are setting hole
             // and hole color for pie chart
             pieChart.setDrawHoleEnabled(true)
-            pieChart.setHoleColor(Color.WHITE)
+            pieChart.setHoleColor(Color.DKGRAY)
 
             // on below line we are setting circle color and alpha
             pieChart.setTransparentCircleColor(Color.WHITE)
@@ -164,30 +159,28 @@ class ResultStatisticFragment(val onItemClickListener: OnItemClickListener) :
         }
     }
 
-    
-
     override fun onResume() {
         super.onResume()
         hideBottomMenu()
     }
 
     companion object {
-        const val CHOOSED_ANSWER_LIST_KEY = "CHOOSE_ANSWER_LIST_KEY"
-        const val CORRECT_ANSWER_LIST_KEY = "CORRECT_ANSWER_LIST_KEY"
+        private const val KEY_RESULT = "KEY_RESULT"
 
         @JvmStatic
-        fun newInstance(choosedAnswerList: List<String>, correctList: List<String>, onItemClickListener: OnItemClickListener) =
-            ResultStatisticFragment(onItemClickListener).apply {
+        fun newInstance(
+            resultCount: ResultCount,
+            quizList: List<Quiz>,
+            selectList: List<SelectAnswer>,
+            answerlist: List<AnswerModel>
+        ) =
+            ResultStatisticFragment().apply {
                 arguments = bundleOf(
-                    CHOOSED_ANSWER_LIST_KEY to choosedAnswerList,
-                    CORRECT_ANSWER_LIST_KEY to correctList
+                    KEY_RESULT to resultCount
                 )
+                this.quizList = quizList
+                this.selectList = selectList
+                this.answerList = answerlist
             }
-    }
-
-    interface OnItemClickListener {
-        fun onReturn()
-        fun onWatchAnswer()
-        fun onBack()
     }
 }

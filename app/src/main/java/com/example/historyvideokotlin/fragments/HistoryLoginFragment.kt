@@ -1,19 +1,18 @@
 package com.example.historyvideokotlin.fragments
 
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.activities.MainActivity
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentLoginBinding
-import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.LoginViewModel
 import java.util.*
 
-class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>(), View.OnClickListener {
+class HistoryLoginFragment :
+    BaseFragment<LoginViewModel, FragmentLoginBinding>(),
+    View.OnClickListener {
     var correctEmail = ""
     var correctPassword = ""
 
@@ -24,13 +23,11 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
     override fun getViewModel(): LoginViewModel =
         ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
 
-    
-
     override fun initData() {
         setUpButtonClick()
     }
 
-    private fun rememberAccount(isRemember : Boolean) {
+    private fun rememberAccount(isRemember: Boolean) {
         if (isRemember) {
             binding.edtEmail.setText(correctEmail)
             binding.edtPassword.setText(correctPassword)
@@ -39,8 +36,6 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
             binding.edtPassword.setText("")
         }
     }
-
-    
 
     override fun onResume() {
         super.onResume()
@@ -56,19 +51,24 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
                 openMainActivity()
             }
             R.id.ibFacebook -> {
-                (requireActivity() as MainActivity ).loginWithFacebook()
+                (requireActivity() as MainActivity).loginWithFacebook()
             }
             R.id.ibPhoneNumber -> {
-                (requireActivity() as MainActivity ).loginWithPhoneNumber()
+                (requireActivity() as MainActivity).loginWithPhoneNumber()
             }
             R.id.ibGoogle -> {
-                (requireActivity() as MainActivity ).loginWithGoogle()
+                (requireActivity() as MainActivity).loginWithGoogle()
             }
             R.id.tvForgotPassword -> {
-                replaceFragment(R.id.fragmentContainer,ForgotPasswordFragment.newInstance(),true,null)
+                replaceFragment(
+                    R.id.fragmentContainer,
+                    ForgotPasswordFragment.newInstance(),
+                    true,
+                    null
+                )
             }
             R.id.tvRegister -> {
-                replaceFragment(R.id.fragmentContainer,RegisterFragment.newInstance(),true,null)
+                replaceFragment(R.id.fragmentContainer, RegisterFragment.newInstance(), true, null)
             }
         }
     }
@@ -83,21 +83,21 @@ class HistoryLoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>()
     }
 
     private fun openMainActivity() {
-        var email = binding.edtEmail.text.toString()
-        var password = binding.edtPassword.text.toString()
-        var isUserLogined = viewModel.loginWithEmail(email,password)
+        val email = binding.edtEmail.text.trim().toString()
+        val password = binding.edtPassword.text.trim().toString()
+        val isUserLogined = viewModel.loginWithEmail(email, password)
 
         if (isUserLogined) {
-            showToast("Failed to login ")
-        } else {
-            correctEmail = binding!!.edtEmail.text.toString()
-            correctPassword = binding!!.edtPassword.text.toString()
+            correctEmail = binding.edtEmail.text.toString()
+            correctPassword = binding.edtPassword.text.toString()
             if (binding.checkbox.isChecked) {
                 rememberAccount(true)
             } else {
                 rememberAccount(false)
             }
-            popFragment(HistoryUtils.getSlideTransitionAnimationOptions())
+            back()
+        } else {
+            showToast("Đăng nhập thất bại. Vui lòng kiểm tra tài khoản hoặc mật khẩu")
         }
     }
 

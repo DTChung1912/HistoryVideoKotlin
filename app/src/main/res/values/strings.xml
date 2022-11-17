@@ -12,10 +12,43 @@
     <string name="title_video_tab_next_video">Tiếp theo</string>
     <string name="title_video_tab_commet">Bình luận</string>
     <string name="title_activity_kotlin_main">KotlinMainActivity</string>
+    <string name="count">%d</string>
 
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="message_cannot_attach_image">chung</string>
     <string name="message_select_other_image">chung</string>
     <string name="back">back</string>
+    <string name="search">Kết quả cho "%s"</string>
+
+    <!-- Post -->
+    <string name="post_read_count">%d lượt đọc</string>
+    <string name="post_rate_count">%d lượt đánh giá</string>
+
+    <!-- Video -->
+    <string name="like">Thích</string>
+    <string name="dislike">Không thích</string>
+    <string name="video_view_count">%d lượt xem</string>
+    <string name="video_like_count">%d lượt thích</string>
+    <string name="video_dislike_count">%d lượt không thích</string>
+    <string name="video_download">Tải xuống</string>
+    <string name="video_downloaded">Đã tải</string>
+    <string name="video_later">Xem sau</string>
+    <string name="video_latered">Đã lưu</string>
+
+    <!-- Comment -->
+    <string name="comment_count">Bình luận (%d)</string>
+
+    <!-- Quiz -->
+    <string name="quiz_number">Câu %d:</string>
+    <string name="quiz_answer">%s:</string>
+    <string name="quiz_answer_A">A: %s</string>
+    <string name="quiz_answer_B">B: %s</string>
+    <string name="quiz_answer_C">C: %s</string>
+    <string name="quiz_answer_D">D: %s</string>
+    <string name="quiz_count">%d Câu</string>
+    <string name="quiz_correct">Đáp án đúng: %s</string>
+    <string name="quiz_incorrect1">Đáp án sai 1: %s</string>
+    <string name="quiz_incorrect2">Đáp án sai 2: %s</string>
+    <string name="quiz_incorrect3">Đáp án sai 3: %s</string>
 </resources>

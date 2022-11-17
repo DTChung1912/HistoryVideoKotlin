@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="post"
+            type="com.example.historyvideokotlin.model.Post" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/itemPostList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/ndp_5"
+        android:layout_marginVertical="@dimen/ndp_10"
+        android:background="@drawable/background_item_post_person"
+        android:paddingVertical="@dimen/ndp_10"
+        android:paddingStart="@dimen/ndp_10">
+
+        <ImageView
+            android:id="@+id/ivPostList"
+            url="@{post.image}"
+            android:layout_width="@dimen/ndp_70"
+            android:layout_height="@dimen/ndp_70"
+            android:background="@drawable/background_imageview_post_list"
+            android:clipToOutline="true"
+            android:src="@drawable/ic_avatar" />
+
+        <TextView
+            android:id="@+id/tvPostListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:layout_toLeftOf="@id/ivEdit"
+            android:layout_toRightOf="@id/ivPostList"
+            android:text="@{post.title}"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold"
+            tools:text="Hồ Chí Minh" />
+
+        <TextView
+            android:id="@+id/tvReadCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvPostListTitle"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:layout_toRightOf="@id/ivPostList"
+            android:drawableLeft="@drawable/reading_book"
+            android:drawablePadding="@dimen/ndp_10"
+            android:text="@{@string/post_read_count(post.read_count)}"
+            android:textSize="@dimen/nsp_15"
+            tools:text="100 lượt đọc" />
+
+        <TextView
+            android:id="@+id/tvRateCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvReadCount"
+            android:layout_marginStart="@dimen/ndp_15"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:layout_toRightOf="@id/ivPostList"
+            android:drawableLeft="@drawable/rating"
+            android:drawablePadding="@dimen/ndp_10"
+            android:text="@{@string/post_rate_count(post.rate_count)}"
+            android:textSize="@dimen/nsp_15"
+            tools:text="100 lượt đánh giá" />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="@dimen/ndp_30"
+            android:layout_height="@dimen/ndp_30"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ndp_10"
+            android:layout_toLeftOf="@id/ivDelete"
+            android:background="@drawable/background_edit_item"
+            android:padding="@dimen/ndp_5"
+            android:src="@drawable/ic_edit" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="@dimen/ndp_30"
+            android:layout_height="@dimen/ndp_30"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ndp_10"
+            android:background="@drawable/background_delete_item"
+            android:padding="@dimen/ndp_5"
+            android:src="@drawable/ic_delete" />
+    </RelativeLayout>
+</layout>

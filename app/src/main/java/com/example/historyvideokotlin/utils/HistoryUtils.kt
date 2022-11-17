@@ -7,19 +7,36 @@ import android.media.MediaPlayer
 import com.example.historyvideokotlin.HistoryApplication
 import com.example.historyvideokotlin.R
 import com.ncapdevi.fragnav.FragNavTransactionOptions
+import com.ncapdevi.fragnav.FragNavTransactionOptions.Builder
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 object HistoryUtils {
 
     const val DATA_POST_ERROR = "DATA_POST_ERROR"
 
     fun getSlideTransitionAnimationOptions(): FragNavTransactionOptions {
-        return FragNavTransactionOptions.Builder()
+        return Builder()
             .allowReordering(true)
             .customAnimations(
                 R.anim.slide_in_from_right,
                 R.anim.slide_out_to_left,
                 R.anim.slide_in_from_left,
                 R.anim.slide_out_to_right
+            )
+            .build()
+    }
+
+    fun getSlideUpTransitionAnimationOptions(): FragNavTransactionOptions? {
+        return Builder()
+            .allowReordering(true)
+            .customAnimations(
+                R.anim.slide_up,
+                R.anim.slide_down,
+                R.anim.slide_down,
+                R.anim.no_animation
             )
             .build()
     }
@@ -77,6 +94,27 @@ object HistoryUtils {
         } else {
             String.format("%02d:%02d", minute, second)
         }
+    }
+
+    fun getCurrentDate(): String {
+        val date: Date = Calendar.getInstance().getTime()
+        val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val strDate: String = dateFormat.format(date)
+        return strDate
+    }
+
+    fun getCurrentTime(): String {
+        val date: Date = Calendar.getInstance().getTime()
+        val dateFormat: DateFormat = SimpleDateFormat("hh:mm:ss")
+        val strDate: String = dateFormat.format(date)
+        return strDate
+    }
+
+    fun getCurrentDateAndTime(): String {
+        val date: Date = Calendar.getInstance().getTime()
+        val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+        val strDate: String = dateFormat.format(date)
+        return strDate
     }
 
 //    @SuppressLint("Range")

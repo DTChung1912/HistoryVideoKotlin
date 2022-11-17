@@ -11,12 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.databinding.FragmentDeleteMyVideoBottomSheetDialogBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DeleteMyVideoBottomSheetDialogFragment(val onItemClickListener: OnItemClickListener) :
-    DialogFragment() {
+    BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentDeleteMyVideoBottomSheetDialogBinding
 
@@ -46,7 +46,6 @@ class DeleteMyVideoBottomSheetDialogFragment(val onItemClickListener: OnItemClic
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        activity?.finish()
         activity?.overridePendingTransition(R.anim.slide_up, R.anim.slide_down)
     }
 

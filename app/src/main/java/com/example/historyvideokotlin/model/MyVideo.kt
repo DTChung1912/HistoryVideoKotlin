@@ -15,7 +15,7 @@ data class MyVideo(
     val view_count: Int,
     val dislike_count: Int,
     val comment_count: Int,
-    val share_count: Int,
+    val download_count: Int,
     val video_url: String,
     val poster_image: String,
     val date_submitted: String,

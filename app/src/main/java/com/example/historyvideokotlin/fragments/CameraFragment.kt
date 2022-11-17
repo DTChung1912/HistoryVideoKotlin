@@ -2,10 +2,8 @@ package com.example.historyvideokotlin.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,7 +13,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.Settings
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.exifinterface.media.ExifInterface
@@ -24,11 +21,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.base.AppConfigs.BASE_ENDPOINT_URL.SAVE_AUDIO_FOLDER
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentCameraBinding
 import com.example.historyvideokotlin.listener.SwitchFragmentListener
-import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.CameraViewModel
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
@@ -38,9 +33,9 @@ import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
+class CameraFragment :
+    BaseFragment<CameraViewModel, FragmentCameraBinding>(),
     View.OnClickListener {
-
 
     private var mCameraView: CameraView? = null
     private val clickTimeStart: Long = 0
@@ -56,7 +51,6 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
         ViewModelProvider(requireActivity()).get(CameraViewModel::class.java)
 
     override fun initData() {
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,8 +86,11 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
         isPickLastImage = true
         val cursor = requireContext().contentResolver
             .query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null,
-                null, MediaStore.Images.ImageColumns.DATE_ADDED + " DESC"
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null,
+                null,
+                null,
+                MediaStore.Images.ImageColumns.DATE_ADDED + " DESC"
             )
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -126,11 +123,14 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
     }
 
     private fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
+        if (ContextCompat.checkSelfPermission(
                 requireActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestCameraPermission()
         } else {
@@ -262,8 +262,6 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
         }
     }
 
-
-
     companion object {
 
         private val MIME_TYPES_IMAGE = arrayOf("image/png", "image/jpg", "image/jpeg")
@@ -281,7 +279,6 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
             CameraFragment().apply {
                 listener = onClickListener
             }
-
     }
 
     interface OnClickListener {
@@ -312,7 +309,6 @@ class CameraFragment : BaseFragment<CameraViewModel, FragmentCameraBinding>(),
 //    }
 
     override fun onClick(v: View?) {
-
     }
 
     inner class Listener : CameraListener() {

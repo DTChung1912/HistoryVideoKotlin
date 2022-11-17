@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="quiz"
+            type="com.example.historyvideokotlin.model.Quiz" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/ndp_10"
+        android:background="@drawable/background_quiz_answer"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/ndp_10">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:background="@drawable/background_question_title"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/ndp_10"
+            android:paddingVertical="@dimen/ndp_10">
+
+            <ImageView
+                android:id="@+id/ivImageQuiz"
+                url="@{quiz.image}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="@dimen/ndp_60"
+                android:scaleType="fitXY"
+                android:src="@drawable/history_quiz_image"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/ndp_5"
+                android:layout_marginEnd="@dimen/ndp_10"
+                android:layout_toLeftOf="@id/ivEdit"
+                android:text="@{quiz.question}"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/nsp_15"
+                android:textStyle="bold"
+                tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+
+
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="@dimen/ndp_30"
+                android:layout_height="@dimen/ndp_30"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ndp_10"
+                android:layout_toLeftOf="@id/ivDelete"
+                android:background="@drawable/background_edit_item"
+                android:padding="@dimen/ndp_5"
+                android:src="@drawable/ic_edit" />
+
+            <ImageView
+                android:id="@+id/ivDelete"
+                android:layout_width="@dimen/ndp_30"
+                android:layout_height="@dimen/ndp_30"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ndp_10"
+                android:background="@drawable/background_delete_item"
+                android:padding="@dimen/ndp_5"
+                android:src="@drawable/ic_delete" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tvCorrect"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:text="@{@string/quiz_correct(quiz.correct)}"
+                tools:background="@drawable/background_answer"
+                tools:text="Đáp án đúng: aaaaaaaaaaaaaaaa" />
+
+            <TextView
+                android:id="@+id/tvIncorrect1"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:paddingVertical="@dimen/ndp_5"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="@{@string/quiz_incorrect1(quiz.incorrect_1)}"
+                tools:background="@drawable/background_answer"
+                tools:text="Đáp án sai 1: aaaaaaaaaaaaaaaa" />
+
+            <TextView
+                android:id="@+id/tvIncorrect2"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:paddingVertical="@dimen/ndp_5"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="@{@string/quiz_incorrect2(quiz.incorrect_2)}"
+                tools:background="@drawable/background_answer"
+                tools:text="Đáp án sai 1: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+
+            <TextView
+                android:id="@+id/tvIncorrect3"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:paddingVertical="@dimen/ndp_5"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="@{@string/quiz_incorrect3(quiz.incorrect_3)}"
+                tools:background="@drawable/background_answer"
+                tools:text="Đáp án sai 1: aaaaaaaaaaaaaaaa" />
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

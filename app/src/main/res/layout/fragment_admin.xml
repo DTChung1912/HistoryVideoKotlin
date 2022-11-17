@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.AdminViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.50" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glRight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <!--        <include-->
+        <!--            android:id="@+id/toolbar"-->
+        <!--            layout="@layout/layout_toolbar_detail" />-->
+
+        <LinearLayout
+            android:id="@+id/rlUser"
+            style="@style/AdminOption"
+            app:layout_constraintEnd_toEndOf="@id/glCenter"
+            app:layout_constraintStart_toStartOf="@id/glLeft"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/ndp_64"
+                android:layout_height="@dimen/ndp_64"
+                android:background="@drawable/background_admin_imageview"
+                android:backgroundTint="#F6A91E"
+                android:padding="10dp"
+                android:src="@drawable/ic_bottom_menu_my_page" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="Người dùng"
+                android:textSize="@dimen/nsp_18"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_1"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Quản lý danh sách người dùng"
+                android:textAlignment="center"
+                android:textSize="@dimen/nsp_15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rlPost"
+            style="@style/AdminOption"
+            app:layout_constraintEnd_toEndOf="@id/glRight"
+            app:layout_constraintStart_toStartOf="@id/glCenter"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/ndp_64"
+                android:layout_height="@dimen/ndp_64"
+                android:background="@drawable/background_admin_imageview"
+                android:backgroundTint="#69DAE8"
+                android:padding="10dp"
+                android:src="@drawable/ic_bottom_menu_home" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="Bài viết"
+                android:textSize="@dimen/nsp_18"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_1"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Quản lý danh sách bài viết"
+                android:textAlignment="center"
+                android:textSize="@dimen/nsp_15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rlVideo"
+            style="@style/AdminOption"
+            app:layout_constraintEnd_toEndOf="@id/glCenter"
+            app:layout_constraintStart_toStartOf="@id/glLeft"
+            app:layout_constraintTop_toBottomOf="@id/rlUser">
+
+            <ImageView
+                android:layout_width="@dimen/ndp_64"
+                android:layout_height="@dimen/ndp_64"
+                android:background="@drawable/background_admin_imageview"
+                android:backgroundTint="#8BC34A"
+                android:padding="10dp"
+                android:src="@drawable/ic_bottom_menu_video" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="Video"
+                android:textSize="@dimen/nsp_18"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_1"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Quản lý danh sách video"
+                android:textAlignment="center"
+                android:textSize="@dimen/nsp_15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rlQuiz"
+            style="@style/AdminOption"
+            app:layout_constraintEnd_toEndOf="@id/glRight"
+            app:layout_constraintStart_toStartOf="@id/glCenter"
+            app:layout_constraintTop_toBottomOf="@id/rlPost">
+
+            <ImageView
+                android:layout_width="@dimen/ndp_64"
+                android:layout_height="@dimen/ndp_64"
+                android:background="@drawable/background_admin_imageview"
+                android:backgroundTint="#F60B5B"
+                android:padding="10dp"
+                android:src="@drawable/ic_bottom_menu_quiz" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="Câu hỏi"
+                android:textSize="@dimen/nsp_18"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_1"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Quản lý danh sách các câu hỏi"
+                android:textAlignment="center"
+                android:textSize="@dimen/nsp_15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rlTheme"
+            style="@style/AdminOption"
+            android:layout_width="@dimen/ndp_150"
+            app:layout_constraintEnd_toEndOf="@id/glRight"
+            app:layout_constraintStart_toStartOf="@id/glLeft"
+            app:layout_constraintTop_toBottomOf="@id/rlQuiz">
+
+            <ImageView
+                android:layout_width="@dimen/ndp_64"
+                android:layout_height="@dimen/ndp_64"
+                android:background="@drawable/background_admin_imageview"
+                android:backgroundTint="#FFEB3B"
+                android:padding="10dp"
+                android:src="@drawable/ic_bottom_menu_quiz" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="Chủ đề"
+                android:textSize="@dimen/nsp_18"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ndp_1"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Quản lý Chủ đề"
+                android:textAlignment="center"
+                android:textSize="@dimen/nsp_15" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

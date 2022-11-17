@@ -15,8 +15,6 @@ class MyPageLoginFragment : BaseFragment<MyPageLoginViewModel, FragmentMyPageLog
     override fun getViewModel(): MyPageLoginViewModel =
         ViewModelProvider(requireActivity()).get(MyPageLoginViewModel::class.java)
 
-    
-
     override fun initData() {
         binding.run {
             btnLogin.setOnClickListener {
@@ -24,7 +22,6 @@ class MyPageLoginFragment : BaseFragment<MyPageLoginViewModel, FragmentMyPageLog
                     HistoryLoginFragment.newInstance(),
                     HistoryUtils.getSlideTransitionAnimationOptions()
                 )
-//                findNavController().navigate(R.id.action_myPageFragment_to_historyLoginFragment)
             }
             btnRegister.setOnClickListener {
                 pushFragment(
@@ -34,17 +31,23 @@ class MyPageLoginFragment : BaseFragment<MyPageLoginViewModel, FragmentMyPageLog
             }
 
             tvDownloadVideoList.setOnClickListener {
-                pushFragment(DownloadListFragment.newInstance(4),HistoryUtils.getSlideTransitionAnimationOptions())
+                pushFragment(
+                    DownloadListFragment.newInstance(4),
+                    HistoryUtils.getSlideTransitionAnimationOptions()
+                )
+            }
+
+            tvDownloadPostList.setOnClickListener {
+                pushFragment(
+                    DownloadPostFragment.newInstance(),
+                    HistoryUtils.getSlideTransitionAnimationOptions()
+                )
             }
         }
     }
 
-    
-
     companion object {
 
-        @JvmStatic
-        fun newInstance() =
-            MyPageLoginFragment()
+        fun newInstance() = MyPageLoginFragment()
     }
 }

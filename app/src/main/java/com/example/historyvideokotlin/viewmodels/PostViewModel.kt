@@ -1,6 +1,7 @@
 package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.historyvideokotlin.R
@@ -22,6 +23,9 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
     var postRepository = PostRepository()
 
     val ktorPostRepository = application.repositoryProvider.ktorPostRepository
+
+    private val _isLoadFail = MutableLiveData(false)
+    val isLoadFail: LiveData<Boolean> get() = _isLoadFail
 
     fun getPostData() {
         getPostKtor()
@@ -48,6 +52,7 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun getPostKtor() {
+        _isLoadFail.value = false
         viewModelScope.launch {
             runCatching {
                 showLoading()
@@ -55,9 +60,11 @@ class PostViewModel(application: Application) : BaseViewModel(application) {
             }.onSuccess {
                 hideLoading()
                 postList.value = it
+                _isLoadFail.value = false
             }.onFailure {
                 hideLoading()
                 MyLog.e("postList",it.message)
+                _isLoadFail.value = true
             }
         }
     }

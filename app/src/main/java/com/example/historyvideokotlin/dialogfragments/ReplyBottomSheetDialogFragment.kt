@@ -14,10 +14,8 @@ import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
-import com.bumptech.glide.Glide
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.databinding.FragmentReplyBottomSheetDialogBinding
-import com.example.historyvideokotlin.model.Reply
 
 class ReplyBottomSheetDialogFragment(val onItemClickListener: OnItemClickListener) :
     DialogFragment() {
@@ -58,8 +56,6 @@ class ReplyBottomSheetDialogFragment(val onItemClickListener: OnItemClickListene
                     onItemClickListener.onSend(userName, content)
                 }
             }
-
-
         }
         return binding.root
     }

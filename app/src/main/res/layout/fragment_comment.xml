@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.CommentViewModel" />
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,19 +23,22 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/ndp_10"
-            android:text="Bình luận (1)"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:text="@{@string/comment_count(viewModel.commentCount)}"
             android:textSize="@dimen/nsp_20"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Bình luận (1)" />
 
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/ndp_10"
-            android:layout_marginEnd="@dimen/ndp_10"
-            android:src="@drawable/cancel" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/ivBack"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentTop="true"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_marginTop="@dimen/ndp_10"-->
+        <!--            android:layout_marginEnd="@dimen/ndp_10"-->
+        <!--            android:src="@drawable/cancel" />-->
 
         <LinearLayout
             android:id="@+id/llSendComment"
@@ -41,13 +52,14 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civAvatar"
-                android:layout_width="@dimen/ndp_30"
-                android:layout_height="@dimen/ndp_30"
+                android:layout_width="@dimen/ndp_40"
+                android:layout_height="@dimen/ndp_40"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/user_avatar" />
 
-            <EditText
+            <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/edtComment"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ndp_40"
@@ -56,23 +68,25 @@
                 android:layout_marginHorizontal="@dimen/ndp_10"
                 android:layout_weight="8"
                 android:background="@drawable/background_edittext_comment"
-                android:hint="Phản hồi bình luận"
+                android:text="Nhập bình luận"
                 android:paddingStart="@dimen/ndp_10" />
 
             <ImageView
                 android:id="@+id/ivSend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ndp_40"
+                android:layout_height="@dimen/ndp_40"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:src="@drawable/send" />
+                android:src="@drawable/ic_send_comment" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewComment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/llSendComment" />
+            android:layout_below="@id/llSendComment"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_comment" />
     </RelativeLayout>
 </layout>
 

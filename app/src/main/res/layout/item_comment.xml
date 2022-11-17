@@ -1,113 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/itemComment"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/ndp_10">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civUserAvatar"
-        android:layout_width="@dimen/ndp_40"
-        android:layout_height="@dimen/ndp_40"
-        android:layout_marginStart="@dimen/ndp_10"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher" />
+    <data>
 
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="wrap_content"
+        <variable
+            name="comment"
+            type="com.example.historyvideokotlin.model.Comment" />
+
+        <variable
+            name="isLike"
+            type="Boolean" />
+
+        <variable
+            name="isDislike"
+            type="Boolean" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/itemComment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ndp_10"
-        android:layout_toRightOf="@id/civUserAvatar"
-        android:text="Chung"
-        android:textSize="@dimen/nsp_15"
-        android:textStyle="bold" />
+        android:paddingVertical="@dimen/ndp_10">
 
-    <TextView
-        android:id="@+id/tvContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvUserName"
-        android:layout_marginStart="@dimen/ndp_10"
-        android:layout_marginTop="@dimen/ndp_5"
-        android:layout_toRightOf="@id/civUserAvatar"
-        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        android:textSize="@dimen/nsp_10" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civUserAvatar"
+            imageUrl="@{comment.user_image}"
+            android:layout_width="@dimen/ndp_40"
+            android:layout_height="@dimen/ndp_40"
+            android:layout_marginStart="@dimen/ndp_10"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_avatar" />
 
-    <TextView
-        android:id="@+id/tvDateSubmitted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ndp_20"
-        android:layout_marginTop="@dimen/ndp_5"
-        android:layout_toRightOf="@id/tvUserName"
-        android:text="1 ngay truoc"
-        android:textSize="@dimen/nsp_10" />
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ndp_10"
+            android:layout_toRightOf="@id/civUserAvatar"
+            android:text="@{comment.user_name}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/nsp_15"
+            android:textStyle="bold"
+            tools:text="Chung" />
 
-    <ImageView
-        android:id="@+id/ivLike"
-        android:src="@drawable/like_video"
-        android:scaleType="fitXY"
-        android:layout_width="@dimen/ndp_20"
-        android:layout_height="@dimen/ndp_20"
-        android:layout_below="@id/tvContent"
-        android:layout_marginStart="@dimen/ndp_10"
-        android:layout_marginTop="@dimen/ndp_10"
-        android:layout_toRightOf="@id/civUserAvatar"/>
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvUserName"
+            android:layout_marginStart="@dimen/ndp_10"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:layout_toRightOf="@id/civUserAvatar"
+            android:text="@{comment.content}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/nsp_12"
+            tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
-    <TextView
-        android:id="@+id/tvLikeCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvContent"
-        android:layout_marginStart="@dimen/ndp_5"
-        android:layout_marginTop="@dimen/ndp_10"
-        android:layout_toRightOf="@id/ivLike"
-        android:gravity="center"
-        android:text="10" />
+        <TextView
+            android:id="@+id/tvDateSubmitted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ndp_20"
+            android:layout_toRightOf="@id/tvUserName"
+            android:text="@{comment.date_submitted}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/nsp_12"
+            tools:text="1 ngay truoc" />
 
-    <ImageView
-        android:id="@+id/ivDislike"
-        android:layout_width="@dimen/ndp_20"
-        android:layout_height="@dimen/ndp_20"
-        android:layout_below="@id/tvContent"
-        android:layout_marginStart="@dimen/ndp_30"
-        android:layout_marginTop="@dimen/ndp_10"
-        android:layout_toRightOf="@id/tvLikeCount"
-        android:scaleType="fitXY"
-        android:src="@drawable/dislike_video" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvContent"
+            android:layout_toRightOf="@id/civUserAvatar"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/ndp_10"
+            android:paddingStart="@dimen/ndp_10">
 
-    <TextView
-        android:id="@+id/tvDislikeCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvContent"
-        android:layout_marginStart="@dimen/ndp_5"
-        android:layout_marginTop="@dimen/ndp_10"
-        android:layout_toRightOf="@id/ivDislike"
-        android:gravity="center"
-        android:text="10" />
+            <ImageView
+                android:id="@+id/ivLike"
+                isVisible="@{!isLike}"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_below="@id/tvContent"
+                android:layout_toRightOf="@id/civUserAvatar"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_like"
+                tools:visibility="visible" />
 
-    <ImageView
-        android:id="@+id/ivReply"
-        android:layout_width="@dimen/ndp_20"
-        android:layout_height="@dimen/ndp_20"
-        android:layout_below="@id/tvContent"
-        android:layout_marginStart="@dimen/ndp_30"
-        android:layout_marginTop="@dimen/ndp_10"
-        android:layout_toRightOf="@id/tvDislikeCount"
-        android:scaleType="fitXY"
-        android:src="@drawable/comment_video" />
+            <ImageView
+                android:id="@+id/ivLiked"
+                isVisible="@{isLike}"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_toRightOf="@id/civUserAvatar"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_liked"
+                tools:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tvReplyCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvContent"
-        android:layout_marginStart="@dimen/ndp_5"
-        android:layout_marginTop="@dimen/ndp_10"
-        android:layout_toRightOf="@id/ivReply"
-        android:gravity="center"
-        android:text="10" />
+            <TextView
+                android:id="@+id/tvLikeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ndp_5"
+                android:gravity="center_vertical"
+                android:text="@{@string/count(comment.like_count)}"
+                android:textColor="@color/black"
+                tools:text="10" />
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/ivDislike"
+                isVisible="@{!isDislike}"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_marginStart="@dimen/ndp_30"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_dislike"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/ivDisliked"
+                isVisible="@{isDislike}"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_marginStart="@dimen/ndp_30"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_disliked"
+                tools:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvDislikeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ndp_5"
+                android:gravity="center_vertical"
+                android:text="@{@string/count(comment.dislike_count)}"
+                android:textColor="@color/black"
+                tools:text="10" />
+
+            <ImageView
+                android:id="@+id/ivReply"
+                android:layout_width="@dimen/ndp_20"
+                android:layout_height="@dimen/ndp_20"
+                android:layout_marginStart="@dimen/ndp_30"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_comment" />
+
+            <TextView
+                android:id="@+id/tvReplyCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ndp_5"
+                android:gravity="center_vertical"
+                android:text="@{@string/count(comment.reply_count)}"
+                android:textColor="@color/black"
+                tools:text="10" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

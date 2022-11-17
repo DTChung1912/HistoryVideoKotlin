@@ -30,8 +30,8 @@ data class DownloadVideo(
     var dislike_count: Int? = null,
     @ColumnInfo(name = "comment_count")
     var comment_count: Int? = null,
-    @ColumnInfo(name = "share_count")
-    var share_count: Int? = null,
+    @ColumnInfo(name = "download_count")
+    var download_count: Int? = null,
     @ColumnInfo(name = "video_url")
     var video_url: String? = null,
     @ColumnInfo(name = "poster_image")

@@ -4,245 +4,331 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="isLiked"
-            type="Boolean" />
 
         <variable
-            name="isDisliked"
-            type="Boolean" />
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.VideoInfoViewModel" />
     </data>
 
-    <FrameLayout
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <ScrollView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:scrollbars="none"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <ScrollView
+        <TextView
+            android:id="@+id/tvVideoTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:paddingHorizontal="@dimen/ndp_10"
+            android:text="@{viewModel.video.title}"
+            android:textSize="@dimen/nsp_18"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/ivExtend"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Chunggggggggggggggggggggggggggggggg" />
+
+        <TextView
+            android:id="@+id/tvViewCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvVideoTitle"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:paddingStart="@dimen/ndp_10"
+            android:text="@{@string/video_view_count(viewModel.video.view_count)}"
+            android:textSize="@dimen/nsp_15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvVideoTitle"
+            tools:text="100 luot xem" />
+
+        <TextView
+            android:id="@+id/tvDateSubmitted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvVideoTitle"
+            android:layout_marginStart="@dimen/ndp_20"
+            android:layout_marginTop="@dimen/ndp_5"
+            android:layout_toRightOf="@id/tvViewCount"
+            android:text="@{viewModel.video.date_submitted}"
+            android:textSize="@dimen/nsp_15"
+            app:layout_constraintStart_toEndOf="@id/tvViewCount"
+            app:layout_constraintTop_toBottomOf="@id/tvVideoTitle"
+            tools:text="10/07/2022" />
+
+        <ImageView
+            android:id="@+id/ivExtend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/ndp_10"
+            android:src="@drawable/expand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tvDescription"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_below="@id/tvViewCount"-->
+        <!--                    android:text="chung"-->
+        <!--                    android:textSize="@dimen/nsp_15"-->
+        <!--                    android:visibility="gone" />-->
+
+        <LinearLayout
+            android:id="@+id/ll1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/ndp_5"
+            android:weightSum="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvViewCount">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivLike"
+                isVisible="@{!viewModel.isLiked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_like" />
 
-                <TextView
-                    android:id="@+id/tvVideoTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/ndp_10"
-                    android:text="Chung"
-                    android:textSize="@dimen/nsp_20"
-                    android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/ivLiked"
+                isVisible="@{viewModel.isLiked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_liked"
+                tools:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tvViewCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvVideoTitle"
-                    android:layout_marginTop="@dimen/ndp_5"
-                    android:paddingStart="@dimen/ndp_10"
-                    android:text="100 luot xem"
-                    android:textSize="@dimen/nsp_15" />
+            <ImageView
+                android:id="@+id/ivDislike"
+                isVisible="@{!viewModel.isDisliked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/ic_dislike" />
 
-                <TextView
-                    android:id="@+id/tvDateSubmitted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvVideoTitle"
-                    android:layout_marginStart="@dimen/ndp_20"
-                    android:layout_marginTop="@dimen/ndp_5"
-                    android:layout_toRightOf="@id/tvViewCount"
-                    android:text="10/07/2022"
-                    android:textSize="@dimen/nsp_15" />
+            <ImageView
+                android:id="@+id/ivDisliked"
+                isVisible="@{viewModel.isDisliked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/ic_disliked"
+                tools:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/ivExtend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/ndp_20"
-                    android:layout_marginEnd="@dimen/ndp_10"
-                    android:src="@drawable/expand" />
+            <ImageView
+                android:id="@+id/ivDownload"
+                isVisible="@{!viewModel.isDownload}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/ic_download"
+                tools:visibility="visible" />
 
-                <TextView
-                    android:id="@+id/tvDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvViewCount"
-                    android:text="chung"
-                    android:textSize="@dimen/nsp_15"
-                    android:visibility="gone" />
+            <ImageView
+                android:id="@+id/ivDownloaded"
+                isVisible="@{viewModel.isDownload}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/ic_completed"
+                tools:visibility="gone" />
 
-                <LinearLayout
-                    android:id="@+id/llLike1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvDescription"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/ndp_5"
-                    android:weightSum="4">
+            <ImageView
+                android:id="@+id/ivLater"
+                isVisible="@{!viewModel.isLater}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/ic_later" />
 
-                    <ImageView
-                        android:id="@+id/ivLike"
-                        imageResourceLike="@{isLiked}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/like_video" />
+            <ImageView
+                android:id="@+id/ivLatered"
+                isVisible="@{viewModel.isLater()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/ic_latered"
+                tools:visibility="gone" />
+        </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/ivDislike"
-                        imageResourceDislike="@{isDisliked}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/ndp_10"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:src="@drawable/dislike_video" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll1">
 
-                    <ImageView
-                        android:id="@+id/ivDownload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/ndp_10"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:src="@drawable/download" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
 
-                    <ImageView
-                        android:id="@+id/ivSave"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/ndp_10"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:src="@drawable/save" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50" />
 
-                </LinearLayout>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.75" />
 
-                <LinearLayout
-                    android:id="@+id/llLike2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/llLike1"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
+            <TextView
+                android:id="@+id/tvLike"
+                textLike="@{viewModel.likeCount}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@+id/glLeft"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Thích" />
 
-                    <TextView
-                        android:id="@+id/tvLike"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/ndp_10"
-                        android:layout_marginTop="@dimen/ndp_5"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:text="Thích" />
+            <TextView
+                android:id="@+id/tvDislike"
+                textDislike="@{viewModel.dislikeCount}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@id/glCenter"
+                app:layout_constraintStart_toEndOf="@id/glLeft"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Không thích" />
 
-                    <TextView
-                        android:id="@+id/tvDislike"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/ndp_20"
-                        android:layout_marginTop="@dimen/ndp_5"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Không thích" />
+            <TextView
+                android:id="@+id/tvDownload"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{viewModel.isDownload ? @string/video_downloaded : @string/video_download}"
+                app:layout_constraintEnd_toStartOf="@id/glRight"
+                app:layout_constraintStart_toEndOf="@id/glCenter"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Tải xuống" />
 
-                    <TextView
-                        android:id="@+id/tvDownload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/ndp_10"
-                        android:layout_marginTop="@dimen/ndp_5"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Tải xuống" />
+            <TextView
+                android:id="@+id/tvSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{viewModel.isLater ? @string/video_latered : @string/video_later}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/glRight"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Xem sau" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/tvSave"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/ndp_10"
-                        android:layout_marginTop="@dimen/ndp_5"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Xem sau" />
+        <LinearLayout
+            android:id="@+id/llCreater"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:background="@drawable/background_creater"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/ndp_10"
+            android:paddingStart="@dimen/ndp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll2">
 
-                </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivCreaterAvatar"
+                imageUrl="@{viewModel.video.creater_image}"
+                android:layout_width="@dimen/ndp_50"
+                android:layout_height="@dimen/ndp_50"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_avatar" />
 
-                <LinearLayout
-                    android:id="@+id/llCreater"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/llLike2"
-                    android:layout_marginTop="@dimen/ndp_10"
-                    android:background="@drawable/background_creater"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/ndp_10"
-                    android:paddingStart="@dimen/ndp_10">
+            <TextView
+                android:id="@+id/tvCreaterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/ndp_10"
+                android:layout_toRightOf="@id/ivCreaterAvatar"
+                android:text="@{viewModel.video.creater}"
+                android:textSize="@dimen/nsp_20"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,RtlHardcoded,SpUsage"
+                tools:text="Chung" />
+        </LinearLayout>
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/ivCreaterAvatar"
-                        android:layout_width="@dimen/ndp_50"
-                        android:layout_height="@dimen/ndp_50"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_launcher" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_40"
+            android:layout_gravity="center"
+            android:fillViewport="true"
+            android:textSize="@dimen/nsp_15"
+            app:layout_constraintBottom_toTopOf="@id/viewPager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llCreater"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/app2"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="@dimen/ndp_1"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/VideoTabSelectedTextAppearance" />
 
-                    <TextView
-                        android:id="@+id/tvCreaterName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/ndp_10"
-                        android:layout_toRightOf="@id/ivCreaterAvatar"
-                        android:text="Chung"
-                        android:textSize="@dimen/nsp_20"
-                        android:textStyle="bold"
-                        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llNextVideoAndComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/llCreater"
-                    android:layout_marginTop="@dimen/ndp_10"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tabLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/ndp_40"
-                        android:layout_gravity="center"
-                        android:fillViewport="true"
-                        android:textSize="@dimen/nsp_15"
-                        app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/app2"
-                        app:tabIndicatorFullWidth="false"
-                        app:tabIndicatorHeight="@dimen/ndp_1"
-                        app:tabMaxWidth="0dp"
-                        app:tabMode="fixed"
-                        app:tabTextAppearance="@style/VideoTabSelectedTextAppearance" />
-
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-        </ScrollView>
-    </FrameLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    </LinearLayout>-->
 </layout>

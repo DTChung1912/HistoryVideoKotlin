@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:elevation="@dimen/ndp_10"
+            android:src="@drawable/ic_cancel_black" />
+
+        <LinearLayout
+            android:id="@+id/flTiltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ndp_10"
+            android:layout_marginTop="@dimen/ndp_10"
+            android:background="@drawable/background_dialog_quiz_result"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/ndp_10"
+                android:layout_marginBottom="@dimen/ndp_20"
+                android:gravity="center"
+                android:text="Bạn có muốn tiếp tục làm bài?"
+                android:textSize="@dimen/nsp_30"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/ndp_10"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/ndp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_button_quiz_result"
+                    android:text="Hủy"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/ndp_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_button_quiz_result"
+                    android:text="Thoát"
+                    android:textSize="@dimen/nsp_20"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

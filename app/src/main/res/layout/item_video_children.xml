@@ -1,88 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/videoChildrenItem"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SeekBar
-        android:id="@+id/seekbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ndp_5"
-        android:layout_alignStart="@id/ivPoster"
-        android:layout_alignEnd="@id/ivPoster"
-        android:layout_alignBottom="@id/ivPoster"
-        android:backgroundTint="@color/gray"
-        android:max="1000"
-        android:progress="500"
-        android:progressTint="@color/red"
-        android:thumb="@null" />
-
-    <ImageView
-        android:id="@+id/ivPoster"
-        android:layout_width="150dp"
-        android:layout_height="@dimen/ndp_80"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/ndp_5"
-        android:src="@drawable/moo_without_text" />
-
-    <TextView
-        android:id="@+id/tvDuration"
+    <RelativeLayout
+        android:id="@+id/videoChildrenItem"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/ivPoster"
-        android:layout_alignBottom="@id/ivPoster"
-        android:layout_marginEnd="@dimen/ndp_5"
-        android:layout_marginBottom="@dimen/ndp_5"
-        android:background="@color/black"
-        android:paddingHorizontal="@dimen/ndp_2"
-        android:text="00:00"
-        android:textColor="@color/white"
-        android:textSize="@dimen/nsp_10" />
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/ivMore"
-        android:layout_toRightOf="@id/ivPoster"
-        android:orientation="vertical">
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ndp_5"
+            android:layout_alignStart="@id/ivPoster"
+            android:layout_alignEnd="@id/ivPoster"
+            android:layout_alignBottom="@id/ivPoster"
+            android:backgroundTint="@color/gray"
+            android:max="1000"
+            android:progress="500"
+            android:progressTint="@color/red"
+            android:thumb="@null"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ndp_10"
-            android:text="Chung"
-            android:textSize="@dimen/nsp_12"
-            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="150dp"
+            android:layout_height="@dimen/ndp_80"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ndp_5"
+            android:src="@drawable/moo_without_text" />
 
         <TextView
-            android:id="@+id/tvCreaterName"
+            android:id="@+id/tvDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ndp_10"
-            android:text="Chung"
-            android:textSize="@dimen/nsp_10" />
+            android:layout_alignEnd="@id/ivPoster"
+            android:layout_alignBottom="@id/ivPoster"
+            android:layout_marginEnd="@dimen/ndp_5"
+            android:layout_marginBottom="@dimen/ndp_5"
+            android:background="@color/black"
+            android:paddingHorizontal="@dimen/ndp_2"
+            android:text="00:00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/nsp_10"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tvViewCount"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/ivMore"
+            android:layout_toRightOf="@id/ivPoster"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="Chung"
+                android:textSize="@dimen/nsp_12"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCreaterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:text="Chung"
+                android:textSize="@dimen/nsp_10" />
+
+            <TextView
+                android:id="@+id/tvViewCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ndp_5"
+                android:text="100 lượt xem"
+                android:textSize="@dimen/nsp_10" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ndp_5"
-            android:text="100 lượt xem"
-            android:textSize="@dimen/nsp_10" />
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/ivMore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/ndp_5"
-        android:layout_marginEnd="@dimen/ndp_5"
-        android:src="@drawable/threedots" />
-</RelativeLayout>
+            android:layout_marginEnd="@dimen/ndp_5"
+            android:src="@drawable/threedots" />
+    </RelativeLayout>
+</layout>
 
 

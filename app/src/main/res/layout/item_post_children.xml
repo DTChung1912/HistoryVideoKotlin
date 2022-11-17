@@ -15,7 +15,7 @@
         android:layout_height="@dimen/ndp_70"
         android:background="@drawable/background_imageview_post_list"
         android:clipToOutline="true"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/ic_avatar" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -42,16 +42,16 @@
         android:textSize="@dimen/nsp_15" />
 
     <TextView
-        android:id="@+id/tvDownloadCount"
+        android:id="@+id/tvRateCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvReadCount"
         android:layout_marginStart="@dimen/ndp_15"
         android:layout_marginTop="@dimen/ndp_5"
         android:layout_toRightOf="@id/ivPostList"
-        android:drawableLeft="@drawable/download_arrow"
+        android:drawableLeft="@drawable/rating"
         android:drawablePadding="@dimen/ndp_10"
-        android:text="100 lượt tải xuống"
+        android:text="100 lượt đánh giá "
         android:textSize="@dimen/nsp_15" />
 
     <ImageView

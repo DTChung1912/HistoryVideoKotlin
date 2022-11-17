@@ -1,22 +1,17 @@
 package com.example.historyvideokotlin.fragments
 
 import android.content.Intent
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.example.historyvideokotlin.R
 import com.example.historyvideokotlin.activities.MainActivity
-import com.example.historyvideokotlin.base.AppEvent
 import com.example.historyvideokotlin.base.BaseFragment
 import com.example.historyvideokotlin.databinding.FragmentRegisterBinding
-import com.example.historyvideokotlin.utils.HistoryUtils
 import com.example.historyvideokotlin.viewmodels.RegisterViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
-class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding>(){
+class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding>() {
 
     val firebaseAuth = Firebase.auth
 
@@ -27,11 +22,10 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     override fun getViewModel(): RegisterViewModel =
         ViewModelProvider(requireActivity()).get(RegisterViewModel::class.java)
 
-    
-
     override fun initData() {
         binding.run {
             ivUserAvatar.setOnClickListener {
+
 //                pushFragment(CameraFragment.newInstance(),HistoryUtils.getSlideTransitionAnimationOptions())
             }
 
@@ -48,7 +42,6 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
                 )
             }
         }
-
     }
 
     private fun registerUser() {
@@ -59,7 +52,7 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val userId = task.result.user?.uid ?: "null"
-                    viewModel.postUser(userId,name, email)
+                    viewModel.postUser(userId, name, email)
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
@@ -69,8 +62,6 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
                 }
             }
     }
-
-    
 
     override fun onResume() {
         super.onResume()
@@ -83,6 +74,4 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
         fun newInstance() =
             RegisterFragment()
     }
-
-
 }

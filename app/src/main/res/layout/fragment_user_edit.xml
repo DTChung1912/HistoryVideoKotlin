@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.UserEditViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,10 +40,11 @@
         </RelativeLayout>
 
         <ImageView
-            android:layout_gravity="center_horizontal"
             android:id="@+id/ivUserAvatar"
+            url="@{viewModel.user.user_image}"
             android:layout_width="@dimen/ndp_100"
             android:layout_height="@dimen/ndp_100"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/user_avatar" />
 
         <TextView
@@ -55,8 +63,9 @@
             android:drawableLeft="@drawable/user_name"
             android:drawablePadding="@dimen/ndp_20"
             android:paddingStart="@dimen/ndp_15"
-            android:text="chung"
-            android:textSize="@dimen/nsp_20" />
+            android:text="@{viewModel.user.user_name}"
+            android:textSize="@dimen/nsp_20"
+            tools:text="chung" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,7 +84,7 @@
             android:drawablePadding="@dimen/ndp_20"
             android:hint="Nhập ngày sinh"
             android:paddingStart="@dimen/ndp_15"
-            android:text=""
+            android:text="@{viewModel.user.birthday}"
             android:textSize="@dimen/nsp_20" />
 
         <TextView
@@ -95,7 +104,7 @@
             android:drawablePadding="@dimen/ndp_20"
             android:hint="Nhập email"
             android:paddingStart="@dimen/ndp_15"
-            android:text=""
+            android:text="@{viewModel.user.email}"
             android:textSize="@dimen/nsp_20" />
 
         <TextView
@@ -115,7 +124,7 @@
             android:drawablePadding="@dimen/ndp_20"
             android:hint="Nhập số điện thoại"
             android:paddingStart="@dimen/ndp_15"
-            android:text=""
+            android:text="@{viewModel.user.phone_number}"
             android:textSize="@dimen/nsp_20" />
 
         <TextView
@@ -135,11 +144,26 @@
             android:drawablePadding="@dimen/ndp_20"
             android:hint="Nhập địa chỉ"
             android:paddingStart="@dimen/ndp_15"
-            android:text=""
+            android:text="@{viewModel.user.address}"
             android:textSize="@dimen/nsp_20" />
 
         <Button
+            android:id="@+id/btnAdd"
+            isVisible="@{!viewModel.isUpdate}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ndp_20"
+            android:background="@drawable/background_button_edit"
+            android:paddingHorizontal="@dimen/ndp_10"
+            android:text="Thêm mới"
+            android:textColor="@color/white"
+            android:textSize="@dimen/nsp_20"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/btnUpdate"
+            isVisible="@{viewModel.isUpdate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

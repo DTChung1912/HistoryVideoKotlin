@@ -6,8 +6,11 @@ import retrofit2.http.*
 
 interface KtorAPIService {
 
+    @GET("user/list")
+    suspend fun getUserList(): Response<List<User>>
+
     @GET("user/detail")
-    suspend fun getUser(@Query("userId") userId: String): Response<User>
+    suspend fun getUser(@Query("user_id") userId: String): Response<User>
 
     @GET("video/list")
     suspend fun getVideoList(): Response<List<Video>>
@@ -46,37 +49,88 @@ interface KtorAPIService {
     @GET("video/search")
     suspend fun getSearchVideo(@Query("keyword") keyword: String): Response<List<Video>>
 
+    @GET("video/next")
+    suspend fun getNextVideo(@Query("video_id") video_id: Int): Response<List<Video>>
+
     @POST("user/register")
     suspend fun register(
         @Body user: User
     ): Response<List<User>>
 
+    @POST("post/create")
+    suspend fun createPost(
+        @Body post: PostRequest
+    ): Response<CreateResponse>
+
+    @POST("video/create")
+    suspend fun createVideo(
+        @Body video: Video
+    ): Response<CreateResponse>
+
     @POST("comment/create")
-    suspend fun postComment(
-        @Body comment: Comment
-    ): Response<Comment>
+    suspend fun createComment(
+        @Body comment: CommentRequest
+    ): Response<CreateResponse>
 
     @POST("reply/create")
-    suspend fun postReply(
-        @Body reply: Reply
-    ): Response<Reply>
+    suspend fun createReply(
+        @Body reply: ReplyRequest
+    ): Response<CreateResponse>
+
+    @POST("theme/create")
+    suspend fun createTheme(
+        @Body theme: Theme
+    ): Response<CreateResponse>
+
+    @POST("quiz/create")
+    suspend fun createQuiz(
+        @Body quiz: Quiz
+    ): Response<CreateResponse>
 
     @GET("myvideo/list")
     suspend fun getMyVideoList(
         @Query("user_id") userId: String
-    ): Response<MyVideoRespone>
+    ): Response<List<MyVideoModel>>
 
     @GET("myvideo/list")
     suspend fun getMyVideoListType(
         @Query("user_id") userId: String,
-        @Query("type") type: Int,
-    ): Response<MyVideoRespone>
+        @Query("type") type: Int
+    ): Response<List<MyVideoModel>>
 
     @GET("myvideo/detail")
     suspend fun getMyVideo(
         @Query("user_id") userId: String,
         @Query("video_id") videoId: Int
-    ): Response<List<MyVideoStatus>>
+    ): Response<MyVideoStatus>
+
+    @GET("mycomment/list")
+    suspend fun getMyCommentList(
+        @Query("user_id") userId: String,
+        @Query("video_id") videoId: Int
+    ): Response<List<MyComment>>
+
+    @GET("mycomment/detail")
+    suspend fun getMyComment(
+        @Query("user_id") userId: String,
+        @Query("video_id") videoId: Int,
+        @Query("comment_id") commentId: Int
+    ): Response<MyComment>
+
+    @GET("myreply/list")
+    suspend fun getMyReplyList(
+        @Query("user_id") userId: String,
+        @Query("video_id") videoId: Int,
+        @Query("comment_id") commentId: Int
+    ): Response<List<MyReply>>
+
+    @GET("myreply/detail")
+    suspend fun getMyReply(
+        @Query("user_id") userId: String,
+        @Query("video_id") videoId: Int,
+        @Query("comment_id") commentId: Int,
+        @Query("reply_id") replyId: Int
+    ): Response<MyReply>
 
     @GET("video/test")
     suspend fun getTest(
@@ -86,7 +140,8 @@ interface KtorAPIService {
 
     @GET("mypost/list")
     suspend fun getMyPostList(
-        @Query("user_id") userId: String
+        @Query("user_id") userId: String,
+        @Query("type") type: Int
     ): Response<MyPostResponse>
 
     @GET("mypost/detail")
@@ -112,16 +167,25 @@ interface KtorAPIService {
 
     @PUT("post/update")
     suspend fun updatePost(
-        @Query("post_id") postId: Int,
-        @Body post: Post
-    ): Response<Post>
+        @Body post: PostRequest
+    ): Response<UpdateResponse>
 
     @PUT("video/update")
     suspend fun updateVideo(
-        @Query("video_id") videoId: Int,
         @Body video: Video
-    ): Response<Video>
+    ): Response<UpdateResponse>
 
+    @PUT("quiz/update")
+    suspend fun updateQuiz(
+        @Body quiz: Quiz
+    ): Response<UpdateResponse>
+
+    @PUT("theme/update")
+    suspend fun updateTheme(
+        @Body theme: Theme
+    ): Response<UpdateResponse>
+
+    @DELETE
     // Update Post
     @PUT("post/update/read")
     suspend fun updatePostRead(
@@ -148,22 +212,22 @@ interface KtorAPIService {
     @PUT("video/update/like")
     suspend fun updateVideoLike(
         @Query("video_id") videoId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("video/update/dislike")
     suspend fun updateVideoDislike(
         @Query("video_id") videoId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("video/update/like/cancel")
     suspend fun updateVideoLikeCancel(
         @Query("video_id") videoId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("video/update/dislike/cancel")
     suspend fun updateVideoDislikeCancel(
         @Query("video_id") videoId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("video/update/download")
     suspend fun updateVideoDownload(
@@ -173,56 +237,66 @@ interface KtorAPIService {
     @PUT("video/update/comment")
     suspend fun updateVideoComment(
         @Query("video_id") videoId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
+
+    @PUT("video/update/comment/cancel")
+    suspend fun updateVideoCommentCancel(
+        @Query("video_id") videoId: Int
+    ): Response<CountResponse>
 
     // Update Comment
 
     @PUT("comment/update/like")
     suspend fun updateCommentLike(
         @Query("comment_id") commentId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("comment/update/dislike")
     suspend fun updateCommentDislike(
         @Query("comment_id") commentId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("comment/update/like/cancel")
     suspend fun updateCommentLikeCancel(
         @Query("comment_id") commentId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("comment/update/dislike/cancel")
     suspend fun updateCommentDislikeCancel(
         @Query("comment_id") commentId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("comment/update/reply")
     suspend fun updateCommentReply(
         @Query("video_id") commentId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
+
+    @PUT("comment/update/reply/cancel")
+    suspend fun updateCommentReplyCancel(
+        @Query("video_id") commentId: Int
+    ): Response<CountResponse>
 
     // Update Reply
 
     @PUT("reply/update/like")
     suspend fun updateReplyLike(
         @Query("reply_id") replyId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("reply/update/dislike")
     suspend fun updateReplyDislike(
         @Query("reply_id") replyId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("reply/update/like/cancel")
     suspend fun updateReplyLikeCancel(
         @Query("reply_id") replyId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
     @PUT("reply/update/dislike/cancel")
     suspend fun updateReplyDislikeCancel(
         @Query("reply_id") replyId: Int
-    ): Response<UpdateResponse>
+    ): Response<CountResponse>
 
 //    @PUT("myvideo/update")
 //    suspend fun updateMyVideo(
@@ -288,7 +362,53 @@ interface KtorAPIService {
         @Query("view_time") viewTime: Int
     ): Response<UpdateResponse>
 
+    // Update My Comment
+
+    @PUT("mycomment/update/like")
+    suspend fun updateMyCommentLike(
+        @Query("user_id") userId: String,
+        @Query("video_id") videoId: Int,
+        @Query("comment_id") commentId: Int,
+        @Query("is_like") isLike: Int
+    ): Response<UpdateResponse>
+
+    // Update My Reply
+
+    @PUT("myreply/update/like")
+    suspend fun updateMyReplyLike(
+        @Query("user_id") userId: String,
+        @Query("video_id") videoId: Int,
+        @Query("comment_id") commentId: Int,
+        @Query("reply_id") replyId: Int,
+        @Query("is_like") isLike: Int
+    ): Response<UpdateResponse>
+
     // Delete
+
+    @DELETE("user/delete")
+    suspend fun deleteUser(
+        @Query("user_id") userId: String
+    ): Response<DeleteResponse>
+
+    @DELETE("video/delete")
+    suspend fun deleteVideo(
+        @Query("video_id") videoId: Int
+    ): Response<DeleteResponse>
+
+    @DELETE("post/delete")
+    suspend fun deletePost(
+        @Query("post_is") postId: Int
+    ): Response<DeleteResponse>
+
+    @DELETE("theme/delete")
+    suspend fun deleteTheme(
+        @Query("theme_id") themeInt: Int
+    ): Response<DeleteResponse>
+
+    @DELETE("quiz/delete")
+    suspend fun deleteQuiz(
+        @Query("quiz_id") quizInt: Int
+    ): Response<DeleteResponse>
 
     @DELETE("comment/delete")
     suspend fun deleteComment(

@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_quiz"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/ndp_10"
-    android:layout_marginVertical="@dimen/ndp_5"
-    android:background="@drawable/background_quiz_theme"
-    android:paddingVertical="@dimen/ndp_10">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivQuiz"
-        android:layout_width="@dimen/ndp_50"
-        android:layout_height="@dimen/ndp_50"
-        android:layout_marginStart="@dimen/ndp_10"
-        android:src="@mipmap/ic_launcher" />
+    <data>
 
-    <TextView
-        android:id="@+id/tvTheme"
-        android:layout_width="wrap_content"
+        <variable
+            name="theme"
+            type="com.example.historyvideokotlin.model.Theme" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item_quiz"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/ndp_5"
-        android:layout_toRightOf="@id/ivQuiz"
-        android:gravity="center_vertical"
-        android:layout_centerVertical="true"
-        android:text="Chiến tranh Việt Nam"
-        android:textSize="@dimen/nsp_15"
-        android:textStyle="bold" />
+        android:layout_marginHorizontal="@dimen/ndp_10"
+        android:layout_marginVertical="@dimen/ndp_5"
+        android:background="@drawable/background_quiz_theme"
+        android:paddingVertical="@dimen/ndp_10">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="@dimen/ndp_10"
-        android:src="@drawable/next" />
-</RelativeLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivQuiz"
+            imageUrl="@{theme.theme_image}"
+            android:layout_width="@dimen/ndp_50"
+            android:layout_height="@dimen/ndp_50"
+            android:layout_marginStart="@dimen/ndp_10"
+            tools:src="@drawable/ic_avatar" />
+
+        <TextView
+            android:id="@+id/tvTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/ndp_5"
+            android:layout_toRightOf="@id/ivQuiz"
+            android:gravity="center_vertical"
+            android:text="@{theme.theme_name}"
+            android:textSize="@dimen/nsp_15"
+            android:textStyle="bold"
+            tools:text="Chiến tranh Việt Nam" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/ndp_10"
+            android:src="@drawable/next" />
+    </RelativeLayout>
+</layout>

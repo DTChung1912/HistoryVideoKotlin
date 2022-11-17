@@ -1,34 +1,35 @@
 package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.historyvideokotlin.repository.QuizRepository
 import com.example.historyvideokotlin.base.BaseViewModel
 import com.example.historyvideokotlin.di.repositoryProvider
-import com.example.historyvideokotlin.model.Theme
 import com.example.historyvideokotlin.model.Quiz
+import com.example.historyvideokotlin.model.Theme
+import com.example.historyvideokotlin.repository.QuizRepository
 import com.example.historyvideokotlin.utils.MyLog
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
 class QuizViewModel(application: Application) : BaseViewModel(application) {
     var themeList = MutableLiveData<List<Theme>>()
-    var quizList = MutableLiveData<List<Quiz>>()
 
     var quizRepository = QuizRepository()
     var disposable = CompositeDisposable()
 
     val ktorQuizRepository = application.repositoryProvider.ktorQuizRepository
 
+    private val _isLoadFail = MutableLiveData(false)
+    val isLoadFail: LiveData<Boolean> get() = _isLoadFail
+
     fun getThemeData() {
         getTheme()
     }
 
     private fun getTheme() {
+        _isLoadFail.value = false
         viewModelScope.launch {
             runCatching {
                 showLoading()
@@ -36,8 +37,11 @@ class QuizViewModel(application: Application) : BaseViewModel(application) {
             }.onSuccess {
                 hideLoading()
                 themeList.value = it
+                _isLoadFail.value = false
             }.onFailure {
+                MyLog.e("getTheme", it.message)
                 hideLoading()
+                _isLoadFail.value = true
             }
         }
     }
@@ -62,6 +66,4 @@ class QuizViewModel(application: Application) : BaseViewModel(application) {
 //                })
 //        )
 //    }
-
-
 }

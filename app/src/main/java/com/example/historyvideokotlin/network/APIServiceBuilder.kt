@@ -12,7 +12,7 @@ class APIServiceBuilder() {
         val okHttpClientProvider = OkHttpClientProvider()
         var okHttpClient: OkHttpClient = buildOkHttp(okHttpClientProvider)
         okHttpClientProvider.okHttpClient = okHttpClient
-        return Retrofit.Builder().baseUrl(RESTClient().T2_KTOR_URL)
+        return Retrofit.Builder().baseUrl(RESTClient().KTOR_API_URL)
             .client(buildOkHttp(okHttpClientProvider).also { okHttpClient = it })
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
@@ -25,6 +25,9 @@ class APIServiceBuilder() {
             .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS)
             .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .addInterceptor(contentTypeInterceptor)
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        httpClientBuilder.addInterceptor(logging)
         return httpClientBuilder.build()
     }
 

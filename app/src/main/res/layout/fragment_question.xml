@@ -3,6 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="number"
+            type="Integer" />
+
+        <variable
+            name="viewModel"
+            type="com.example.historyvideokotlin.viewmodels.QuestionViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,81 +35,93 @@
                 android:id="@+id/tvNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cau 1 "
+                android:text="@{@string/quiz_number(number)}"
                 android:textColor="@color/app2"
                 android:textSize="@dimen/nsp_20"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Cau 1 " />
 
             <ImageView
                 android:id="@+id/ivImageQuiz"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                url="@{viewModel.quiz.image}"
+                android:layout_width="@dimen/ndp_100"
+                android:layout_height="@dimen/ndp_100"
                 android:maxHeight="@dimen/ndp_60"
                 android:scaleType="fitXY"
                 android:src="@drawable/history_quiz_image"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvQuiz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/ndp_5"
-                android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:text="@{viewModel.quiz.question}"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/nsp_15"
-                android:textStyle="bold" />
-
+                android:textStyle="bold"
+                tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvAnswerA"
-            style="@style/QuizAnswer"
+        <com.example.historyvideokotlin.component.SelectLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/ndp_10"
-            android:layout_marginTop="@dimen/ndp_10"
-            android:background="@drawable/background_answer"
-            android:text="A. aaaaaaaaaaaaaaaa"
-            tools:background="@drawable/background_answer" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvAnswerB"
-            style="@style/QuizAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/ndp_10"
-            android:layout_marginTop="@dimen/ndp_10"
-            android:background="@drawable/background_answer"
-            android:paddingVertical="@dimen/ndp_5"
-            android:paddingStart="@dimen/ndp_10"
-            android:text="B. aaaaaaaaaaaaaaaa"
-            tools:background="@drawable/background_answer" />
+            <TextView
+                android:id="@+id/tvAnswerA"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:text="@{@string/quiz_answer_A(viewModel.ansA)}"
+                tools:background="@drawable/background_answer"
+                tools:text="A. aaaaaaaaaaaaaaaa" />
 
-        <TextView
-            android:id="@+id/tvAnswerC"
-            style="@style/QuizAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/ndp_10"
-            android:layout_marginTop="@dimen/ndp_10"
-            android:background="@drawable/background_answer"
-            android:paddingVertical="@dimen/ndp_5"
-            android:paddingStart="@dimen/ndp_10"
-            android:text="C. aaaaaaaaaaaaaaaa"
-            tools:background="@drawable/background_answer" />
+            <TextView
+                android:id="@+id/tvAnswerB"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:paddingVertical="@dimen/ndp_5"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="@{@string/quiz_answer_B(viewModel.ansB)}"
+                tools:background="@drawable/background_answer"
+                tools:text="B. aaaaaaaaaaaaaaaa" />
 
-        <TextView
-            android:id="@+id/tvAnswerD"
-            style="@style/QuizAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/ndp_10"
-            android:layout_marginTop="@dimen/ndp_10"
-            android:background="@drawable/background_answer"
-            android:paddingVertical="@dimen/ndp_5"
-            android:paddingStart="@dimen/ndp_10"
-            android:text="D. aaaaaaaaaaaaaaaa"
-            tools:background="@drawable/background_answer" />
+            <TextView
+                android:id="@+id/tvAnswerC"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:paddingVertical="@dimen/ndp_5"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="@{@string/quiz_answer_C(viewModel.ansC)}"
+                tools:background="@drawable/background_answer"
+                tools:text="C. aaaaaaaaaaaaaaaa" />
+
+            <TextView
+                android:id="@+id/tvAnswerD"
+                style="@style/QuizAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ndp_10"
+                android:layout_marginTop="@dimen/ndp_10"
+                android:background="@drawable/background_answer"
+                android:paddingVertical="@dimen/ndp_5"
+                android:paddingStart="@dimen/ndp_10"
+                android:text="@{@string/quiz_answer_D(viewModel.ansD)}"
+                tools:background="@drawable/background_answer"
+                tools:text="D. aaaaaaaaaaaaaaaa" />
+        </com.example.historyvideokotlin.component.SelectLayout>
     </LinearLayout>
-
 </layout>

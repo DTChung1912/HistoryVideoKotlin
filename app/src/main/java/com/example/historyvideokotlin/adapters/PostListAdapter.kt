@@ -21,13 +21,14 @@ class PostListAdapter(
             context: Context,
             onItemClickListener: OnItemClickListener
         ) = with(binding) {
+            binding.post = post
             binding.run {
-                if (post.image != null && !post.image.isNullOrEmpty()) {
-                    Glide.with(context).load(post.image).into(ivPostList)
-                }
-                tvPostListTitle.text = post.title
-                tvReadCount.text = post.read_count + " lượt đọc"
-                tvDownloadCount.text = post.download_count + " lượt tải xuống"
+
+//               if (post.image != null && !post.image.isNullOrEmpty()) {
+//                    Glide.with(context).load(post.image).into(ivPostList)
+//                } tvPostListTitle.text = post.title
+//                tvReadCount.text = post.read_count + " lượt đọc"
+//                tvRateCount.text = post.download_count + " lượt tải xuống"
 //            binding.tvPostListYear.text = post.timeline
 //                tvPostListDescription.text = post.description
                 itemPostList.setOnClickListener {

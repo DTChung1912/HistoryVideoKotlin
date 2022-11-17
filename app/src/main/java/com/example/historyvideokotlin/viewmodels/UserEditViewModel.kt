@@ -1,44 +1,55 @@
 package com.example.historyvideokotlin.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.historyvideokotlin.repository.HistoryUserManager
-import com.example.historyvideokotlin.repository.UserRepository
 import com.example.historyvideokotlin.base.BaseViewModel
 import com.example.historyvideokotlin.di.repositoryProvider
 import com.example.historyvideokotlin.model.User
+import com.example.historyvideokotlin.repository.HistoryUserManager
 import com.example.historyvideokotlin.utils.MyLog
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
 class UserEditViewModel(application: Application) : BaseViewModel(application) {
-
-    var disposable: Disposable? = null
-    var userRepository = UserRepository()
-    var userList = MutableLiveData<List<User>>()
     val userInfo = MutableLiveData<User>()
     var userId = HistoryUserManager.instance.UserId()
 
     val ktorUserRepository = application.repositoryProvider.ktorUserRepository
 
-    fun getUser() {
-        disposable =
-            userRepository.getUser(userId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .subscribe(
-                    { data ->
-                        data.let {
-                            userList.value = it
-                        }
-                    },
-                    { error -> MyLog.e("this", error.message.toString()) }
-                )
+    val isUpdateComplete = MutableLiveData<Boolean>()
+    val isAddComplete = MutableLiveData<Boolean>()
+
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> get() = _user
+
+    private val _isUpdate = MutableLiveData(false)
+    val isUpdate: LiveData<Boolean> get() = _isUpdate
+
+    fun setUser(user: User) {
+        if (user.user_id == "") {
+            _isUpdate.value = false
+        } else {
+            _isUpdate.value = true
+            _user.value = user
+        }
+    }
+
+    fun register(user: User) {
+        viewModelScope.launch {
+            runCatching {
+                showLoading()
+                ktorUserRepository.register(user)
+            }.onSuccess {
+                hideLoading()
+                userInfo.value = it[0]
+                isAddComplete.value = true
+            }.onFailure {
+                hideLoading()
+                isAddComplete.value = false
+                MyLog.e("register", it.message)
+            }
+        }
     }
 
     fun updateUser(user: User) {
@@ -49,9 +60,11 @@ class UserEditViewModel(application: Application) : BaseViewModel(application) {
             }.onSuccess {
                 hideLoading()
                 userInfo.value = it
+                isUpdateComplete.value = true
             }.onFailure {
                 hideLoading()
-                MyLog.e("updateUser",it.message)
+                isUpdateComplete.value = false
+                MyLog.e("updateUser", it.message)
             }
         }
     }

@@ -4,21 +4,27 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.historyvideokotlin.databinding.ItemKeywordBinding
+import com.example.historyvideokotlin.model.Keyword
 
-class KeywordAdapter(val keywordList: List<String>, val onItemClickListener: OnItemClickListener) :
+class KeywordAdapter(val keywordList: List<Keyword>, val onItemClickListener: OnItemClickListener) :
     RecyclerView.Adapter<KeywordAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemKeywordBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(keyword: String, onItemClickListener: OnItemClickListener) = with(binding) {
+        fun bind(item: Keyword, onItemClickListener: OnItemClickListener) = with(binding) {
             binding.run {
 
-                tvKeyword.text = keyword
+                keyword = item.content
 
-                itemKeyword.setOnClickListener {
-                    onItemClickListener.onKeyword(tvKeyword.text.toString())
+                ivPaste.setOnClickListener {
+                    onItemClickListener.onPaste(item)
                 }
+
+                tvKeyword.setOnClickListener {
+                    onItemClickListener.onKeyword(item)
+                }
+
                 ivDelete.setOnClickListener {
-                    onItemClickListener.onDelete(tvKeyword.text.toString())
+                    onItemClickListener.onDelete(item)
                 }
             }
         }
@@ -35,7 +41,8 @@ class KeywordAdapter(val keywordList: List<String>, val onItemClickListener: OnI
     override fun getItemCount(): Int = keywordList.size
 
     interface OnItemClickListener {
-        fun onKeyword(keyword: String)
-        fun onDelete(keyword: String)
+        fun onKeyword(keyword: Keyword)
+        fun onDelete(keyword: Keyword)
+        fun onPaste(keyword: Keyword)
     }
 }

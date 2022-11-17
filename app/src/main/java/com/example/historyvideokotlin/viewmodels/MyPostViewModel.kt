@@ -11,7 +11,7 @@ import com.example.historyvideokotlin.utils.MyLog
 import kotlinx.coroutines.launch
 
 class MyPostViewModel(application: Application) : BaseViewModel(application) {
-    var myPostResponse = MutableLiveData<MyPostResponse>()
+    val myPostResponse = MutableLiveData<MyPostResponse>()
 
     val ktorUserRepository = application.repositoryProvider.ktorUserRepository
 
@@ -27,8 +27,10 @@ class MyPostViewModel(application: Application) : BaseViewModel(application) {
                 showLoading()
                 ktorUserRepository.getMyPostList(userId)
             }.onSuccess {
+                hideLoading()
                 myPostResponse.value = it
             }.onFailure {
+                hideLoading()
                 MyLog.e("getMyPostList", it.message)
             }
         }
