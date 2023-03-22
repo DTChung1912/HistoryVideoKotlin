@@ -22,5 +22,8 @@ class PostRepository : BaseRepository() {
     fun updateRateCountPost(postId: String, rated: Int): Observable<Post> {
         return apiService?.updateRateCountPost(postId, rated)!!
     }
+    // 1
+    // 2
+    // 3
 
 }
