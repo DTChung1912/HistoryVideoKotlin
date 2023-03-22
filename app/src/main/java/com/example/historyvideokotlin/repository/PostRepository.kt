@@ -23,4 +23,8 @@ class PostRepository : BaseRepository() {
         return apiService?.updateRateCountPost(postId, rated)!!
     }
 
+
+
+
+
 }
